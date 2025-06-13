@@ -7,3 +7,8 @@ export interface PinnedCity {
   lat: number;
   lon: number;
 }
+
+export interface CityPreferencesState {
+  favoriteCities: FavoriteCity[];
+  pinnedCities: PinnedCity[];
+}
