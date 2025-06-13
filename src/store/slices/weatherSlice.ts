@@ -43,7 +43,7 @@ export const fetchCurrentWeather = createAsyncThunk(
 export const fetchWeatherForecast = createAsyncThunk(
   "weather/fetchWeatherForecast",
   async (
-    { query, days = 5 }: { query: string; days?: number },
+    { query, days }: { query: string; days?: number },
     { rejectWithValue }
   ) => {
     try {

@@ -37,12 +37,12 @@ class WeatherApi {
     return this.makeRequest<WeatherData>("/current.json", { q: query });
   }
 
-  async getForecast(query: string, days: number = 5): Promise<WeatherData> {
+  async getForecast(query: string, days: number = 7): Promise<WeatherData> {
     return this.makeRequest<WeatherData>("/forecast.json", {
       q: query,
       days: days.toString(),
-      aqi: "yes",
-      alerts: "yes",
+      aqi: "no",
+      alerts: "no",
     });
   }
 

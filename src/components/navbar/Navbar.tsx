@@ -13,25 +13,55 @@ import {
   DrawerHeader,
   DrawerClose,
 } from "../ui/drawer";
+import { useAppSelector } from "@/hooks/useRedux";
+import { Skeleton } from "../ui/skeleton";
 
 function Navbar() {
+  const { currentWeather, isLoading } = useAppSelector(
+    (state) => state.weather
+  );
+
+  const RenderCity = () => {
+    return (
+      <>
+        {isLoading ? (
+          <Skeleton className="h-7 w-[200px]" />
+        ) : (
+          <Text size="sm" color="default" weight="light">
+            {currentWeather?.location.name}, {currentWeather?.location.country}
+          </Text>
+        )}
+      </>
+    );
+  };
+
+  const RenderIcon = () => {
+    return (
+      <>
+        {isLoading ? (
+          <Skeleton className="h-9 w-9 rounded-full" />
+        ) : (
+          <Icon
+            asChild
+            size="xl"
+            color="primary"
+            background="secondary"
+            rounded="full"
+            className="p-2.5"
+          >
+            <MapPin />
+          </Icon>
+        )}
+      </>
+    );
+  };
+
   return (
     <nav className="flex items-center justify-between py-4">
       {/* Left Section */}
       <div className="flex items-center gap-2">
-        <Icon
-          asChild
-          size="xl"
-          color="primary"
-          background="secondary"
-          rounded="full"
-          className="p-2.5"
-        >
-          <MapPin />
-        </Icon>
-        <Text size="sm" color="default" weight="light">
-          Colombo, Sri Lanka
-        </Text>
+        <RenderIcon />
+        <RenderCity />
       </div>
 
       {/* Desktop Search */}

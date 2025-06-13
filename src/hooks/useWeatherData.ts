@@ -9,9 +9,9 @@ export const useWeatherData = () => {
     (state: RootState) => state.weather
   );
 
-  const fetchWeatherByLocation = async (query: string) => {
+  const fetchWeatherByLocation = async (query: string, days?: number) => {
     try {
-      await dispatch(fetchWeatherForecast({ query, days: 5 })).unwrap();
+      await dispatch(fetchWeatherForecast({ query, days })).unwrap();
     } catch (error) {
       console.error("Failed to fetch weather data:", error);
     }
@@ -28,7 +28,6 @@ export const useWeatherData = () => {
       await fetchWeatherByCoordinates(position.latitude, position.longitude);
     } catch (error) {
       console.error("Failed to get current location weather:", error);
-      // Fallback to a default location
       await fetchWeatherByLocation("Colombo");
     }
   };
