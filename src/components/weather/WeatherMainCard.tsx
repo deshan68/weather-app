@@ -112,7 +112,7 @@ function WeatherMainCard() {
           />
 
           <Text size={"xs"} weight={"light"} className="text-muted-foreground">
-            {current.condition.text}
+            {current.condition.text.split(" ")[0]}
           </Text>
         </div>
       </div>
