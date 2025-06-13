@@ -27,9 +27,14 @@ function Navbar() {
         {isLoading ? (
           <Skeleton className="h-7 w-[200px]" />
         ) : (
-          <Text size="sm" color="default" weight="light">
-            {currentWeather?.location.name}, {currentWeather?.location.country}
-          </Text>
+          <div className="flex flex-col justify-center items-start">
+            <Text size="sm" color="default" weight="normal">
+              {`${currentWeather?.location.name}, ${currentWeather?.location.country}`}
+            </Text>
+            <Text size="xs" color="muted" weight="light" className="leading-2">
+              {currentWeather?.location.region}
+            </Text>
+          </div>
         )}
       </>
     );
