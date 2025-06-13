@@ -43,17 +43,32 @@ function ChanceOfRainArea() {
       </div>
     );
   }
-  const forecast = currentWeather!.forecast!.forecastday[0].hour;
 
   function getUpcomingHourlyRainChances(): HourlyChanceOfRain[] {
     const currentEpoch = Math.floor(Date.now() / 1000);
 
-    return forecast
+    const todayForecast = currentWeather!.forecast!.forecastday[0].hour;
+    const tomorrowForecast = currentWeather!.forecast!.forecastday[1].hour;
+
+    const todayHours = todayForecast
       .filter((hour) => hour.time_epoch >= currentEpoch)
       .map((hour) => ({
         hour: `${hour.time.split(" ")[1].slice(0, 2)}AM`,
-        chancePercentage: hour.chance_of_rain === 0 ? 1 : hour.chance_of_rain,
+        chancePercentage: hour.chance_of_rain,
       }));
+
+    if (todayHours.length < 8) {
+      const remainingHours = 8 - todayHours.length;
+      const tomorrowHours = tomorrowForecast
+        .slice(0, remainingHours)
+        .map((hour) => ({
+          hour: `${hour.time.split(" ")[1].slice(0, 2)}AM`,
+          chancePercentage: hour.chance_of_rain,
+        }));
+      return [...todayHours, ...tomorrowHours];
+    }
+
+    return todayHours;
   }
 
   return (
