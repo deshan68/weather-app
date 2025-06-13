@@ -4,11 +4,12 @@ import { useWeatherData } from "@/hooks/useWeatherData";
 import ChanceOfRainArea from "./ChanceOfRainArea";
 import MapArea from "../map/MapArea";
 import FavoriteItemsArea from "../favorite/FavoriteItemsArea";
+import { DEFAULT_COORDINATE } from "@/lib/constants";
 
 function WeatherDashboard() {
-  const { fetchWeatherByLocation } = useWeatherData();
+  const { fetchWeatherByCoordinates } = useWeatherData();
   useEffect(() => {
-    fetchWeatherByLocation("jaffna");
+    fetchWeatherByCoordinates(DEFAULT_COORDINATE[0], DEFAULT_COORDINATE[1]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
