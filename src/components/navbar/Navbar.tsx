@@ -1,10 +1,10 @@
-"use client";
-
-import { MapPin, Menu, XIcon } from "lucide-react";
-import { Text } from "../ui/text";
-import { Icon } from "../ui/icon";
-import { Input } from "../ui/input";
-import { ModeToggle } from "../mode-toggle";
+import { Menu, XIcon } from "lucide-react";
+import { useEffect, useState, useCallback, useRef } from "react";
+import { useAppDispatch } from "@/hooks/useRedux";
+import {
+  clearSearchResults,
+  searchLocations,
+} from "@/store/slices/weatherSlice";
 import { Button } from "../ui/button";
 import {
   Drawer,
@@ -13,72 +13,66 @@ import {
   DrawerHeader,
   DrawerClose,
 } from "../ui/drawer";
-import { useAppSelector } from "@/hooks/useRedux";
-import { Skeleton } from "../ui/skeleton";
+import { ModeToggle } from "../mode-toggle";
+import { RenderSearch } from "./RenderSearch";
+import { RenderCity } from "./RenderCity";
+import { RenderIcon } from "./RenderIcon";
 
 function Navbar() {
-  const { currentWeather, isLoading } = useAppSelector(
-    (state) => state.weather
+  const dispatch = useAppDispatch();
+  const [query, setQuery] = useState<string>("");
+  const skipSearchRef = useRef(false);
+
+  const handleSearch = useCallback(
+    async (searchQuery: string) => {
+      if (searchQuery.length < 3) {
+        dispatch(clearSearchResults());
+        return;
+      }
+
+      try {
+        await dispatch(searchLocations(searchQuery)).unwrap();
+      } catch (error) {
+        console.error("Search failed:", error);
+      }
+    },
+    [dispatch]
   );
 
-  const RenderCity = () => {
-    return (
-      <>
-        {isLoading ? (
-          <Skeleton className="h-7 w-[200px]" />
-        ) : (
-          <Text size="sm" color="default" weight="light">
-            {currentWeather?.location.name}, {currentWeather?.location.country}
-          </Text>
-        )}
-      </>
-    );
-  };
+  useEffect(() => {
+    if (skipSearchRef.current) {
+      skipSearchRef.current = false;
+      return;
+    }
 
-  const RenderIcon = () => {
-    return (
-      <>
-        {isLoading ? (
-          <Skeleton className="h-9 w-9 rounded-full" />
-        ) : (
-          <Icon
-            asChild
-            size="xl"
-            color="primary"
-            background="secondary"
-            rounded="full"
-            className="p-2.5"
-          >
-            <MapPin />
-          </Icon>
-        )}
-      </>
-    );
-  };
+    const timeoutId = setTimeout(() => {
+      if (query) {
+        handleSearch(query);
+      }
+    }, 400);
+
+    return () => clearTimeout(timeoutId);
+  }, [handleSearch, query]);
 
   return (
     <nav className="flex items-center justify-between py-4">
-      {/* Left Section */}
       <div className="flex items-center gap-2">
         <RenderIcon />
         <RenderCity />
       </div>
 
-      {/* Desktop Search */}
       <div className="hidden md:flex flex-1 justify-center">
-        <Input
-          type="text"
-          placeholder="Search city..."
-          className="max-w-80 w-full"
+        <RenderSearch
+          query={query}
+          setQuery={setQuery}
+          skipSearchRef={skipSearchRef}
         />
       </div>
 
-      {/* Desktop Theme Toggle */}
       <div className="hidden md:flex">
         <ModeToggle />
       </div>
 
-      {/* Mobile Drawer */}
       <div className="md:hidden">
         <Drawer direction="right">
           <DrawerTrigger asChild>
@@ -90,23 +84,18 @@ function Navbar() {
             <div className="mx-auto w-full max-w-sm px-4 py-4 h-full">
               <DrawerHeader className="flex flex-row items-center p-0 mb-5">
                 <ModeToggle />
-
                 <DrawerClose asChild>
-                  <Icon
-                    asChild
-                    size="xl"
-                    color="primary"
-                    background="secondary"
-                    rounded="full"
-                    className="ml-auto p-2.5"
-                  >
-                    <XIcon />
-                  </Icon>
+                  <Button variant="ghost" size="icon" className="ml-auto">
+                    <XIcon className="size-5" />
+                  </Button>
                 </DrawerClose>
               </DrawerHeader>
-
               <div className="flex flex-col justify-between h-full">
-                <Input type="text" placeholder="Search city..." />
+                <RenderSearch
+                  query={query}
+                  setQuery={setQuery}
+                  skipSearchRef={skipSearchRef}
+                />
               </div>
             </div>
           </DrawerContent>

@@ -19,6 +19,7 @@ const initialState: WeatherState = {
     localStorage.getItem("favoriteLocations") || "[]"
   ),
   isLoading: false,
+  isSearching: false,
   error: null,
   temperatureUnit:
     (localStorage.getItem("temperatureUnit") as TemperatureUnit) || "celsius",
@@ -161,17 +162,20 @@ const weatherSlice = createSlice({
 
       // Search locations
       .addCase(searchLocations.pending, (state) => {
+        state.isSearching = true;
         state.error = null;
       })
       .addCase(
         searchLocations.fulfilled,
         (state, action: PayloadAction<SearchLocation[]>) => {
           state.searchResults = action.payload;
+          state.isSearching = false;
           state.error = null;
         }
       )
       .addCase(searchLocations.rejected, (state, action) => {
         state.error = action.payload as string;
+        state.isSearching = false;
         state.searchResults = [];
       })
 

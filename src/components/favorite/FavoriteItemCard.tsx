@@ -7,7 +7,7 @@ function FavoriteItemCard() {
         <Text weight={"light"} size={"xs"} color={"muted"}>
           Sri Lanka
         </Text>
-        <Text size={"2xl"} weight={"medium"}>
+        <Text size={"xl"} weight={"medium"}>
           Colombo
         </Text>
         <Text size={"xs"} weight={"light"} className="mt-auto">
