@@ -3,6 +3,7 @@ import { MainWeatherDetailsArea } from "./MainWeatherDetailsArea";
 import { useWeatherData } from "@/hooks/useWeatherData";
 import ChanceOfRainArea from "./ChanceOfRainArea";
 import MapArea from "../map/MapArea";
+import FavoriteItemsArea from "../favorite/FavoriteItemsArea";
 
 function WeatherDashboard() {
   const { fetchWeatherByLocation } = useWeatherData();
@@ -18,16 +19,18 @@ function WeatherDashboard() {
           <MainWeatherDetailsArea />
         </div>
 
-        <div className="flex w-full md:w-1/3">
+        <div className="flex w-full md:w-1/3 mt-2 md:mt-0">
           <ChanceOfRainArea />
         </div>
       </div>
 
-      <div className="flex w-full flex-col gap-2 md:flex-row">
+      <div className="flex w-full flex-col gap-2 md:flex-row mt-2">
         <div className="w-full md:w-2/3">
           <MapArea />
         </div>
-        <div className="flex w-full md:w-1/3">Not implemented yet</div>
+        <div className="flex w-full md:w-1/3">
+          <FavoriteItemsArea />
+        </div>
       </div>
     </div>
   );
