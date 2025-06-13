@@ -21,6 +21,7 @@ import { RenderIcon } from "./RenderIcon";
 function Navbar() {
   const dispatch = useAppDispatch();
   const [query, setQuery] = useState<string>("");
+  const [openDrawer, setIsOpenDrawer] = useState<boolean>(false);
   const skipSearchRef = useRef(false);
 
   const handleSearch = useCallback(
@@ -38,6 +39,12 @@ function Navbar() {
     },
     [dispatch]
   );
+
+  const handleOpenDrawer = (open: boolean) => {
+    setIsOpenDrawer(open);
+    setQuery("");
+    skipSearchRef.current = false;
+  };
 
   useEffect(() => {
     if (skipSearchRef.current) {
@@ -74,7 +81,11 @@ function Navbar() {
       </div>
 
       <div className="md:hidden">
-        <Drawer direction="right">
+        <Drawer
+          direction="right"
+          open={openDrawer}
+          onOpenChange={handleOpenDrawer}
+        >
           <DrawerTrigger asChild>
             <Button variant="ghost" size="icon">
               <Menu className="size-5" />
