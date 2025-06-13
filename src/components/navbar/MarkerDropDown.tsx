@@ -29,8 +29,8 @@ export function MarkerDropDown() {
       })
     );
   };
-  const handleUnpinCity = () => {
-    dispatch(removePinnedCity(currentWeather.location.name));
+  const handleUnpinCity = (name: string) => {
+    dispatch(removePinnedCity(name));
   };
 
   return (
@@ -45,7 +45,7 @@ export function MarkerDropDown() {
         className="w-[200px] min-h-24 justify-between gap-1 py-2 flex flex-col"
       >
         {pinnedCities.length === 0 ? (
-          <Text size={"xs"} color={"muted"} className="text-center">
+          <Text size={"xs"} color={"muted"} className="text-center my-auto">
             No pinned cities.
           </Text>
         ) : (
@@ -53,12 +53,16 @@ export function MarkerDropDown() {
             {pinnedCities.map((c, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between px-2"
+                className="flex items-center justify-between px-2 pl-3"
               >
                 <Text size={"sm"} weight={"light"} color={"primary"}>
                   {c.name}
                 </Text>
-                <Button variant="ghost" size="icon" onClick={handleUnpinCity}>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleUnpinCity(c.name)}
+                >
                   <Trash className="size-3.5" />
                 </Button>
               </div>
@@ -68,12 +72,12 @@ export function MarkerDropDown() {
 
         <Button
           variant="default"
-          className="mt-2 mx-1"
+          className="mt-2 mx-1 text-[12px]"
           size="sm"
           onClick={handlePinCity}
         >
           <Pin className="size-3.5" />
-          {currentWeather?.location.name}
+          {currentWeather.location.name}
         </Button>
       </DropdownMenuContent>
     </DropdownMenu>
