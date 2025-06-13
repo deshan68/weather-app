@@ -3,6 +3,7 @@ import { memo } from "react";
 import { useTheme } from "../theme-provider";
 import { useAppSelector } from "@/hooks/useRedux";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { Text } from "../ui/text";
 
 function MapArea() {
   const { theme } = useTheme();
@@ -20,21 +21,26 @@ function MapArea() {
   }
 
   return (
-    <Map
-      initialViewState={{ latitude: 6.9271, longitude: 79.8612, zoom: 10 }}
-      mapStyle={mapStyle}
-      style={{ width: "100%", height: "50vh", borderRadius: "1.5rem" }}
-    >
-      <Marker longitude={79.8612} latitude={6.9271} anchor="top">
-        <div className="flex p-1 items-center justify-center bg-background rounded-full border border-sidebar-ring">
-          <img
-            src={`https:${weatherDataList[0].day.condition.icon}`}
-            alt={weatherDataList[0].day.condition.text}
-            className="w-6 h-6"
-          />
-        </div>
-      </Marker>
-    </Map>
+    <div className="flex flex-col gap-1 h-full w-full">
+      <Text size={"sm"} weight={"normal"}>
+        Global Map
+      </Text>
+      <Map
+        initialViewState={{ latitude: 6.9271, longitude: 79.8612, zoom: 10 }}
+        mapStyle={mapStyle}
+        style={{ width: "100%", height: "50vh", borderRadius: "1.5rem" }}
+      >
+        <Marker longitude={79.8612} latitude={6.9271} anchor="top">
+          <div className="flex p-1 items-center justify-center bg-background rounded-full border border-sidebar-ring">
+            <img
+              src={`https:${weatherDataList[0].day.condition.icon}`}
+              alt={weatherDataList[0].day.condition.text}
+              className="w-6 h-6"
+            />
+          </div>
+        </Marker>
+      </Map>
+    </div>
   );
 }
 

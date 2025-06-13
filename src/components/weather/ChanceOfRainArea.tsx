@@ -57,7 +57,7 @@ function ChanceOfRainArea() {
   }
 
   return (
-    <div className="flex flex-col gap-4 h-full w-full">
+    <div className="flex flex-col gap-1 h-full w-full">
       <Text size={"sm"} weight={"normal"}>
         Upcoming Rain Chances
       </Text>
