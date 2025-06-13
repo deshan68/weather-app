@@ -1,10 +1,14 @@
 import { useAppSelector } from "@/hooks/useRedux";
-import WeatherMainCard from "../WeatherMainCard";
+import WeatherMainCard from "./WeatherMainCard";
 import { Skeleton } from "@/components/ui/skeleton";
-import WeatherSubCardList from "../WeatherSubCardList";
+import WeatherSubCardList from "./WeatherSubCardList";
 import { Text } from "@/components/ui/text";
 
-function Today() {
+type TodayProps = {
+  subCardListType: "today" | "tomorrow";
+};
+
+function Today({ subCardListType }: TodayProps) {
   const { currentWeather, isLoading } = useAppSelector(
     (state) => state.weather
   );
@@ -33,8 +37,8 @@ function Today() {
 
   return (
     <div className="flex w-full flex-col gap-2 md:flex-row">
-      <WeatherMainCard />
-      <WeatherSubCardList />
+      {subCardListType === "today" && <WeatherMainCard />}
+      <WeatherSubCardList type={subCardListType} />
     </div>
   );
 }

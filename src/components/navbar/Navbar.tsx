@@ -18,6 +18,7 @@ import { RenderCity } from "./RenderCity";
 import { RenderIcon } from "./RenderIcon";
 import { Menu, XIcon } from "lucide-react";
 import { MarkerDropDown } from "./MarkerDropDown";
+import { TempUnitDropDown } from "./TempUnitDropDown";
 
 function Navbar() {
   const dispatch = useAppDispatch();
@@ -78,6 +79,7 @@ function Navbar() {
       </div>
 
       <div className="hidden gap-x-3 md:flex">
+        <TempUnitDropDown />
         <MarkerDropDown />
         <ModeToggle />
       </div>
@@ -98,6 +100,7 @@ function Navbar() {
               <DrawerHeader className="flex flex-row items-center p-0 mb-5 gap-x-3">
                 <ModeToggle />
                 <MarkerDropDown />
+                <TempUnitDropDown />
                 <DrawerClose asChild>
                   <Button variant="ghost" size="icon" className="ml-auto">
                     <XIcon className="size-5" />

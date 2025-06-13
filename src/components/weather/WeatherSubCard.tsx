@@ -1,19 +1,23 @@
 import {
   formatTime,
   getDayName,
+  getTemperature,
+  getTemperatureUnit,
   getWeatherIconUrl,
 } from "@/utils/weatherHelpers";
 import { Text } from "../ui/text";
 import { Separator } from "../ui/separator";
 import { Droplets } from "lucide-react";
 import { Icon } from "../ui/icon";
+import { useAppSelector } from "@/hooks/useRedux";
 
 type WeatherSubCardProps = {
   dayOrTime: string;
   type?: "day" | "time";
   icon: string;
   iconText: string;
-  temp: number;
+  tempf: number;
+  tempc: number;
   humidity: number;
   wind: string;
 };
@@ -23,12 +27,17 @@ function WeatherSubCard({
   type = "time",
   icon,
   iconText,
-  temp,
+  tempc,
+  tempf,
   humidity,
   wind,
 }: WeatherSubCardProps) {
+  const { temperatureUnit } = useAppSelector((state) => state.weather);
+  const unit = getTemperatureUnit(temperatureUnit);
+  const temp = getTemperature(tempc, tempf, temperatureUnit);
+
   return (
-    <div className="flex flex-col h-52 min-w-20 rounded-3xl bg-accent py-4 px-1">
+    <div className="flex flex-col h-52 min-w-20 max-w-28 w-full rounded-3xl bg-accent py-4 px-1">
       <div className="flex items-center justify-center w-full">
         <Text size={"sm"} weight={"normal"}>
           {type === "day"
@@ -46,8 +55,9 @@ function WeatherSubCard({
         />
 
         {/* temp */}
-        <Text size={"3xl"} weight={"normal"} className="mb-auto">
-          {Math.round(temp)}°
+        <Text size={"2xl"} weight={"normal"} className="mb-auto">
+          {Math.round(temp)}
+          {unit}
         </Text>
 
         {/* humidity */}
