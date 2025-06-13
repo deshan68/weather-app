@@ -15,14 +15,10 @@ import { weatherApi } from "@/services/weatherApi";
 const initialState: WeatherState = {
   currentWeather: null,
   searchResults: [],
-  favoriteLocations: JSON.parse(
-    localStorage.getItem("favoriteLocations") || "[]"
-  ),
   isLoading: false,
   isSearching: false,
   error: null,
-  temperatureUnit:
-    (localStorage.getItem("temperatureUnit") as TemperatureUnit) || "celsius",
+  temperatureUnit: "celsius",
   alerts: [],
 };
 
@@ -92,28 +88,6 @@ const weatherSlice = createSlice({
   reducers: {
     setTemperatureUnit: (state, action: PayloadAction<TemperatureUnit>) => {
       state.temperatureUnit = action.payload;
-      localStorage.setItem("temperatureUnit", action.payload);
-    },
-    addFavoriteLocation: (state, action: PayloadAction<SearchLocation>) => {
-      const exists = state.favoriteLocations.find(
-        (loc) => loc.id === action.payload.id
-      );
-      if (!exists) {
-        state.favoriteLocations.push(action.payload);
-        localStorage.setItem(
-          "favoriteLocations",
-          JSON.stringify(state.favoriteLocations)
-        );
-      }
-    },
-    removeFavoriteLocation: (state, action: PayloadAction<number>) => {
-      state.favoriteLocations = state.favoriteLocations.filter(
-        (loc) => loc.id !== action.payload
-      );
-      localStorage.setItem(
-        "favoriteLocations",
-        JSON.stringify(state.favoriteLocations)
-      );
     },
     clearSearchResults: (state) => {
       state.searchResults = [];
@@ -189,12 +163,7 @@ const weatherSlice = createSlice({
   },
 });
 
-export const {
-  setTemperatureUnit,
-  addFavoriteLocation,
-  removeFavoriteLocation,
-  clearSearchResults,
-  clearError,
-} = weatherSlice.actions;
+export const { setTemperatureUnit, clearSearchResults, clearError } =
+  weatherSlice.actions;
 
 export default weatherSlice.reducer;

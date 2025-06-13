@@ -2,23 +2,43 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import weatherReducer from "./slices/weatherSlice";
 import cityPreferencesReducer from "./slices/cityPreferencesSlice";
 import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+
+const weatherPersistConfig = {
+  key: "weather",
+  storage,
+  whitelist: ["temperatureUnit"],
+};
 
 const rootReducer = combineReducers({
-  weather: weatherReducer,
+  weather: persistReducer(weatherPersistConfig, weatherReducer),
   cityPreferences: cityPreferencesReducer,
 });
 
-const persistedReducer = persistReducer(
-  { key: "root", storage, whitelist: ["cityPreferences"] },
-  rootReducer
-);
+const rootPersistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["weather", "cityPreferences"],
+};
+
+const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
     }),
 });
 

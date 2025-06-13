@@ -18,6 +18,7 @@ import { RenderCity } from "./RenderCity";
 import { RenderIcon } from "./RenderIcon";
 import { Menu, XIcon } from "lucide-react";
 import { MarkerDropDown } from "./MarkerDropDown";
+import { TempUnitDropDown } from "./TempUnitDropDown";
 
 function Navbar() {
   const dispatch = useAppDispatch();
@@ -78,6 +79,7 @@ function Navbar() {
       </div>
 
       <div className="hidden gap-x-3 md:flex">
+        <TempUnitDropDown />
         <MarkerDropDown />
         <ModeToggle />
       </div>
