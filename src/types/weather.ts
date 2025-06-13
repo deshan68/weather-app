@@ -147,13 +147,14 @@ export interface SearchLocation {
   url: string;
 }
 
-export type TemperatureUnit = 'celsius' | 'fahrenheit';
+export type TemperatureUnit = "celsius" | "fahrenheit";
 
 export interface WeatherState {
   currentWeather: WeatherData | null;
   searchResults: SearchLocation[];
   favoriteLocations: SearchLocation[];
   isLoading: boolean;
+  isSearching: boolean;
   error: string | null;
   temperatureUnit: TemperatureUnit;
   alerts: WeatherAlert[];
