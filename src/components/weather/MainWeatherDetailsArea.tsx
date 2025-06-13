@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Today from "./tabs/Today";
+import TabContent from "./TabContent";
 
 export function MainWeatherDetailsArea() {
   return (
@@ -9,10 +9,10 @@ export function MainWeatherDetailsArea() {
         <TabsTrigger value="tomorrow">Tomorrow</TabsTrigger>
       </TabsList>
       <TabsContent value="today">
-        <Today />
+        <TabContent subCardListType="today" />
       </TabsContent>
       <TabsContent value="tomorrow">
-        <Today />
+        <TabContent subCardListType="tomorrow" />
       </TabsContent>
     </Tabs>
   );
