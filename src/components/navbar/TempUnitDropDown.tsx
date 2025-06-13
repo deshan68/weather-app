@@ -24,13 +24,13 @@ export function TempUnitDropDown() {
           checked={temperatureUnit === "celsius"}
           onCheckedChange={() => dispatch(setTemperatureUnit("celsius"))}
         >
-          °C
+          Celsius
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={temperatureUnit === "fahrenheit"}
           onCheckedChange={() => dispatch(setTemperatureUnit("fahrenheit"))}
         >
-          °F
+          Fahrenheit
         </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>
