@@ -1,4 +1,3 @@
-import { Menu, XIcon } from "lucide-react";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useAppDispatch } from "@/hooks/useRedux";
 import {
@@ -17,6 +16,8 @@ import { ModeToggle } from "../mode-toggle";
 import { RenderSearch } from "./RenderSearch";
 import { RenderCity } from "./RenderCity";
 import { RenderIcon } from "./RenderIcon";
+import { Menu, XIcon } from "lucide-react";
+import { MarkerDropDown } from "./MarkerDropDown";
 
 function Navbar() {
   const dispatch = useAppDispatch();
@@ -76,7 +77,8 @@ function Navbar() {
         />
       </div>
 
-      <div className="hidden md:flex">
+      <div className="hidden gap-x-3 md:flex">
+        <MarkerDropDown />
         <ModeToggle />
       </div>
 
@@ -93,8 +95,9 @@ function Navbar() {
           </DrawerTrigger>
           <DrawerContent>
             <div className="mx-auto w-full max-w-sm px-4 py-4 h-full">
-              <DrawerHeader className="flex flex-row items-center p-0 mb-5">
+              <DrawerHeader className="flex flex-row items-center p-0 mb-5 gap-x-3">
                 <ModeToggle />
+                <MarkerDropDown />
                 <DrawerClose asChild>
                   <Button variant="ghost" size="icon" className="ml-auto">
                     <XIcon className="size-5" />
