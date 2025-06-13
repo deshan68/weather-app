@@ -1,10 +1,9 @@
-import type { FavoriteCity, PinnedCity } from "@/types/cityPreference";
+import type {
+  CityPreferencesState,
+  FavoriteCity,
+  PinnedCity,
+} from "@/types/cityPreference";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-
-interface CityPreferencesState {
-  favoriteCities: FavoriteCity[];
-  pinnedCities: PinnedCity[];
-}
 
 const initialState: CityPreferencesState = {
   favoriteCities: [],
