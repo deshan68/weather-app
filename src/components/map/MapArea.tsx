@@ -4,18 +4,27 @@ import { useTheme } from "../theme-provider";
 import { useAppSelector } from "@/hooks/useRedux";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { Text } from "../ui/text";
+import { Skeleton } from "../ui/skeleton";
+import { DEFAULT_COORDINATE } from "@/lib/constants";
 
 function MapArea() {
   const { theme } = useTheme();
   const { pinnedCities } = useAppSelector((state) => state.cityPreferences);
-  const weatherDataList = useAppSelector(
-    (state) => state.weather.currentWeather?.forecast?.forecastday
+  const { currentWeather, isLoading } = useAppSelector(
+    (state) => state.weather
   );
+  const weatherDataList = currentWeather?.forecast?.forecastday;
 
   const mapStyle =
     theme === "dark"
       ? "/styles/dark.json"
       : "https://tiles.openfreemap.org/styles/liberty";
+
+  if (isLoading) {
+    return (
+      <Skeleton className="flex flex-col gap-1 h-full w-full bg-accent rounded-3xl" />
+    );
+  }
 
   if (!weatherDataList || weatherDataList.length === 0) {
     return <div className="text-center">No weather data available</div>;
@@ -27,7 +36,11 @@ function MapArea() {
         Global Map
       </Text>
       <Map
-        initialViewState={{ latitude: 6.9271, longitude: 79.8612, zoom: 10 }}
+        initialViewState={{
+          latitude: DEFAULT_COORDINATE[0],
+          longitude: DEFAULT_COORDINATE[1],
+          zoom: 10,
+        }}
         mapStyle={mapStyle}
         style={{ width: "100%", height: "50vh", borderRadius: "1.5rem" }}
       >
