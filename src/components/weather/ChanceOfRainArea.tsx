@@ -7,6 +7,7 @@ import {
 } from "../ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { Text } from "../ui/text";
+import { Skeleton } from "../ui/skeleton";
 
 interface HourlyChanceOfRain {
   hour: string;
@@ -19,7 +20,21 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 function ChanceOfRainArea() {
-  const { currentWeather } = useAppSelector((state) => state.weather);
+  const { currentWeather, isLoading } = useAppSelector(
+    (state) => state.weather
+  );
+
+  if (isLoading) {
+    return (
+      <div className="flex items-end h-full justify-between gap-2 w-full">
+        {["h-56", "h-10", "h-46", "h-36", "h-5", "h-26", "h-46", "h-34"].map(
+          (height, idx) => (
+            <Skeleton key={idx} className={`${height} w-full rounded-md`} />
+          )
+        )}
+      </div>
+    );
+  }
 
   if (!currentWeather || !currentWeather.forecast) {
     return (
@@ -36,7 +51,7 @@ function ChanceOfRainArea() {
     return forecast
       .filter((hour) => hour.time_epoch >= currentEpoch)
       .map((hour) => ({
-        hour: hour.time.split(" ")[1].slice(0, 2) + "AM",
+        hour: `${hour.time.split(" ")[1].slice(0, 2)}AM`,
         chancePercentage: hour.chance_of_rain === 0 ? 1 : hour.chance_of_rain,
       }));
   }
@@ -48,11 +63,11 @@ function ChanceOfRainArea() {
       </Text>
       <ChartContainer
         config={chartConfig}
-        className="h-56 w-72 md:h-full md:w-full bg-accent rounded-2xl p-2"
+        className="h-56 w-full md:h-full md:w-full bg-accent rounded-2xl p-2"
       >
         <BarChart
           accessibilityLayer
-          data={getUpcomingHourlyRainChances().slice(0, 6)}
+          data={getUpcomingHourlyRainChances().slice(0, 8)}
         >
           <CartesianGrid vertical={false} />
           <XAxis
@@ -60,6 +75,7 @@ function ChanceOfRainArea() {
             tickLine={false}
             tickMargin={10}
             axisLine={false}
+            fontSize={9}
           />
           <ChartTooltip
             cursor={false}
