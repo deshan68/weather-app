@@ -9,6 +9,7 @@ import { Card } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
 import { useWeatherData } from "@/hooks/useWeatherData";
 import { clearSearchResults } from "@/store/slices/weatherSlice";
+import { Button } from "../ui/button";
 
 interface RenderSearchProps {
   query: string;
@@ -63,17 +64,18 @@ export const RenderSearch = ({
           ) : (
             <ScrollArea className="max-h-60 items-start justify-center">
               {searchResults.map((result: SearchLocation) => (
-                <button
+                <Button
+                  variant={"ghost"}
                   key={result.id}
                   onClick={() => handleSelect(result)}
                   className={cn(
-                    "w-full flex justify-between items-center px-4 py-2 hover:bg-accent hover:text-accent-foreground transition-colors"
+                    "w-full flex justify-between items-center px-4 py-2"
                   )}
                 >
                   <Text size="sm" weight="light" className="text-left">
                     {result.name}, {result.region}, {result.country}
                   </Text>
-                </button>
+                </Button>
               ))}
             </ScrollArea>
           )}
