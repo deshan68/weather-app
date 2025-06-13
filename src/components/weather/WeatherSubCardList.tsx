@@ -9,7 +9,7 @@ function WeatherSubCardList() {
     const currentHour = now.getHours();
 
     return currentWeather!.forecast.forecastday[0].hour
-      .slice(currentHour + 1, currentHour + 7)
+      .slice(currentHour + 1, currentHour + 6)
       .map((hour) => ({
         time: hour.time,
         icon: hour.condition.icon,

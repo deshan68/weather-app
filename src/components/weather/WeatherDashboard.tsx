@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { Text } from "../ui/text";
 import { MainWeatherDetailsArea } from "./MainWeatherDetailsArea";
 import { useWeatherData } from "@/hooks/useWeatherData";
+import ChanceOfRainArea from "./ChanceOfRainArea";
 
 function WeatherDashboard() {
   const { fetchWeatherByLocation } = useWeatherData();
   useEffect(() => {
-    fetchWeatherByLocation("colombo");
+    fetchWeatherByLocation("jaffna");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -16,8 +16,8 @@ function WeatherDashboard() {
         <MainWeatherDetailsArea />
       </div>
 
-      <div className="flex w-full md:w-1/3 bg-accent">
-        <Text size={"sm"}>Chance of rain</Text>
+      <div className="flex w-full md:w-1/3">
+        <ChanceOfRainArea />
       </div>
     </div>
   );
