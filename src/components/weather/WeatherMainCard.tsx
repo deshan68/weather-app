@@ -9,7 +9,15 @@ import {
 } from "@/utils/weatherHelpers";
 import { Text } from "../ui/text";
 import { Separator } from "../ui/separator";
-import { Droplets, Sun, ThermometerSun, Wind } from "lucide-react";
+import {
+  Cloud,
+  Droplets,
+  Eye,
+  Gauge,
+  Sun,
+  ThermometerSun,
+  Wind,
+} from "lucide-react";
 import { Icon } from "../ui/icon";
 
 function WeatherMainCard() {
@@ -104,16 +112,56 @@ function WeatherMainCard() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between">
+        <div className="flex flex-col items-end justify-between">
           <img
             src={getWeatherIconUrl(current.condition.icon)}
             alt={current.condition.text}
             className="w-16 h-16"
           />
 
-          <Text size={"xs"} weight={"light"} className="text-muted-foreground">
-            {current.condition.text.split(" ")[0]}
-          </Text>
+          {/* suggest more data to render here line by line */}
+          <div className="flex items-center gap-1">
+            <Icon size={"sm"} color={"muted"}>
+              <Cloud />
+            </Icon>
+            <Text
+              size={"xs"}
+              weight={"light"}
+              className="text-muted-foreground"
+            >
+              {current.cloud}%
+            </Text>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <Icon size={"sm"} color={"muted"}>
+              <Gauge />
+            </Icon>
+            <Text
+              size={"xs"}
+              weight={"light"}
+              className="text-muted-foreground"
+            >
+              {temperatureUnit === "celsius"
+                ? `${current.pressure_mb} mb`
+                : `${current.pressure_in} in`}
+            </Text>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <Icon size={"sm"} color={"muted"}>
+              <Eye />
+            </Icon>
+            <Text
+              size={"xs"}
+              weight={"light"}
+              className="text-muted-foreground"
+            >
+              {temperatureUnit === "celsius"
+                ? `${current.vis_km} km`
+                : `${current.vis_miles} mi`}
+            </Text>
+          </div>
         </div>
       </div>
     </div>
