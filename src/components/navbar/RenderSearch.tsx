@@ -25,7 +25,7 @@ export const RenderSearch = ({
   );
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { fetchWeatherByLocation } = useWeatherData();
+  const { fetchWeatherByCoordinates } = useWeatherData();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export const RenderSearch = ({
     setShowDropdown(false);
     skipSearchRef.current = true;
     setQuery(`${location.name}, ${location.region}, ${location.country}`);
-    fetchWeatherByLocation(`${location.lat},${location.lon}`);
+    fetchWeatherByCoordinates(location.lat, location.lon);
     dispatch(clearSearchResults());
   };
   return (
@@ -55,7 +55,7 @@ export const RenderSearch = ({
       />
 
       {showDropdown && (
-        <Card className="absolute z-50 mt-2 w-full shadow-md border rounded-md overflow-hidden">
+        <Card className="absolute z-50 mt-2 w-full shadow-md border rounded-md overflow-hidden py-2">
           {isSearching ? (
             <div className="flex items-center justify-center py-4">
               <Loader2 className="animate-spin size-4 text-muted-foreground" />
