@@ -21,7 +21,8 @@ function WeatherSubCardList({ type }: WeatherSubCardListProps) {
       time: hour.time,
       icon: hour.condition.icon,
       iconText: hour.condition.text,
-      temp: hour.temp_c,
+      tempc: hour.temp_c,
+      tempf: hour.temp_f,
       humidity: hour.humidity,
       wind: `${hour.wind_kph} km/h`,
     }));
@@ -45,7 +46,8 @@ function WeatherSubCardList({ type }: WeatherSubCardListProps) {
           type="time"
           icon={hour.icon}
           iconText={hour.iconText}
-          temp={hour.temp}
+          tempc={hour.tempc}
+          tempf={hour.tempf}
           humidity={hour.humidity}
           wind={hour.wind}
         />
