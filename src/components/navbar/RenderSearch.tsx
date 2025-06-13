@@ -1,13 +1,15 @@
 import { Input } from "../ui/input";
-import { useAppSelector } from "@/hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { Text } from "../ui/text";
-import { Loader2, Heart } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { SearchLocation } from "@/types/weather";
 import { Card } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
 import { useWeatherData } from "@/hooks/useWeatherData";
+import { clearSearchResults } from "@/store/slices/weatherSlice";
+import { Button } from "../ui/button";
 
 interface RenderSearchProps {
   query: string;
@@ -24,7 +26,8 @@ export const RenderSearch = ({
   );
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { fetchWeatherByLocation } = useWeatherData();
+  const { fetchWeatherByCoordinates } = useWeatherData();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (query.length >= 3 && searchResults.length > 0) {
@@ -35,10 +38,11 @@ export const RenderSearch = ({
   }, [query, searchResults]);
 
   const handleSelect = (location: SearchLocation) => {
+    setShowDropdown(false);
     skipSearchRef.current = true;
     setQuery(`${location.name}, ${location.region}, ${location.country}`);
-    setShowDropdown(false);
-    fetchWeatherByLocation(`${location.lat},${location.lon}`);
+    fetchWeatherByCoordinates(location.lat, location.lon);
+    dispatch(clearSearchResults());
   };
   return (
     <div className="relative w-full md:max-w-80">
@@ -52,7 +56,7 @@ export const RenderSearch = ({
       />
 
       {showDropdown && (
-        <Card className="absolute z-50 mt-2 w-full shadow-md border rounded-md overflow-hidden">
+        <Card className="absolute z-50 mt-2 w-full shadow-md border rounded-md overflow-hidden py-2">
           {isSearching ? (
             <div className="flex items-center justify-center py-4">
               <Loader2 className="animate-spin size-4 text-muted-foreground" />
@@ -60,18 +64,18 @@ export const RenderSearch = ({
           ) : (
             <ScrollArea className="max-h-60 items-start justify-center">
               {searchResults.map((result: SearchLocation) => (
-                <button
+                <Button
+                  variant={"ghost"}
                   key={result.id}
                   onClick={() => handleSelect(result)}
                   className={cn(
-                    "w-full flex justify-between items-center px-4 py-2 hover:bg-accent hover:text-accent-foreground transition-colors"
+                    "w-full flex justify-between items-center px-4 py-2"
                   )}
                 >
                   <Text size="sm" weight="light" className="text-left">
                     {result.name}, {result.region}, {result.country}
                   </Text>
-                  <Heart size={16} className="text-muted-foreground" />
-                </button>
+                </Button>
               ))}
             </ScrollArea>
           )}
