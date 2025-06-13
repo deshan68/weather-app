@@ -28,7 +28,7 @@ function WeatherSubCard({
   wind,
 }: WeatherSubCardProps) {
   return (
-    <div className="flex flex-col h-52 min-w-20 rounded-3xl bg-accent py-4 px-1">
+    <div className="flex flex-col h-52 min-w-20 max-w-28 w-full rounded-3xl bg-accent py-4 px-1">
       <div className="flex items-center justify-center w-full">
         <Text size={"sm"} weight={"normal"}>
           {type === "day"
