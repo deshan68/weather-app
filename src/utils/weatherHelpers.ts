@@ -9,7 +9,7 @@ export const getTemperature = (
 };
 
 export const getTemperatureUnit = (unit: TemperatureUnit): string => {
-  return unit === "celsius" ? "°" : "°F";
+  return unit === "celsius" ? "°C" : "°F";
 };
 
 export const getWindSpeed = (
