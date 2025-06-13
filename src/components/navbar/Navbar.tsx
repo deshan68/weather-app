@@ -100,6 +100,7 @@ function Navbar() {
               <DrawerHeader className="flex flex-row items-center p-0 mb-5 gap-x-3">
                 <ModeToggle />
                 <MarkerDropDown />
+                <TempUnitDropDown />
                 <DrawerClose asChild>
                   <Button variant="ghost" size="icon" className="ml-auto">
                     <XIcon className="size-5" />
