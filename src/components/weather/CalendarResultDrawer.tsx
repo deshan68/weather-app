@@ -1,7 +1,7 @@
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { Button } from "../ui/button";
 import { CalendarDays } from "lucide-react";
-import HorizontalDatePicker from "./HorizontalDatePicker";
+import DateWiseWeatherDisplay from "./DateWiseWeatherDisplay";
 
 function CalendarResultDrawer() {
   return (
@@ -12,7 +12,7 @@ function CalendarResultDrawer() {
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <HorizontalDatePicker />
+        <DateWiseWeatherDisplay />
       </DrawerContent>
     </Drawer>
   );

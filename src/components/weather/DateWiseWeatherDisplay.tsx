@@ -15,7 +15,7 @@ interface HourlyWeatherData {
   humidity: number;
 }
 
-function DateForecastViewer() {
+function DateWiseWeatherDisplay() {
   const { currentWeather, temperatureUnit } = useAppSelector(
     (state) => state.weather
   );
@@ -130,4 +130,4 @@ function DateForecastViewer() {
   );
 }
 
-export default DateForecastViewer;
+export default DateWiseWeatherDisplay;
