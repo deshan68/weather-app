@@ -16,7 +16,7 @@ function WeatherSubCardList({ type }: WeatherSubCardListProps) {
 
   const getNextHoursWeather = useMemo(() => {
     if (type === "sevenDays")
-      return forecastDayDate.slice(0, 7).map((day) => ({
+      return forecastDayDate.slice(1, 8).map((day) => ({
         time: day.date,
         icon: day.day.condition.icon,
         iconText: day.day.condition.text,
