@@ -15,7 +15,7 @@ interface HourlyWeatherData {
   humidity: number;
 }
 
-function HorizontalDatePicker() {
+function DateForecastViewer() {
   const { currentWeather, temperatureUnit } = useAppSelector(
     (state) => state.weather
   );
@@ -82,7 +82,7 @@ function HorizontalDatePicker() {
                 size="xs"
                 color={isSelected ? "primary" : "muted"}
                 className={cn(
-                  "rounded-full w-7 h-7 flex items-center justify-center",
+                  "rounded-full w-6 h-6 flex items-center justify-center",
                   isSelected && "bg-primary text-primary-foreground"
                 )}
               >
@@ -130,4 +130,4 @@ function HorizontalDatePicker() {
   );
 }
 
-export default HorizontalDatePicker;
+export default DateForecastViewer;
