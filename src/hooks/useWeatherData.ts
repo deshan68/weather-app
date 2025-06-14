@@ -32,6 +32,16 @@ export const useWeatherData = () => {
     }
   };
 
+  const getHistoricalWeather = async (query: string, date: string) => {
+    try {
+      const response = await weatherApi.getHistoricalWeather(query, date);
+      return response;
+    } catch (error) {
+      console.error("Failed to fetch historical weather data:", error);
+      throw error;
+    }
+  };
+
   return {
     currentWeather,
     isLoading,
@@ -40,5 +50,6 @@ export const useWeatherData = () => {
     fetchWeatherByLocation,
     fetchWeatherByCoordinates,
     fetchCurrentLocationWeather,
+    getHistoricalWeather,
   };
 };

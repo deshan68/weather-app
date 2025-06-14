@@ -63,7 +63,7 @@ function HorizontalDatePicker() {
   }, [currentWeather, temperatureUnit]);
 
   return (
-    <div className="flex flex-col overflow-y-auto p-4">
+    <div className="flex flex-col overflow-y-auto p-2">
       <div className="flex gap-2 pt-4 pb-2 justify-between">
         {dates.map((date) => {
           const isSelected =
