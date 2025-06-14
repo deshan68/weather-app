@@ -45,7 +45,7 @@ export function MarkerDropDown() {
   };
 
   return (
-    <>
+    <div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon">
@@ -94,6 +94,6 @@ export function MarkerDropDown() {
         </DropdownMenuContent>
       </DropdownMenu>
       <Toaster />
-    </>
+    </div>
   );
 }
