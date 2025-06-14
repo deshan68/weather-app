@@ -27,7 +27,7 @@ const rootReducer = combineReducers({
 const rootPersistConfig = {
   key: "root",
   storage,
-  whitelist: ["weather", "cityPreferences"],
+  whitelist: ["cityPreferences"],
 };
 
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
