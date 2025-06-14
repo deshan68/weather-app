@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TabContent from "./TabContent";
-import CalendarResultDrawer from "./DateForecastViewer";
+import CalendarResultDrawer from "./CalendarResultDrawer";
 
 export function MainWeatherDetailsArea() {
   return (
