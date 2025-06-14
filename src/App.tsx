@@ -1,7 +1,7 @@
 import { Provider } from "react-redux";
 import { persistor, store } from "@/store/store";
 import MainLayout from "./layout/MainLayout";
-import WeatherDashboard from "./components/weather/WeatherDashboard";
+import WeatherDashboard from "./components/Home";
 import { ThemeProvider } from "./components/theme-provider";
 import { PersistGate } from "redux-persist/integration/react";
 
