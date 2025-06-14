@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useAppSelector } from "@/hooks/useRedux";
 import { Skeleton } from "../ui/skeleton";
 import { Text } from "../ui/text";
@@ -7,17 +8,35 @@ export const RenderCity = () => {
     (state) => state.weather
   );
 
+  const [time, setTime] = useState<string>("");
+
+  useEffect(() => {
+    if (!currentWeather) return;
+
+    const updateTime = () => {
+      const now = new Date();
+      now.setSeconds(now.getSeconds() + 1);
+      setTime(now.toLocaleString());
+    };
+
+    updateTime();
+
+    const interval = setInterval(updateTime, 1000);
+
+    return () => clearInterval(interval);
+  }, [currentWeather]);
+
   return (
     <div className="flex flex-col justify-center w-56">
       {isLoading ? (
-        <Skeleton className="h-7 w-full" />
+        <Skeleton className="h-8 w-full" />
       ) : (
         <div className="flex flex-col items-start">
           <Text size="sm" color="default" weight="normal">
-            {`${currentWeather?.location.name}, ${currentWeather?.location.country}`}
+            {`${currentWeather?.location.name}, ${currentWeather?.location.region}, ${currentWeather?.location.country}`}
           </Text>
-          <Text size="xs" color="muted" weight="light" className="leading-2">
-            {currentWeather?.location.region}
+          <Text size="xs" color="muted" weight="light" className="leading-3">
+            {time}
           </Text>
         </div>
       )}
