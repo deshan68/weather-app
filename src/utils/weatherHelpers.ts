@@ -1,4 +1,10 @@
-import type { TemperatureUnit, WeatherCondition } from "@/types/weather";
+import type { HourlyPrediction } from "@/types";
+import type {
+  ForecastDay,
+  TemperatureUnit,
+  WeatherCondition,
+  WeatherData,
+} from "@/types/weather";
 
 export const getTemperature = (
   tempC: number,
@@ -166,3 +172,32 @@ export const getDayName = (dateString: string): string => {
   const date = new Date(dateString);
   return date.toLocaleDateString("en-US", { weekday: "long" });
 };
+
+export function getUpcomingHourlyPredictions<
+  K extends keyof ForecastDay["hour"][0]
+>(currentWeather: WeatherData, variable: K): Array<HourlyPrediction<K>> {
+  const currentEpoch = Math.floor(Date.now() / 1000);
+
+  const todayForecast = currentWeather.forecast.forecastday[0].hour;
+
+  const todayHours = todayForecast
+    .filter((hour) => hour.time_epoch >= currentEpoch)
+    .map((hour) => ({
+      time: `${hour.time.split(" ")[1].slice(0, 2)}AM`,
+      [variable]: hour[variable],
+    })) as HourlyPrediction<K>[];
+
+  if (todayHours.length >= 8) return todayHours;
+
+  const tomorrowForecast = currentWeather.forecast.forecastday[1].hour;
+  const remainingHours = 8 - todayHours.length;
+
+  const tomorrowHours = tomorrowForecast
+    .slice(0, remainingHours)
+    .map((hour) => ({
+      time: `${hour.time.split(" ")[1].slice(0, 2)}AM`,
+      [variable]: hour[variable],
+    })) as HourlyPrediction<K>[];
+
+  return [...todayHours, ...tomorrowHours];
+}
