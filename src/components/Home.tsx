@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { MainWeatherDetailsArea } from "./MainWeatherDetailsArea";
+import { MainWeatherDetailsArea } from "./weather/MainWeatherDetailsArea";
 import { useWeatherData } from "@/hooks/useWeatherData";
-import ChanceOfRainArea from "./ChanceOfRainArea";
-import MapArea from "../map/MapArea";
-import FavoriteItemsArea from "../favorite/FavoriteItemsArea";
+import ChanceOfRainArea from "./weather/ChanceOfRainArea";
+import MapArea from "./map/MapArea";
+import FavoriteItemsArea from "./favorite/FavoriteItemsArea";
 import { DEFAULT_COORDINATE } from "@/lib/constants";
 
 function WeatherDashboard() {

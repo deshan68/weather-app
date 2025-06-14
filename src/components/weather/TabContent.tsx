@@ -5,7 +5,7 @@ import WeatherSubCardList from "./WeatherSubCardList";
 import { Text } from "@/components/ui/text";
 
 type TodayProps = {
-  subCardListType: "today" | "tomorrow";
+  subCardListType: "today" | "tomorrow" | "sevenDays";
 };
 
 function Today({ subCardListType }: TodayProps) {

@@ -7,12 +7,16 @@ export function MainWeatherDetailsArea() {
       <TabsList>
         <TabsTrigger value="today">Today</TabsTrigger>
         <TabsTrigger value="tomorrow">Tomorrow</TabsTrigger>
+        <TabsTrigger value="sevenDays">Next 7 days</TabsTrigger>
       </TabsList>
       <TabsContent value="today">
         <TabContent subCardListType="today" />
       </TabsContent>
       <TabsContent value="tomorrow">
         <TabContent subCardListType="tomorrow" />
+      </TabsContent>
+      <TabsContent value="sevenDays">
+        <TabContent subCardListType="sevenDays" />
       </TabsContent>
     </Tabs>
   );
