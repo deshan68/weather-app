@@ -16,6 +16,7 @@ interface RenderSearchProps {
   setQuery: (value: string) => void;
   skipSearchRef: RefObject<boolean>;
 }
+
 export const RenderSearch = ({
   query,
   setQuery,
@@ -26,6 +27,7 @@ export const RenderSearch = ({
   );
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { fetchWeatherByCoordinates } = useWeatherData();
   const dispatch = useAppDispatch();
 
@@ -37,6 +39,22 @@ export const RenderSearch = ({
     }
   }, [query, searchResults, isSearching]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleSelect = (location: SearchLocation) => {
     setShowDropdown(false);
     skipSearchRef.current = true;
@@ -44,8 +62,9 @@ export const RenderSearch = ({
     fetchWeatherByCoordinates(location.lat, location.lon);
     dispatch(clearSearchResults());
   };
+
   return (
-    <div className="relative w-full md:max-w-80">
+    <div ref={containerRef} className="relative w-full md:max-w-80">
       <Input
         ref={inputRef}
         type="text"
@@ -63,24 +82,32 @@ export const RenderSearch = ({
             </div>
           ) : (
             <ScrollArea className="max-h-40 overflow-auto">
-              {searchResults.map((result: SearchLocation) => (
-                <Button
-                  variant={"ghost"}
-                  key={result.id}
-                  onClick={() => handleSelect(result)}
-                  className={cn(
-                    "w-full flex justify-between items-center px-4 py-2 mb-1 rounded-none"
-                  )}
-                >
-                  <Text
-                    size="xs"
-                    weight="light"
-                    className="text-left whitespace-normal break-words leading-4"
+              {searchResults.length > 0 ? (
+                searchResults.map((result: SearchLocation) => (
+                  <Button
+                    variant={"ghost"}
+                    key={result.id}
+                    onClick={() => handleSelect(result)}
+                    className={cn(
+                      "w-full flex justify-between items-center px-4 py-2 mb-1 rounded-none"
+                    )}
                   >
-                    {result.name}, {result.region}, {result.country}.
+                    <Text
+                      size="xs"
+                      weight="light"
+                      className="text-left whitespace-normal break-words leading-4"
+                    >
+                      {result.name}, {result.region}, {result.country}.
+                    </Text>
+                  </Button>
+                ))
+              ) : (
+                <div className="flex items-center justify-center py-4">
+                  <Text size="xs" color="muted">
+                    No results found.
                   </Text>
-                </Button>
-              ))}
+                </div>
+              )}
             </ScrollArea>
           )}
         </Card>
