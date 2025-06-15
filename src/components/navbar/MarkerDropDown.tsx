@@ -24,7 +24,7 @@ export function MarkerDropDown() {
     dispatch(
       addPinnedCity({
         icon: currentWeather.current.condition.icon,
-        name: currentWeather.location.name,
+        name: `${currentWeather.location.name}, ${currentWeather.location.country}`,
         lat: currentWeather.location.lat,
         lon: currentWeather.location.lon,
       })
@@ -54,10 +54,14 @@ export function MarkerDropDown() {
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="end"
-          className="w-[200px] min-h-24 justify-between gap-1 py-2 flex flex-col"
+          className="w-56 min-h-24 justify-between gap-1 py-2 flex flex-col"
         >
           {pinnedCities.length === 0 ? (
-            <Text size={"xs"} color={"muted"} className="text-center my-auto">
+            <Text
+              size={"xs"}
+              color={"muted"}
+              className="truncate text-center my-auto"
+            >
               No pinned cities.
             </Text>
           ) : (
