@@ -8,6 +8,7 @@ import AppBarChart from "../charts/AppBarChart";
 import { DAYS_TO_SHOW } from "@/lib/constants";
 import type { HourlyWeatherData } from "@/types";
 import WeatherMainCard, { type WeatherDataProps } from "./WeatherMainCard";
+import { Separator } from "../ui/separator";
 
 function DateWiseWeatherDisplay() {
   const { currentWeather, temperatureUnit, error } = useAppSelector(
@@ -112,7 +113,7 @@ function DateWiseWeatherDisplay() {
   return (
     <div className="flex flex-col overflow-y-auto p-2">
       {/* Date Picker */}
-      <div className="flex gap-2 pt-4 pb-2 justify-between">
+      <div className="flex gap-2 pt-4 pb-2 justify-between px-2">
         {dates.map((date) => {
           const isSelected =
             format(date, "yyyy-MM-dd") === format(selectedDate, "yyyy-MM-dd");
@@ -144,6 +145,8 @@ function DateWiseWeatherDisplay() {
       <Text size="xs" className="text-center">
         {format(selectedDate, "EEEE, d MMMM yyyy")}
       </Text>
+
+      <Separator className="mt-4" />
 
       {!currentWeather && (
         <div className="flex w-full justify-center items-center h-[50vh] border border-separate rounded-3xl mt-10">
