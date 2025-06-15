@@ -62,18 +62,22 @@ export const RenderSearch = ({
               <Loader2 className="animate-spin size-4 text-muted-foreground" />
             </div>
           ) : (
-            <ScrollArea className="max-h-60 items-start justify-center">
+            <ScrollArea className="max-h-40 overflow-auto">
               {searchResults.map((result: SearchLocation) => (
                 <Button
                   variant={"ghost"}
                   key={result.id}
                   onClick={() => handleSelect(result)}
                   className={cn(
-                    "w-full flex justify-between items-center px-4 py-2"
+                    "w-full flex justify-between items-center px-4 py-2 mb-1 rounded-none"
                   )}
                 >
-                  <Text size="sm" weight="light" className="text-left">
-                    {result.name}, {result.region}, {result.country}
+                  <Text
+                    size="xs"
+                    weight="light"
+                    className="text-left whitespace-normal break-words leading-4"
+                  >
+                    {result.name}, {result.region}, {result.country}.
                   </Text>
                 </Button>
               ))}
