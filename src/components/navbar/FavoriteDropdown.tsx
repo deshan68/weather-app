@@ -12,12 +12,16 @@ import {
   removeFavoriteCity,
 } from "@/store/slices/cityPreferencesSlice";
 import { useWeatherData } from "@/hooks/useWeatherData";
+import { toast } from "sonner";
+import { useState } from "react";
 
 export function FavoriteDropdown() {
   const dispatch = useAppDispatch();
   const { fetchWeatherByCoordinates } = useWeatherData();
   const { currentWeather } = useAppSelector((state) => state.weather);
   const { favoriteCities } = useAppSelector((state) => state.cityPreferences);
+
+  const [showDropdown, setShowDropdown] = useState(false);
 
   if (!currentWeather) return null;
 
@@ -34,13 +38,32 @@ export function FavoriteDropdown() {
   const handleRemoveFavorite = (name: string) => {
     dispatch(removeFavoriteCity(name));
   };
+  const handleCitySelect = (name: string, lat: number, lon: number) => {
+    const isSameCity =
+      currentWeather?.location?.lat === lat &&
+      currentWeather?.location?.lon === lon;
 
-  const handleSelectFavorite = (lat: number, lon: number) => {
+    if (isSameCity) {
+      toast("Already viewing", {
+        description: `You're already seeing weather for ${name}`,
+        duration: 4000,
+        position: "bottom-center",
+      });
+      return;
+    }
+
     fetchWeatherByCoordinates(lat, lon);
-  };
 
+    toast.success("Switched city", {
+      description: `Now showing weather for ${name}`,
+      duration: 4000,
+      position: "bottom-center",
+    });
+
+    setTimeout(() => setShowDropdown(false), 400);
+  };
   return (
-    <DropdownMenu>
+    <DropdownMenu open={showDropdown} onOpenChange={setShowDropdown}>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon">
           <Heart />
@@ -63,7 +86,7 @@ export function FavoriteDropdown() {
             <div key={index} className="flex items-center justify-between">
               <button
                 className="h-full p-2  rounded-md w-full text-sm text-left hover:text-primary hover:cursor-pointer"
-                onClick={() => handleSelectFavorite(city.lat, city.lon)}
+                onClick={() => handleCitySelect(city.name, city.lat, city.lon)}
               >
                 {city.name}
               </button>
