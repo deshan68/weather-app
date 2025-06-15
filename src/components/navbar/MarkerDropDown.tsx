@@ -60,7 +60,7 @@ export function MarkerDropDown() {
                   key={index}
                   className="flex items-center justify-between px-2 pl-3"
                 >
-                  <Text size={"sm"} weight={"light"} color={"primary"}>
+                  <Text size={"sm"} weight={"light"}>
                     {c.name}
                   </Text>
                   <Button
