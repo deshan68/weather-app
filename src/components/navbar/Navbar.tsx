@@ -19,6 +19,7 @@ import { RenderIcon } from "./RenderIcon";
 import { Menu, XIcon } from "lucide-react";
 import { MarkerDropDown } from "./MarkerDropDown";
 import { TempUnitDropDown } from "./TempUnitDropDown";
+import { FavoriteDropdown } from "./FavoriteDropdown";
 
 function Navbar() {
   const dispatch = useAppDispatch();
@@ -79,9 +80,10 @@ function Navbar() {
       </div>
 
       <div className="hidden gap-x-3 md:flex">
+        <ModeToggle />
         <TempUnitDropDown />
         <MarkerDropDown />
-        <ModeToggle />
+        <FavoriteDropdown />
       </div>
 
       <div className="md:hidden">
@@ -99,8 +101,9 @@ function Navbar() {
             <div className="mx-auto w-full max-w-sm px-4 py-4 h-full">
               <DrawerHeader className="flex flex-row items-center p-0 mb-5 gap-x-3">
                 <ModeToggle />
-                <MarkerDropDown />
                 <TempUnitDropDown />
+                <MarkerDropDown />
+                <FavoriteDropdown />
                 <DrawerClose asChild>
                   <Button variant="ghost" size="icon" className="ml-auto">
                     <XIcon className="size-5" />

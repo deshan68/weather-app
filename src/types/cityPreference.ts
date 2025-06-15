@@ -1,5 +1,7 @@
 export interface FavoriteCity {
   name: string;
+  lat: number;
+  lon: number;
 }
 export interface PinnedCity {
   name: string;
