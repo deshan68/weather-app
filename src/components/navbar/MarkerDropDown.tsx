@@ -11,7 +11,6 @@ import {
   addPinnedCity,
   removePinnedCity,
 } from "@/store/slices/cityPreferencesSlice";
-import { toast, Toaster } from "sonner";
 
 export function MarkerDropDown() {
   const dispatch = useAppDispatch();
@@ -29,19 +28,9 @@ export function MarkerDropDown() {
         lon: currentWeather.location.lon,
       })
     );
-    toast("City pinned", {
-      description: `${currentWeather.location.name} has been added to your pinned cities.`,
-      duration: 4000,
-      position: "bottom-center",
-    });
   };
   const handleUnpinCity = (name: string) => {
     dispatch(removePinnedCity(name));
-    toast("City unpinned", {
-      description: `${name} has been removed from your pinned cities.`,
-      duration: 4000,
-      position: "bottom-center",
-    });
   };
 
   return (
@@ -97,7 +86,6 @@ export function MarkerDropDown() {
           </Button>
         </DropdownMenuContent>
       </DropdownMenu>
-      <Toaster />
     </div>
   );
 }
