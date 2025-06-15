@@ -1,6 +1,6 @@
 import { Map, Marker } from "@vis.gl/react-maplibre";
 import { memo } from "react";
-import { useTheme } from "../theme-provider";
+import { useTheme } from "../../providers/ThemeProvider";
 import { useAppSelector } from "@/hooks/useRedux";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { Text } from "../ui/text";
@@ -10,7 +10,7 @@ import { DEFAULT_COORDINATE } from "@/lib/constants";
 function MapArea() {
   const { theme } = useTheme();
   const { pinnedCities } = useAppSelector((state) => state.cityPreferences);
-  const { currentWeather, isLoading } = useAppSelector(
+  const { currentWeather, error, isLoading } = useAppSelector(
     (state) => state.weather
   );
 
@@ -27,9 +27,9 @@ function MapArea() {
 
   if (!currentWeather)
     return (
-      <div className="flex gap-x-2 w-full justify-center items-center h-[50vh] border border-separate rounded-3xl p-4">
+      <div className="hidden md:flex gap-x-2 w-full justify-center items-center h-[50vh] border border-separate rounded-3xl p-4">
         <Text size="sm" className="italic" color={"muted"}>
-          No weather data available
+          {error || "No data available"}
         </Text>
       </div>
     );

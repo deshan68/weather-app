@@ -9,7 +9,7 @@ import { DAYS_TO_SHOW } from "@/lib/constants";
 import type { HourlyWeatherData } from "@/types";
 
 function DateWiseWeatherDisplay() {
-  const { currentWeather, temperatureUnit } = useAppSelector(
+  const { currentWeather, temperatureUnit, error } = useAppSelector(
     (state) => state.weather
   );
 
@@ -93,7 +93,7 @@ function DateWiseWeatherDisplay() {
       {!currentWeather && (
         <div className="flex w-full justify-center items-center h-[50vh] border border-separate rounded-3xl mt-10">
           <Text size="sm" className="italic" color={"muted"}>
-            No weather data available
+            {error || "No data available"}
           </Text>
         </div>
       )}

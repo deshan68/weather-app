@@ -25,7 +25,7 @@ function AppBarChart({
   label,
   title,
 }: AppBarChartProps) {
-  const { isLoading } = useAppSelector((state) => state.weather);
+  const { isLoading, error } = useAppSelector((state) => state.weather);
 
   const chartConfig = {
     chancePercentage: {
@@ -36,10 +36,19 @@ function AppBarChart({
   if (isLoading) {
     return (
       <div className="flex items-end h-full justify-between gap-2 w-full">
-        <Skeleton className={`h-52 w-full rounded-3xl`} />
+        <Skeleton className="h-52 w-full rounded-3xl" />
       </div>
     );
   }
+
+  if (data.length === 0)
+    return (
+      <div className="flex gap-x-2 w-full justify-center items-center h-full min-h-52 border border-separate rounded-3xl p-4">
+        <Text size="sm" className="italic text-center" color={"muted"}>
+          {error || "No data available"}
+        </Text>
+      </div>
+    );
 
   return (
     <div className="flex flex-col gap-1 h-full w-full">
