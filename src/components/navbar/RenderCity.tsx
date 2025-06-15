@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "@/hooks/useRedux";
 import { Skeleton } from "../ui/skeleton";
 import { Text } from "../ui/text";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export const RenderCity = () => {
   const { currentWeather, isLoading } = useAppSelector(
@@ -27,7 +28,7 @@ export const RenderCity = () => {
   }, [currentWeather]);
 
   return (
-    <div className="flex flex-col justify-center w-56">
+    <div className="flex flex-col justify-center min-w-60">
       {isLoading && <Skeleton className="h-8 w-full" />}
       {!isLoading && !currentWeather && (
         <Text size={"xs"} className="italic  w-56" color={"muted"}>
@@ -36,9 +37,23 @@ export const RenderCity = () => {
       )}
       {!isLoading && currentWeather && (
         <div className="flex flex-col items-start">
-          <Text size="sm" color="default" weight="normal">
-            {`${currentWeather?.location.name}, ${currentWeather?.location.region}, ${currentWeather?.location.country}`}
-          </Text>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Text
+                size="sm"
+                color="default"
+                weight="normal"
+                className="truncate max-w-[240px] cursor-default"
+              >
+                {`${currentWeather?.location.name}, ${currentWeather?.location.region}, ${currentWeather?.location.country}`}
+              </Text>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>
+                {`${currentWeather?.location.name}, ${currentWeather?.location.region}, ${currentWeather?.location.country}`}
+              </p>
+            </TooltipContent>
+          </Tooltip>
           <Text size="xs" color="muted" weight="light" className="leading-3">
             {time}
           </Text>
