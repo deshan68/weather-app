@@ -9,7 +9,7 @@ type TodayProps = {
 };
 
 function Today({ subCardListType }: TodayProps) {
-  const { currentWeather, isLoading } = useAppSelector(
+  const { currentWeather, isLoading, error } = useAppSelector(
     (state) => state.weather
   );
 
@@ -30,7 +30,7 @@ function Today({ subCardListType }: TodayProps) {
     return (
       <div className="flex w-full justify-center items-center h-52 border border-separate rounded-3xl p-4">
         <Text size="sm" className="italic" color={"muted"}>
-          No weather data available
+          {error || "No data available"}
         </Text>
       </div>
     );
