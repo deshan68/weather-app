@@ -4,6 +4,7 @@ import type {
   PinnedCity,
 } from "@/types/cityPreference";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { toast } from "sonner";
 
 const initialState: CityPreferencesState = {
   favoriteCities: [],
@@ -42,12 +43,22 @@ const cityPreferencesSlice = createSlice({
         };
         const updatedList = [...state.pinnedCities, newCity];
         state.pinnedCities = updatedList;
+        toast.success("City pinned", {
+          description: `${newCity.name} has been added to your pinned cities.`,
+          duration: 4000,
+          position: "bottom-center",
+        });
       }
     },
     removePinnedCity(state, action: PayloadAction<string>) {
       state.pinnedCities = state.pinnedCities.filter(
         (city) => city.name !== action.payload
       );
+      toast("City unpinned", {
+        description: `${name} has been removed from your pinned cities.`,
+        duration: 4000,
+        position: "bottom-center",
+      });
     },
   },
 });
