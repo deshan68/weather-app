@@ -25,7 +25,7 @@ function WeatherDashboard() {
         </div>
       </div>
 
-      <div className="flex w-full flex-col gap-2 md:flex-row mt-2">
+      <div className="flex w-full gap-2 flex-col-reverse md:flex-row mt-2">
         <div className="w-full md:w-2/3">
           <MapArea />
         </div>
