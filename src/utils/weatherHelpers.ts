@@ -175,9 +175,9 @@ export const getDayName = (dateString: string): string => {
 
 export function getUpcomingHourlyPredictions<
   K extends keyof ForecastDay["hour"][0]
->(currentWeather: WeatherData, variable: K): Array<HourlyPrediction<K>> {
+>(currentWeather: WeatherData | null, variable: K): Array<HourlyPrediction<K>> {
   const currentEpoch = Math.floor(Date.now() / 1000);
-
+  if (!currentWeather || !currentWeather.forecast) return [];
   const todayForecast = currentWeather.forecast.forecastday[0].hour;
 
   const todayHours = todayForecast
