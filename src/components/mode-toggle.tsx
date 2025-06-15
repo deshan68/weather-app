@@ -34,12 +34,6 @@ export function ModeToggle() {
         >
           Dark
         </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          checked={theme === "system"}
-          onCheckedChange={() => setTheme("system")}
-        >
-          System
-        </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
