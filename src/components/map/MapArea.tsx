@@ -4,35 +4,16 @@ import { useTheme } from "../../providers/ThemeProvider";
 import { useAppSelector } from "@/hooks/useRedux";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { Text } from "../ui/text";
-import { Skeleton } from "../ui/skeleton";
 import { DEFAULT_COORDINATE } from "@/lib/constants";
 
 function MapArea() {
   const { theme } = useTheme();
   const { pinnedCities } = useAppSelector((state) => state.cityPreferences);
-  const { currentWeather, error, isLoading } = useAppSelector(
-    (state) => state.weather
-  );
 
   const mapStyle =
     theme === "dark"
       ? "/styles/dark.json"
       : "https://tiles.openfreemap.org/styles/liberty";
-
-  if (isLoading) {
-    return (
-      <Skeleton className="flex flex-col gap-1 h-full w-full bg-accent rounded-3xl" />
-    );
-  }
-
-  if (!currentWeather)
-    return (
-      <div className="hidden md:flex gap-x-2 w-full justify-center items-center h-[50vh] border border-separate rounded-3xl p-4">
-        <Text size="sm" className="italic" color={"muted"}>
-          {error || "No data available"}
-        </Text>
-      </div>
-    );
 
   return (
     <div className="flex flex-col gap-1 h-full w-full">

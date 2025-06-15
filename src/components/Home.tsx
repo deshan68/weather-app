@@ -5,6 +5,7 @@ import MapArea from "./map/MapArea";
 import { DEFAULT_COORDINATE } from "@/lib/constants";
 import WindSpeedProgressionArea from "./weather/WindSpeedProgressionArea";
 import TemperatureAndUVArea from "./favorite/FavoriteItemsArea";
+import Footer from "./Footer";
 
 function WeatherDashboard() {
   const { fetchWeatherByCoordinates } = useWeatherData();
@@ -33,6 +34,7 @@ function WeatherDashboard() {
           <TemperatureAndUVArea />
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
