@@ -19,7 +19,7 @@ function Today({ subCardListType }: TodayProps) {
         <Skeleton className="h-52 aspect-square rounded-3xl" />
         <div className="flex gap-x-2 w-full">
           {Array.from({ length: 5 }).map((_, idx) => (
-            <Skeleton key={idx} className="h-52 min-w-20 rounded-3xl" />
+            <Skeleton key={idx} className="h-52 min-w-14 w-full rounded-3xl" />
           ))}
         </div>
       </div>
@@ -28,8 +28,8 @@ function Today({ subCardListType }: TodayProps) {
 
   if (!currentWeather)
     return (
-      <div className="flex gap-x-2 w-full h-52 border border-separate rounded-3xl p-4">
-        <Text size="sm" weight="normal" color={"primary"}>
+      <div className="flex w-full justify-center items-center h-52 border border-separate rounded-3xl p-4">
+        <Text size="sm" className="italic" color={"muted"}>
           No weather data available
         </Text>
       </div>

@@ -36,11 +36,7 @@ function AppAreaChart({
   if (isLoading) {
     return (
       <div className="flex items-end h-full justify-between gap-2 w-full">
-        {["h-56", "h-10", "h-46", "h-36", "h-5", "h-26", "h-46", "h-34"].map(
-          (height, idx) => (
-            <Skeleton key={idx} className={`${height} w-full rounded-md`} />
-          )
-        )}
+        <Skeleton className={`h-52 w-full rounded-3xl`} />
       </div>
     );
   }

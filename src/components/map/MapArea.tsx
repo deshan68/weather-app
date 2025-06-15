@@ -13,7 +13,6 @@ function MapArea() {
   const { currentWeather, isLoading } = useAppSelector(
     (state) => state.weather
   );
-  const weatherDataList = currentWeather?.forecast?.forecastday;
 
   const mapStyle =
     theme === "dark"
@@ -26,9 +25,14 @@ function MapArea() {
     );
   }
 
-  if (!weatherDataList || weatherDataList.length === 0) {
-    return <div className="text-center">No weather data available</div>;
-  }
+  if (!currentWeather)
+    return (
+      <div className="flex gap-x-2 w-full justify-center items-center h-[50vh] border border-separate rounded-3xl p-4">
+        <Text size="sm" className="italic" color={"muted"}>
+          No weather data available
+        </Text>
+      </div>
+    );
 
   return (
     <div className="flex flex-col gap-1 h-full w-full">

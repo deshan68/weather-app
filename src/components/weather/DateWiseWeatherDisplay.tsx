@@ -5,15 +5,8 @@ import { Text } from "../ui/text";
 import { useAppSelector } from "@/hooks/useRedux";
 import AppAreaChart from "../charts/AppAreaChart";
 import AppBarChart from "../charts/AppBarChart";
-
-const DAYS_TO_SHOW = 7;
-
-interface HourlyWeatherData {
-  time: string;
-  temp: number;
-  windSpeed: number;
-  humidity: number;
-}
+import { DAYS_TO_SHOW } from "@/lib/constants";
+import type { HourlyWeatherData } from "@/types";
 
 function DateWiseWeatherDisplay() {
   const { currentWeather, temperatureUnit } = useAppSelector(
@@ -96,6 +89,14 @@ function DateWiseWeatherDisplay() {
       <Text size="xs" className="text-center">
         {format(selectedDate, "EEEE, d MMMM yyyy")}
       </Text>
+
+      {!currentWeather && (
+        <div className="flex w-full justify-center items-center h-[50vh] border border-separate rounded-3xl mt-10">
+          <Text size="sm" className="italic" color={"muted"}>
+            No weather data available
+          </Text>
+        </div>
+      )}
 
       {hourlyData.length > 0 && (
         <div className="flex flex-col gap-4 py-4 mt-2">
