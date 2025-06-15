@@ -31,7 +31,7 @@ export const RenderCity = () => {
     <div className="flex flex-col justify-center min-w-60">
       {isLoading && <Skeleton className="h-8 w-full" />}
       {!isLoading && !currentWeather && (
-        <Text size={"xs"} className="italic  w-56" color={"muted"}>
+        <Text size={"xs"} className="italic w-56" color={"muted"}>
           No data available
         </Text>
       )}
