@@ -1,8 +1,8 @@
 import { useAppSelector } from "@/hooks/useRedux";
 import WeatherMainCard from "./WeatherMainCard";
-import { Skeleton } from "@/components/ui/skeleton";
 import WeatherSubCardList from "./WeatherSubCardList";
 import { Text } from "@/components/ui/text";
+import { Skeleton } from "../ui/skeleton";
 
 type TodayProps = {
   subCardListType: "today" | "tomorrow" | "sevenDays";
@@ -15,13 +15,8 @@ function Today({ subCardListType }: TodayProps) {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col md:flex-row gap-2 w-full">
-        <Skeleton className="h-52 aspect-square rounded-3xl" />
-        <div className="flex gap-x-2 w-full">
-          {Array.from({ length: 5 }).map((_, idx) => (
-            <Skeleton key={idx} className="h-52 min-w-14 w-full rounded-3xl" />
-          ))}
-        </div>
+      <div className="flex w-full">
+        <Skeleton className="h-52 min-w-14 w-full rounded-3xl" />
       </div>
     );
   }
@@ -44,6 +39,7 @@ function Today({ subCardListType }: TodayProps) {
             localtime: currentWeather.location.localtime,
           }}
           temperatureUnit={temperatureUnit}
+          isLoading={isLoading}
         />
       )}
       <WeatherSubCardList type={subCardListType} />

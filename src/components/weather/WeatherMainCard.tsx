@@ -18,6 +18,7 @@ import {
   Wind,
 } from "lucide-react";
 import { Icon } from "../ui/icon";
+import { Skeleton } from "../ui/skeleton";
 
 export interface WeatherCondition {
   text: string;
@@ -45,11 +46,13 @@ export interface WeatherDataProps {
 export interface WeatherMainCardProps {
   weatherData: WeatherDataProps;
   temperatureUnit: "celsius" | "fahrenheit";
+  isLoading: boolean;
 }
 
 function WeatherMainCard({
   weatherData,
   temperatureUnit,
+  isLoading,
 }: WeatherMainCardProps) {
   const temp = getTemperature(
     weatherData.temp_c,
@@ -63,6 +66,10 @@ function WeatherMainCard({
   );
   const unit = getTemperatureUnit(temperatureUnit);
   const uvLevel = getUVIndexLevel(weatherData.uv);
+
+  if (isLoading) {
+    return <Skeleton className="h-52 aspect-square rounded-3xl" />;
+  }
 
   return (
     <div className="flex flex-col h-52 p-4 bg-accent aspect-square rounded-3xl">
