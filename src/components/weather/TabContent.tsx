@@ -9,7 +9,7 @@ type TodayProps = {
 };
 
 function Today({ subCardListType }: TodayProps) {
-  const { currentWeather, isLoading, error } = useAppSelector(
+  const { currentWeather, isLoading, error, temperatureUnit } = useAppSelector(
     (state) => state.weather
   );
 
@@ -37,7 +37,15 @@ function Today({ subCardListType }: TodayProps) {
 
   return (
     <div className="flex w-full flex-col gap-2 md:flex-row">
-      {subCardListType === "today" && <WeatherMainCard />}
+      {subCardListType === "today" && (
+        <WeatherMainCard
+          weatherData={{
+            ...currentWeather.current,
+            localtime: currentWeather.location.localtime,
+          }}
+          temperatureUnit={temperatureUnit}
+        />
+      )}
       <WeatherSubCardList type={subCardListType} />
     </div>
   );

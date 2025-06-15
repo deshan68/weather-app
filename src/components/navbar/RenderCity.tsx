@@ -26,19 +26,15 @@ export const RenderCity = () => {
     return () => clearInterval(interval);
   }, [currentWeather]);
 
-  if (!currentWeather) {
-    return (
-      <Text size={"xs"} className="italic  w-56" color={"muted"}>
-        No data available
-      </Text>
-    );
-  }
-
   return (
     <div className="flex flex-col justify-center w-56">
-      {isLoading ? (
-        <Skeleton className="h-8 w-full" />
-      ) : (
+      {isLoading && <Skeleton className="h-8 w-full" />}
+      {!isLoading && !currentWeather && (
+        <Text size={"xs"} className="italic  w-56" color={"muted"}>
+          No data available
+        </Text>
+      )}
+      {!isLoading && currentWeather && (
         <div className="flex flex-col items-start">
           <Text size="sm" color="default" weight="normal">
             {`${currentWeather?.location.name}, ${currentWeather?.location.region}, ${currentWeather?.location.country}`}
