@@ -26,6 +26,14 @@ export const RenderCity = () => {
     return () => clearInterval(interval);
   }, [currentWeather]);
 
+  if (!currentWeather) {
+    return (
+      <Text size={"xs"} className="italic  w-56" color={"muted"}>
+        No data available
+      </Text>
+    );
+  }
+
   return (
     <div className="flex flex-col justify-center w-56">
       {isLoading ? (
