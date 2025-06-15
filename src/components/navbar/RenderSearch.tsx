@@ -30,17 +30,17 @@ export const RenderSearch = ({
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (query.length >= 3 && searchResults.length > 0) {
+    if (query.length >= 3 && (isSearching || searchResults.length > 0)) {
       setShowDropdown(true);
     } else {
       setShowDropdown(false);
     }
-  }, [query, searchResults]);
+  }, [query, searchResults, isSearching]);
 
   const handleSelect = (location: SearchLocation) => {
     setShowDropdown(false);
     skipSearchRef.current = true;
-    setQuery(`${location.name}, ${location.region}, ${location.country}`);
+    setQuery("");
     fetchWeatherByCoordinates(location.lat, location.lon);
     dispatch(clearSearchResults());
   };
