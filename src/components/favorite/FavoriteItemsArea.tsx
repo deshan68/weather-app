@@ -3,7 +3,7 @@ import AppBarChart from "../charts/AppBarChart";
 import { useAppSelector } from "@/hooks/useRedux";
 import AppAreaChart from "../charts/AppAreaChart";
 
-function FavoriteItemsArea() {
+function TemperatureAndUVArea() {
   const { currentWeather, temperatureUnit } = useAppSelector(
     (state) => state.weather
   );
@@ -23,19 +23,14 @@ function FavoriteItemsArea() {
         }`}
       />
       <AppBarChart
-        data={getUpcomingHourlyPredictions(
-          currentWeather,
-          temperatureUnit === "celsius" ? "wind_kph" : "wind_mph"
-        )}
+        data={getUpcomingHourlyPredictions(currentWeather, "uv")}
         keyOfXAxis="time"
-        keyOfYAxis={temperatureUnit === "celsius" ? "wind_kph" : "wind_mph"}
-        label="Wind Speed"
-        title={`Wind Speed Progression ${
-          temperatureUnit === "celsius" ? "kph" : "mph"
-        }`}
+        keyOfYAxis="uv"
+        label="UV Index"
+        title="UV Index Progression"
       />
     </div>
   );
 }
 
-export default FavoriteItemsArea;
+export default TemperatureAndUVArea;

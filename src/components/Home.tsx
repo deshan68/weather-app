@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { MainWeatherDetailsArea } from "./weather/MainWeatherDetailsArea";
 import { useWeatherData } from "@/hooks/useWeatherData";
-import ChanceOfRainArea from "./weather/ChanceOfRainArea";
 import MapArea from "./map/MapArea";
-import FavoriteItemsArea from "./favorite/FavoriteItemsArea";
 import { DEFAULT_COORDINATE } from "@/lib/constants";
+import WindSpeedProgressionArea from "./weather/WindSpeedProgressionArea";
+import TemperatureAndUVArea from "./favorite/FavoriteItemsArea";
 
 function WeatherDashboard() {
   const { fetchWeatherByCoordinates } = useWeatherData();
@@ -21,7 +21,7 @@ function WeatherDashboard() {
         </div>
 
         <div className="flex w-full md:w-1/3 mt-2 md:mt-0">
-          <ChanceOfRainArea />
+          <WindSpeedProgressionArea />
         </div>
       </div>
 
@@ -30,7 +30,7 @@ function WeatherDashboard() {
           <MapArea />
         </div>
         <div className="flex w-full md:w-1/3">
-          <FavoriteItemsArea />
+          <TemperatureAndUVArea />
         </div>
       </div>
     </div>
