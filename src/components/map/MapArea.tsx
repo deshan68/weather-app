@@ -39,7 +39,6 @@ function MapArea() {
         <Text size="sm" weight="normal">
           Global Map
         </Text>
-        <PinnedCityDropdown mapRef={mapRef} />
       </div>
 
       <Map
@@ -51,6 +50,7 @@ function MapArea() {
         }}
         mapStyle={mapStyle}
         style={{ width: "100%", height: "50vh", borderRadius: "1.5rem" }}
+        attributionControl={false}
       >
         {pinnedCities.map((city, index) => (
           <Marker
@@ -68,6 +68,9 @@ function MapArea() {
             </div>
           </Marker>
         ))}
+        <div className="absolute top-2 left-2 z-10">
+          <PinnedCityDropdown mapRef={mapRef} />
+        </div>
       </Map>
     </div>
   );
