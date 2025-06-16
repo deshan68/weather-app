@@ -15,7 +15,7 @@ export function TempUnitDropDown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="icon" className="rounded-full">
           {temperatureUnit === "celsius" ? "°C" : "°F"}
         </Button>
       </DropdownMenuTrigger>

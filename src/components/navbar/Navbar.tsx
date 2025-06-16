@@ -93,7 +93,7 @@ function Navbar() {
           onOpenChange={handleOpenDrawer}
         >
           <DrawerTrigger asChild>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className="rounded-full">
               <Menu className="size-5" />
             </Button>
           </DrawerTrigger>
@@ -105,7 +105,11 @@ function Navbar() {
                 <MarkerDropDown />
                 <FavoriteDropdown />
                 <DrawerClose asChild>
-                  <Button variant="ghost" size="icon" className="ml-auto">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="rounded-full ml-auto"
+                  >
                     <XIcon className="size-5" />
                   </Button>
                 </DrawerClose>
