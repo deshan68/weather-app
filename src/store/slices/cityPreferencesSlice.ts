@@ -1,41 +1,32 @@
-import type {
-  CityPreferencesState,
-  FavoriteCity,
-  PinnedCity,
-} from "@/types/cityPreference";
+import type { City, CityPreferencesState } from "@/types/cityPreference";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "sonner";
 
 const initialState: CityPreferencesState = {
-  favoriteCities: [],
-  pinnedCities: [],
+  citiesByName: {},
+  favoriteCityNames: [],
+  pinnedCityNames: [],
 };
 
 const cityPreferencesSlice = createSlice({
   name: "cityPreferences",
   initialState,
   reducers: {
-    addFavoriteCity(state, action: PayloadAction<FavoriteCity>) {
-      const exists = state.favoriteCities.find(
-        (city) => city.name === action.payload.name
-      );
+    addFavoriteCity(state, action: PayloadAction<City>) {
+      const { name } = action.payload;
 
-      if (!exists) {
-        const newCity: FavoriteCity = {
-          name: action.payload.name,
-          lat: action.payload.lat,
-          lon: action.payload.lon,
-        };
-        state.favoriteCities.push(newCity);
+      if (!state.favoriteCityNames.includes(name)) {
+        state.favoriteCityNames.push(name);
+        state.citiesByName[name] = action.payload;
 
         toast.success("City added to favorites", {
-          description: `${newCity.name} has been added to your favorite cities.`,
+          description: `${name} has been added to your favorite cities.`,
           duration: 4000,
           position: "bottom-center",
         });
       } else {
         toast("Already a favorite", {
-          description: `${action.payload.name} is already in your favorite list.`,
+          description: `${name} is already in your favorite list.`,
           duration: 3000,
           position: "bottom-center",
         });
@@ -43,37 +34,38 @@ const cityPreferencesSlice = createSlice({
     },
 
     removeFavoriteCity(state, action: PayloadAction<string>) {
-      state.favoriteCities = state.favoriteCities.filter(
-        (city) => city.name !== action.payload
+      const name = action.payload;
+      state.favoriteCityNames = state.favoriteCityNames.filter(
+        (n) => n !== name
       );
 
       toast("Favorite removed", {
-        description: `${action.payload} has been removed from your favorite cities.`,
+        description: `${name} has been removed from your favorite cities.`,
         duration: 4000,
         position: "bottom-center",
       });
+
+      // Optionally remove city data if it's not referenced anymore
+      if (!state.pinnedCityNames.includes(name)) {
+        delete state.citiesByName[name];
+      }
     },
 
-    addPinnedCity(state, action: PayloadAction<PinnedCity>) {
-      if (
-        !state.pinnedCities.find((city) => city.name === action.payload.name)
-      ) {
-        const newCity: PinnedCity = {
-          name: action.payload.name,
-          icon: action.payload.icon,
-          lat: action.payload.lat,
-          lon: action.payload.lon,
-        };
-        state.pinnedCities.push(newCity);
+    addPinnedCity(state, action: PayloadAction<City>) {
+      const { name } = action.payload;
+
+      if (!state.pinnedCityNames.includes(name)) {
+        state.pinnedCityNames.push(name);
+        state.citiesByName[name] = action.payload;
 
         toast.success("City pinned", {
-          description: `${newCity.name} has been added to your pinned cities.`,
+          description: `${name} has been pinned.`,
           duration: 4000,
           position: "bottom-center",
         });
       } else {
         toast("Already pinned", {
-          description: `${action.payload.name} is already pinned.`,
+          description: `${name} is already pinned.`,
           duration: 3000,
           position: "bottom-center",
         });
@@ -81,15 +73,19 @@ const cityPreferencesSlice = createSlice({
     },
 
     removePinnedCity(state, action: PayloadAction<string>) {
-      state.pinnedCities = state.pinnedCities.filter(
-        (city) => city.name !== action.payload
-      );
+      const name = action.payload;
+      state.pinnedCityNames = state.pinnedCityNames.filter((n) => n !== name);
 
       toast("City unpinned", {
-        description: `${action.payload} has been removed from your pinned cities.`,
+        description: `${name} has been removed from your pinned cities.`,
         duration: 4000,
         position: "bottom-center",
       });
+
+      // Optionally remove city data if it's not referenced anymore
+      if (!state.favoriteCityNames.includes(name)) {
+        delete state.citiesByName[name];
+      }
     },
   },
 });

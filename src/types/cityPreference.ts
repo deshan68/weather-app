@@ -1,16 +1,11 @@
-export interface FavoriteCity {
+export interface City {
   name: string;
-  lat: number;
-  lon: number;
-}
-export interface PinnedCity {
-  name: string;
-  icon: string;
   lat: number;
   lon: number;
 }
 
 export interface CityPreferencesState {
-  favoriteCities: FavoriteCity[];
-  pinnedCities: PinnedCity[];
+  citiesByName: Record<string, City>;
+  favoriteCityNames: string[];
+  pinnedCityNames: string[];
 }
