@@ -21,7 +21,7 @@ function WeatherDashboard() {
           <MainWeatherDetailsArea />
         </div>
 
-        <div className="flex w-full md:w-1/3 mt-2 md:mt-0">
+        <div className="flex w-full md:w-1/3">
           <WindSpeedProgressionArea />
         </div>
       </div>
