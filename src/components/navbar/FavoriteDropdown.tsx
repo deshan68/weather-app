@@ -65,7 +65,7 @@ export function FavoriteDropdown() {
   return (
     <DropdownMenu open={showDropdown} onOpenChange={setShowDropdown}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="icon" className="rounded-full">
           <Heart />
         </Button>
       </DropdownMenuTrigger>
