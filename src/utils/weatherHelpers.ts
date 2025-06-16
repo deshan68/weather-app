@@ -18,13 +18,13 @@ export const getTemperatureUnit = (unit: TemperatureUnit): string => {
   return unit === "celsius" ? "°C" : "°F";
 };
 
-export const getWindSpeed = (
+export const getSpeed = (
   windKph: number,
   windMph: number,
   unit: TemperatureUnit
 ): string => {
   const speed = unit === "celsius" ? windKph : windMph;
-  const unitLabel = unit === "celsius" ? "km/h" : "mph";
+  const unitLabel = unit === "celsius" ? "kmh" : "mph";
   return `${Math.round(speed)} ${unitLabel}`;
 };
 

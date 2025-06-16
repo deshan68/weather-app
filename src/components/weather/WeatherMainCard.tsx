@@ -1,10 +1,10 @@
 import {
   getDayName,
+  getSpeed,
   getTemperature,
   getTemperatureUnit,
   getUVIndexLevel,
   getWeatherIconUrl,
-  getWindSpeed,
 } from "@/utils/weatherHelpers";
 import { Text } from "../ui/text";
 import { Separator } from "../ui/separator";
@@ -122,7 +122,7 @@ function WeatherMainCard({
             </Icon>
             <Text size={"xs"} weight={"light"} color={"muted"}>
               Wind:{" "}
-              {getWindSpeed(
+              {getSpeed(
                 weatherData.wind_kph,
                 weatherData.wind_mph,
                 temperatureUnit

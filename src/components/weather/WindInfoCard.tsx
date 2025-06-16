@@ -1,50 +1,67 @@
+import { getSpeed } from "@/utils/weatherHelpers";
+import { Skeleton } from "../ui/skeleton";
 import { Text } from "../ui/text";
 import { useAppSelector } from "@/hooks/useRedux";
 
 interface WindInfoCardProps {
-  windMph: number;
-  windKph: number;
-  windDegree: number;
-  gustMph: number;
-  gustKph: number;
+  windMph?: number;
+  windKph?: number;
+  windDegree?: number;
+  gustMph?: number;
+  gustKph?: number;
+  isLoading?: boolean;
 }
 
+const RADIUS = 48;
+const DOT_OFFSET = 10;
 export const WindInfoCard = ({
   windMph,
   windKph,
   windDegree,
   gustMph,
   gustKph,
+  isLoading = false,
 }: WindInfoCardProps) => {
-  const RADIUS = 48;
-  const DOT_OFFSET = 10;
+  const { temperatureUnit } = useAppSelector((state) => state.weather);
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <Skeleton className="w-full h-full rounded-3xl" />
+      </div>
+    );
+  }
+
+  if (!windMph || !windKph || !windDegree || !gustMph || !gustKph) {
+    return (
+      <div className="w-full h-full flex items-center justify-center border border-muted rounded-3xl p-4">
+        <Text size="sm" weight="light" className="italic" color="muted">
+          Wind information is not available
+        </Text>
+      </div>
+    );
+  }
 
   const angleInRadians = (windDegree - 90) * (Math.PI / 180);
   const x = RADIUS + (RADIUS - DOT_OFFSET) * Math.cos(angleInRadians);
   const y = RADIUS + (RADIUS - DOT_OFFSET) * Math.sin(angleInRadians);
 
-  const { temperatureUnit } = useAppSelector((state) => state.weather);
-
   return (
-    <div className="w-full bg-background p-4 rounded-3xl border border-separate">
+    <div className="w-full bg-background p-4 rounded-3xl border border-muted flex flex-col gap-4">
       <div className="flex justify-between items-center w-full gap-2">
         {/* Wind Details */}
         <div className="flex flex-col gap-3 w-full">
           <div className="flex items-center justify-between">
             <Text size="xs">Wind</Text>
             <Text size="xs" weight="light" color="muted">
-              {temperatureUnit === "celsius"
-                ? `${windKph} km/h`
-                : `${windMph} mph`}
+              {getSpeed(windKph, windMph, temperatureUnit)}
             </Text>
           </div>
 
           <div className="flex items-center justify-between">
             <Text size="xs">Gust</Text>
             <Text size="xs" weight="light" color="muted">
-              {temperatureUnit === "celsius"
-                ? `${gustKph ?? 0} km/h`
-                : `${gustMph ?? 0} mph`}
+              {getSpeed(gustKph, gustMph, temperatureUnit)}
             </Text>
           </div>
 
@@ -93,7 +110,7 @@ export const WindInfoCard = ({
 
             {/* Wind Degree Dot */}
             <div
-              className="absolute size-2 rounded-full bg-chart-1 shadow"
+              className="absolute size-2 rounded-full bg-chart-1 shadow animate-pulse"
               style={{
                 left: `${x}px`,
                 top: `${y}px`,
