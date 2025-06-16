@@ -14,11 +14,7 @@ function Today({ subCardListType }: TodayProps) {
   );
 
   if (isLoading) {
-    return (
-      <div className="flex w-full">
-        <Skeleton className="h-52 min-w-14 w-full rounded-3xl" />
-      </div>
-    );
+    return <Skeleton className="h-52 min-w-14 w-full rounded-3xl" />;
   }
 
   if (!currentWeather)

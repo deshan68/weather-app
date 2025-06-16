@@ -6,16 +6,13 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { Text } from "../ui/text";
 import { DEFAULT_COORDINATE } from "@/lib/constants";
 import PinnedCityDropdown from "./PinnedCityDropdown";
-import { Skeleton } from "../ui/skeleton";
 
 function MapArea() {
   const { theme } = useTheme();
   const mapRef = useRef<MapRef>(null);
 
   const { pinnedCities } = useAppSelector((state) => state.cityPreferences);
-  const { currentWeather, isLoading } = useAppSelector(
-    (state) => state.weather
-  );
+  const { currentWeather } = useAppSelector((state) => state.weather);
 
   const mapStyle =
     theme === "dark"
@@ -36,20 +33,14 @@ function MapArea() {
     });
   };
 
-  if (isLoading) {
-    return <Skeleton className="w-full h-full rounded-3xl" />;
-  }
-
   return (
-    <div className="flex flex-col gap-2 h-full w-full mt-2 md:mt-0">
+    <div className="flex flex-col gap-1 h-full w-full mt-2 md:mt-0">
       <div className="flex items-center gap-2">
         <Text size="sm" weight="normal">
           Global Map
         </Text>
-        <PinnedCityDropdown mapRef={mapRef} />
       </div>
 
-      {/* 🗺️ Map View */}
       <Map
         ref={mapRef}
         initialViewState={{
@@ -59,6 +50,7 @@ function MapArea() {
         }}
         mapStyle={mapStyle}
         style={{ width: "100%", height: "50vh", borderRadius: "1.5rem" }}
+        attributionControl={false}
       >
         {pinnedCities.map((city, index) => (
           <Marker
@@ -76,6 +68,9 @@ function MapArea() {
             </div>
           </Marker>
         ))}
+        <div className="absolute top-2 left-2 z-10">
+          <PinnedCityDropdown mapRef={mapRef} />
+        </div>
       </Map>
     </div>
   );

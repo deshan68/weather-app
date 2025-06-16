@@ -2,7 +2,7 @@ import { useAppSelector } from "@/hooks/useRedux";
 import { WindInfoCard } from "./WindInfoCard";
 import { UVIndexCard } from "./UVIndexCard";
 
-function WindSpeedProgressionArea() {
+function WindInfoAndUVInfoArea() {
   const { currentWeather, isLoading } = useAppSelector(
     (state) => state.weather
   );
@@ -22,4 +22,4 @@ function WindSpeedProgressionArea() {
   );
 }
 
-export default WindSpeedProgressionArea;
+export default WindInfoAndUVInfoArea;

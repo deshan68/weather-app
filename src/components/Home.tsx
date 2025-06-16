@@ -3,9 +3,9 @@ import { MainWeatherDetailsArea } from "./weather/MainWeatherDetailsArea";
 import { useWeatherData } from "@/hooks/useWeatherData";
 import MapArea from "./map/MapArea";
 import { DEFAULT_COORDINATE } from "@/lib/constants";
-import WindSpeedProgressionArea from "./weather/WindSpeedProgressionArea";
 import TemperatureAndUVArea from "./favorite/FavoriteItemsArea";
 import Footer from "./Footer";
+import WindInfoAndUVInfoArea from "./weather/WindInfoAndUVInfoArea";
 
 function WeatherDashboard() {
   const { fetchWeatherByCoordinates } = useWeatherData();
@@ -22,11 +22,11 @@ function WeatherDashboard() {
         </div>
 
         <div className="flex w-full md:w-1/3">
-          <WindSpeedProgressionArea />
+          <WindInfoAndUVInfoArea />
         </div>
       </div>
 
-      <div className="flex w-full gap-2 flex-col-reverse md:flex-row mt-2">
+      <div className="flex w-full gap-2 flex-col-reverse md:flex-row">
         <div className="w-full md:w-2/3">
           <MapArea />
         </div>
