@@ -34,11 +34,7 @@ function AppBarChart({
   } satisfies ChartConfig;
 
   if (isLoading) {
-    return (
-      <div className="flex items-end h-full justify-between gap-2 w-full">
-        <Skeleton className="h-52 w-full rounded-3xl" />
-      </div>
-    );
+    return <Skeleton className="h-52 w-full rounded-3xl" />;
   }
 
   if (data.length === 0)
