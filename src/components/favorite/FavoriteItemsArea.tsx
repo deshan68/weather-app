@@ -9,7 +9,7 @@ function TemperatureAndUVArea() {
   );
 
   return (
-    <div className="flex flex-col gap-1 h-full w-full">
+    <div className="flex flex-col gap-2 h-full w-full">
       <AppAreaChart
         data={getUpcomingHourlyPredictions(
           currentWeather,
