@@ -1,7 +1,7 @@
 import { getUpcomingHourlyPredictions } from "@/utils/weatherHelpers";
-import AppBarChart from "../charts/AppBarChart";
 import { useAppSelector } from "@/hooks/useRedux";
 import AppAreaChart from "../charts/AppAreaChart";
+import AppBarChart from "../charts/AppBarChart";
 
 function TemperatureAndUVArea() {
   const { currentWeather, temperatureUnit } = useAppSelector(
@@ -23,11 +23,16 @@ function TemperatureAndUVArea() {
         }`}
       />
       <AppBarChart
-        data={getUpcomingHourlyPredictions(currentWeather, "uv")}
+        data={getUpcomingHourlyPredictions(
+          currentWeather,
+          temperatureUnit === "celsius" ? "wind_kph" : "wind_mph"
+        )}
         keyOfXAxis="time"
-        keyOfYAxis="uv"
-        label="UV Index"
-        title="UV Index Progression"
+        keyOfYAxis={temperatureUnit === "celsius" ? "wind_kph" : "wind_mph"}
+        label="Wind Speed"
+        title={`Wind Speed Progression ${
+          temperatureUnit === "celsius" ? "kph" : "mph"
+        }`}
       />
     </div>
   );
