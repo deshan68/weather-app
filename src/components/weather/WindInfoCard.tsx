@@ -12,6 +12,8 @@ interface WindInfoCardProps {
   isLoading?: boolean;
 }
 
+const RADIUS = 48;
+const DOT_OFFSET = 10;
 export const WindInfoCard = ({
   windMph,
   windKph,
@@ -39,9 +41,6 @@ export const WindInfoCard = ({
       </div>
     );
   }
-
-  const RADIUS = 48;
-  const DOT_OFFSET = 10;
 
   const angleInRadians = (windDegree - 90) * (Math.PI / 180);
   const x = RADIUS + (RADIUS - DOT_OFFSET) * Math.cos(angleInRadians);
