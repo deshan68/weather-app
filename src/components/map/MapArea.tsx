@@ -1,5 +1,5 @@
 import { Map, Marker, type MapRef } from "@vis.gl/react-maplibre";
-import { memo, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import { useTheme } from "../../providers/ThemeProvider";
 import { useAppSelector } from "@/hooks/useRedux";
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -8,15 +8,23 @@ import { DEFAULT_COORDINATE } from "@/lib/constants";
 
 function MapArea() {
   const { theme } = useTheme();
+  const mapRef = useRef<MapRef>(null);
+
   const { pinnedCities } = useAppSelector((state) => state.cityPreferences);
-  const mapRef = useRef<MapRef>(null); // useRef to hold map instance
+  const { currentWeather } = useAppSelector((state) => state.weather);
 
   const mapStyle =
     theme === "dark"
       ? "/styles/dark.json"
       : "https://tiles.openfreemap.org/styles/liberty";
 
-  const handleFlyTo = (lat: number, lon: number) => {
+  useEffect(() => {
+    if (currentWeather) {
+      flyTo(currentWeather.location.lat, currentWeather.location.lon);
+    }
+  }, [currentWeather]);
+
+  const flyTo = (lat: number, lon: number) => {
     mapRef.current?.flyTo({
       center: [lon, lat],
       zoom: 10,
@@ -25,23 +33,10 @@ function MapArea() {
   };
 
   return (
-    <div className="flex flex-col gap-4 h-full w-full">
+    <div className="flex flex-col gap-2 h-full w-full">
       <Text size="sm" weight="normal">
         Global Map
       </Text>
-
-      {/* 🔘 External Fly-to Buttons */}
-      <div className="flex flex-wrap gap-2">
-        {pinnedCities.map((city, index) => (
-          <button
-            key={index}
-            onClick={() => handleFlyTo(city.lat, city.lon)}
-            className="px-3 py-1 text-sm rounded-full bg-muted text-foreground hover:bg-muted/80 border"
-          >
-            {city.name}
-          </button>
-        ))}
-      </div>
 
       {/* 🗺️ Map View */}
       <Map
