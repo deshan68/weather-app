@@ -15,9 +15,10 @@ export const UVIndexCard = ({ uv, isLoading = false }: UVIndexCardProps) => {
       </div>
     );
   }
+
   if (uv === undefined || uv === null) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
+      <div className="w-full h-full flex items-center justify-center border border-muted rounded-3xl p-4">
         <Text size="sm" weight="light" className="italic" color="muted">
           UV Index information is not available
         </Text>

@@ -32,7 +32,7 @@ export const WindInfoCard = ({
 
   if (!windMph || !windKph || !windDegree || !gustMph || !gustKph) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
+      <div className="w-full h-full flex items-center justify-center border border-muted rounded-3xl p-4">
         <Text size="sm" weight="light" className="italic" color="muted">
           Wind information is not available
         </Text>
