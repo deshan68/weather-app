@@ -15,20 +15,22 @@ import {
 export function MarkerDropDown() {
   const dispatch = useAppDispatch();
   const { currentWeather } = useAppSelector((state) => state.weather);
-  const { pinnedCities } = useAppSelector((state) => state.cityPreferences);
+  const { pinnedCityNames, citiesByName } = useAppSelector(
+    (state) => state.cityPreferences
+  );
 
   if (!currentWeather) return null;
 
   const handlePinCity = () => {
     dispatch(
       addPinnedCity({
-        icon: currentWeather.current.condition.icon,
         name: `${currentWeather.location.name}, ${currentWeather.location.country}`,
         lat: currentWeather.location.lat,
         lon: currentWeather.location.lon,
       })
     );
   };
+
   const handleUnpinCity = (name: string) => {
     dispatch(removePinnedCity(name));
   };
@@ -44,33 +46,38 @@ export function MarkerDropDown() {
         align="end"
         className="w-56 min-h-24 justify-between gap-1 py-2 flex flex-col"
       >
-        {pinnedCities.length === 0 ? (
+        {pinnedCityNames.length === 0 ? (
           <Text
-            size={"xs"}
-            color={"muted"}
+            size="xs"
+            color="muted"
             className="truncate text-center my-auto"
           >
             No pinned cities.
           </Text>
         ) : (
           <>
-            {pinnedCities.map((c, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between px-2 pl-3"
-              >
-                <Text size={"sm"} weight={"light"}>
-                  {c.name}
-                </Text>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => handleUnpinCity(c.name)}
+            {pinnedCityNames.map((name) => {
+              const city = citiesByName[name];
+              if (!city) return null;
+
+              return (
+                <div
+                  key={name}
+                  className="flex items-center justify-between px-2 pl-3"
                 >
-                  <Trash className="size-3.5" />
-                </Button>
-              </div>
-            ))}
+                  <Text size="sm" weight="light">
+                    {city.name}
+                  </Text>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleUnpinCity(name)}
+                  >
+                    <Trash className="size-3.5" />
+                  </Button>
+                </div>
+              );
+            })}
           </>
         )}
 

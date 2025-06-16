@@ -19,16 +19,20 @@ export function FavoriteDropdown() {
   const dispatch = useAppDispatch();
   const { fetchWeatherByCoordinates } = useWeatherData();
   const { currentWeather } = useAppSelector((state) => state.weather);
-  const { favoriteCities } = useAppSelector((state) => state.cityPreferences);
+  const { favoriteCityNames, citiesByName } = useAppSelector(
+    (state) => state.cityPreferences
+  );
 
   const [showDropdown, setShowDropdown] = useState(false);
 
   if (!currentWeather) return null;
 
+  const currentName = `${currentWeather.location.name}, ${currentWeather.location.country}`;
+
   const handleAddFavorite = () => {
     dispatch(
       addFavoriteCity({
-        name: `${currentWeather.location.name}, ${currentWeather.location.country}`,
+        name: currentName,
         lat: currentWeather.location.lat,
         lon: currentWeather.location.lon,
       })
@@ -38,10 +42,11 @@ export function FavoriteDropdown() {
   const handleRemoveFavorite = (name: string) => {
     dispatch(removeFavoriteCity(name));
   };
+
   const handleCitySelect = (name: string, lat: number, lon: number) => {
     const isSameCity =
-      currentWeather?.location?.lat === lat &&
-      currentWeather?.location?.lon === lon;
+      currentWeather.location.lat === lat &&
+      currentWeather.location.lon === lon;
 
     if (isSameCity) {
       toast("Already viewing", {
@@ -62,6 +67,7 @@ export function FavoriteDropdown() {
 
     setTimeout(() => setShowDropdown(false), 400);
   };
+
   return (
     <DropdownMenu open={showDropdown} onOpenChange={setShowDropdown}>
       <DropdownMenuTrigger asChild>
@@ -73,31 +79,38 @@ export function FavoriteDropdown() {
         align="end"
         className="w-56 min-h-24 justify-between gap-1 py-2 flex flex-col"
       >
-        {favoriteCities.length === 0 ? (
+        {favoriteCityNames.length === 0 ? (
           <Text
-            size={"xs"}
-            color={"muted"}
+            size="xs"
+            color="muted"
             className="truncate text-center my-auto"
           >
             No favorite cities.
           </Text>
         ) : (
-          favoriteCities.map((city, index) => (
-            <div key={index} className="flex items-center justify-between">
-              <button
-                className="h-full p-2  rounded-md w-full text-sm text-left hover:text-primary hover:cursor-pointer"
-                onClick={() => handleCitySelect(city.name, city.lat, city.lon)}
-              >
-                {city.name}
-              </button>
-              <button
-                className="h-full p-2  rounded-md text-sm text-left hover:text-primary hover:cursor-pointer hover:bg-accent"
-                onClick={() => handleRemoveFavorite(city.name)}
-              >
-                <Trash className="size-3.5" />
-              </button>
-            </div>
-          ))
+          favoriteCityNames.map((name) => {
+            const city = citiesByName[name];
+            if (!city) return null;
+
+            return (
+              <div key={name} className="flex items-center justify-between">
+                <button
+                  className="h-full p-2 rounded-md w-full text-sm text-left hover:text-primary hover:cursor-pointer"
+                  onClick={() =>
+                    handleCitySelect(city.name, city.lat, city.lon)
+                  }
+                >
+                  {city.name}
+                </button>
+                <button
+                  className="h-full p-2 rounded-md text-sm text-left hover:text-primary hover:cursor-pointer hover:bg-accent"
+                  onClick={() => handleRemoveFavorite(city.name)}
+                >
+                  <Trash className="size-3.5" />
+                </button>
+              </div>
+            );
+          })
         )}
         <Button
           variant="default"
