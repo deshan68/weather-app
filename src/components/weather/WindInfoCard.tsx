@@ -93,7 +93,7 @@ export const WindInfoCard = ({
 
             {/* Wind Degree Dot */}
             <div
-              className="absolute size-2 rounded-full bg-chart-1 shadow"
+              className="absolute size-2 rounded-full bg-chart-1 shadow animate-pulse"
               style={{
                 left: `${x}px`,
                 top: `${y}px`,
