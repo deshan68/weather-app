@@ -1,26 +1,22 @@
 import { useAppSelector } from "@/hooks/useRedux";
-import { getUpcomingHourlyPredictions } from "@/utils/weatherHelpers";
-import AppAreaChart from "../charts/AppAreaChart";
+import { WindInfoCard } from "./WindInfoCard";
+import { UVIndexCard } from "./UVIndexCard";
 
 function WindSpeedProgressionArea() {
-  const { currentWeather, temperatureUnit } = useAppSelector(
-    (state) => state.weather
-  );
+  const { currentWeather } = useAppSelector((state) => state.weather);
+
+  if (!currentWeather) return null;
 
   return (
-    <div className="h-full w-full">
-      <AppAreaChart
-        data={getUpcomingHourlyPredictions(
-          currentWeather,
-          temperatureUnit === "celsius" ? "wind_kph" : "wind_mph"
-        )}
-        keyOfXAxis="time"
-        keyOfYAxis={temperatureUnit === "celsius" ? "wind_kph" : "wind_mph"}
-        label="Wind Speed"
-        title={`Wind Speed Progression ${
-          temperatureUnit === "celsius" ? "kph" : "mph"
-        }`}
+    <div className="h-full w-full flex flex-col gap-2 justify-between">
+      <WindInfoCard
+        windDegree={currentWeather!.current.wind_degree}
+        windKph={currentWeather!.current.wind_kph}
+        windMph={currentWeather!.current.wind_mph}
+        gustKph={currentWeather!.current.gust_kph}
+        gustMph={currentWeather!.current.gust_mph}
       />
+      <UVIndexCard uv={currentWeather!.current.uv} />
     </div>
   );
 }

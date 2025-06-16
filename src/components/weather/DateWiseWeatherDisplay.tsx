@@ -11,7 +11,7 @@ import WeatherMainCard, { type WeatherDataProps } from "./WeatherMainCard";
 import { Separator } from "../ui/separator";
 
 function DateWiseWeatherDisplay() {
-  const { currentWeather, temperatureUnit, error, isLoading } = useAppSelector(
+  const { currentWeather, temperatureUnit, error } = useAppSelector(
     (state) => state.weather
   );
 
@@ -161,7 +161,7 @@ function DateWiseWeatherDisplay() {
           <WeatherMainCard
             weatherData={selectedDayWeather}
             temperatureUnit={temperatureUnit}
-            isLoading={isLoading}
+            isLoading={!currentWeather}
           />
           <AppAreaChart
             data={hourlyData}
