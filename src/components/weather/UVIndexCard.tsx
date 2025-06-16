@@ -32,7 +32,7 @@ export const UVIndexCard = ({ uv, isLoading = false }: UVIndexCardProps) => {
   const percentage = (clampedUV / maxUV) * 100;
 
   return (
-    <div className="w-full h-full bg-background p-4 rounded-3xl border space-y-4 justify-center flex flex-col">
+    <div className="w-full h-1/2 bg-background p-4 rounded-3xl border space-y-4 justify-center flex flex-col">
       {/* Header */}
       <div className="flex justify-between items-center">
         <Text size="xs">UV Index</Text>

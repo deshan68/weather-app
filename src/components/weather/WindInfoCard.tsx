@@ -47,7 +47,7 @@ export const WindInfoCard = ({
   const y = RADIUS + (RADIUS - DOT_OFFSET) * Math.sin(angleInRadians);
 
   return (
-    <div className="w-full bg-background p-4 rounded-3xl border border-muted flex flex-col gap-4">
+    <div className="w-full h-1/2 bg-background p-4 rounded-3xl border space-y-4 justify-center flex flex-col">
       <div className="flex justify-between items-center w-full gap-2">
         {/* Wind Details */}
         <div className="flex flex-col gap-3 w-full">

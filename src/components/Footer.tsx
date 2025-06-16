@@ -2,7 +2,7 @@ import { Text } from "./ui/text";
 
 function Footer() {
   return (
-    <footer className="w-full py-4">
+    <footer className="w-full py-2">
       <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row justify-between items-start gap-1.5 text-center md:text-left">
         <Text size="xs" color="muted" weight={"light"} className="leading-none">
           Designed & Built by Arun Deshan
