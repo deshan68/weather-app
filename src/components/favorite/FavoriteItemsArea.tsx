@@ -3,7 +3,7 @@ import { useAppSelector } from "@/hooks/useRedux";
 import AppAreaChart from "../charts/AppAreaChart";
 import AppBarChart from "../charts/AppBarChart";
 
-function TemperatureAndUVArea() {
+const TemperatureAndUVArea = () => {
   const { currentWeather, temperatureUnit } = useAppSelector(
     (state) => state.weather
   );
@@ -36,6 +36,6 @@ function TemperatureAndUVArea() {
       />
     </div>
   );
-}
+};
 
 export default TemperatureAndUVArea;

@@ -1,6 +1,6 @@
 import { Text } from "../ui/text";
 
-function FavoriteItemCard() {
+const FavoriteItemCard = () => {
   return (
     <div className="flex w-full bg-accent rounded-3xl p-4">
       <div className="flex flex-col">
@@ -28,6 +28,6 @@ function FavoriteItemCard() {
       </div>
     </div>
   );
-}
+};
 
 export default FavoriteItemCard;

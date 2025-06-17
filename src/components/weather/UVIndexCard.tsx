@@ -7,7 +7,7 @@ interface UVIndexCardProps {
   isLoading?: boolean;
 }
 
-export const UVIndexCard = ({ uv, isLoading = false }: UVIndexCardProps) => {
+const UVIndexCard = ({ uv, isLoading = false }: UVIndexCardProps) => {
   if (isLoading) {
     return (
       <div className="w-full h-full flex items-center justify-center">
@@ -64,3 +64,5 @@ export const UVIndexCard = ({ uv, isLoading = false }: UVIndexCardProps) => {
     </div>
   );
 };
+
+export default UVIndexCard;

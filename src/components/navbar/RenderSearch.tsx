@@ -1,6 +1,6 @@
 import { Input } from "../ui/input";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { memo, useEffect, useRef, useState, type RefObject } from "react";
 import { Text } from "../ui/text";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -17,7 +17,7 @@ interface RenderSearchProps {
   skipSearchRef: RefObject<boolean>;
 }
 
-export const RenderSearch = ({
+const RenderSearch = ({
   query,
   setQuery,
   skipSearchRef,
@@ -115,3 +115,5 @@ export const RenderSearch = ({
     </div>
   );
 };
+
+export default memo(RenderSearch);

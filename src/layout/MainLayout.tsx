@@ -2,7 +2,7 @@ import Navbar from "@/components/navbar/Navbar";
 import React from "react";
 import { Toaster } from "sonner";
 
-function MainLayout({ children }: { children: React.ReactNode }) {
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-screen mx-auto max-w-5xl bg-background px-4">
       <Navbar />
@@ -10,6 +10,6 @@ function MainLayout({ children }: { children: React.ReactNode }) {
       <Toaster />
     </div>
   );
-}
+};
 
 export default MainLayout;

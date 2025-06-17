@@ -7,15 +7,15 @@ import {
   DrawerHeader,
   DrawerClose,
 } from "../ui/drawer";
-import { ModeToggle } from "../ModeToggle";
-import { RenderSearch } from "./RenderSearch";
-import { RenderCity } from "./RenderCity";
-import { RenderIcon } from "./RenderIcon";
 import { Menu, XIcon } from "lucide-react";
-import { MarkerDropDown } from "./MarkerDropDown";
-import { TempUnitDropDown } from "./TempUnitDropDown";
-import { FavoriteDropdown } from "./FavoriteDropdown";
 import { useWeatherData } from "@/hooks/useWeatherData";
+import MarkerDropDown from "./MarkerDropDown";
+import FavoriteDropdown from "./FavoriteDropdown";
+import ModeToggle from "../ModeToggle";
+import TempUnitDropDown from "./TempUnitDropDown";
+import RenderCity from "./RenderCity";
+import RenderIcon from "./RenderIcon";
+import RenderSearch from "./RenderSearch";
 
 function Navbar() {
   const { searchWeatherLocations } = useWeatherData();

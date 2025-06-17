@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useAppSelector } from "@/hooks/useRedux";
 import { Skeleton } from "../ui/skeleton";
 import { Text } from "../ui/text";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
-export const RenderCity = () => {
+const RenderCity = () => {
   const { currentWeather, isLoading } = useAppSelector(
     (state) => state.weather
   );
@@ -62,3 +62,5 @@ export const RenderCity = () => {
     </div>
   );
 };
+
+export default memo(RenderCity);

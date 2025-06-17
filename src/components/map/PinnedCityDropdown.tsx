@@ -7,16 +7,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAppSelector } from "@/hooks/useRedux";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { type MapRef } from "@vis.gl/react-maplibre";
 
 type PinnedCityDropdownProps = {
   mapRef: React.RefObject<MapRef | null>;
 };
 
-export default function PinnedCityDropdown({
-  mapRef,
-}: PinnedCityDropdownProps) {
+const PinnedCityDropdown = ({ mapRef }: PinnedCityDropdownProps) => {
   const { pinnedCityNames, citiesByName } = useAppSelector(
     (state) => state.cityPreferences
   );
@@ -83,4 +81,6 @@ export default function PinnedCityDropdown({
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
+
+export default memo(PinnedCityDropdown);
