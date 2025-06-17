@@ -165,6 +165,7 @@ function DateWiseWeatherDisplay() {
           />
           <AppAreaChart
             data={hourlyData}
+            showAllData
             keyOfXAxis="time"
             keyOfYAxis="temp"
             label="Temperature"
@@ -174,6 +175,7 @@ function DateWiseWeatherDisplay() {
           />
           <AppBarChart
             data={hourlyData}
+            showAllData
             keyOfXAxis="time"
             keyOfYAxis="windSpeed"
             label="Wind Speed"
@@ -183,6 +185,7 @@ function DateWiseWeatherDisplay() {
           />
           <AppAreaChart
             data={hourlyData}
+            showAllData
             keyOfXAxis="time"
             keyOfYAxis="humidity"
             label="Humidity"
