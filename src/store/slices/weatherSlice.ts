@@ -6,7 +6,6 @@ import {
 import {
   type SearchLocation,
   type TemperatureUnit,
-  type WeatherAlert,
   type WeatherData,
   type WeatherState,
 } from "@/types/weather";
@@ -19,7 +18,6 @@ const initialState: WeatherState = {
   isSearching: false,
   error: null,
   temperatureUnit: "celsius",
-  alerts: [],
 };
 
 // Async thunks
@@ -63,20 +61,6 @@ export const searchLocations = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(
         error instanceof Error ? error.message : "Failed to search locations"
-      );
-    }
-  }
-);
-
-export const fetchWeatherAlerts = createAsyncThunk(
-  "weather/fetchWeatherAlerts",
-  async (query: string, { rejectWithValue }) => {
-    try {
-      const data = await weatherApi.getAlerts(query);
-      return data;
-    } catch (error) {
-      return rejectWithValue(
-        error instanceof Error ? error.message : "Failed to fetch alerts"
       );
     }
   }
@@ -151,15 +135,7 @@ const weatherSlice = createSlice({
         state.error = action.payload as string;
         state.isSearching = false;
         state.searchResults = [];
-      })
-
-      // Fetch weather alerts
-      .addCase(
-        fetchWeatherAlerts.fulfilled,
-        (state, action: PayloadAction<WeatherAlert[]>) => {
-          state.alerts = action.payload;
-        }
-      );
+      });
   },
 });
 

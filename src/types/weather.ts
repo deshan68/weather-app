@@ -121,22 +121,6 @@ export interface WeatherData {
   forecast: WeatherForecast;
 }
 
-export interface WeatherAlert {
-  headline: string;
-  msgtype: string;
-  severity: string;
-  urgency: string;
-  areas: string;
-  category: string;
-  certainty: string;
-  event: string;
-  note: string;
-  effective: string;
-  expires: string;
-  desc: string;
-  instruction: string;
-}
-
 export interface SearchLocation {
   id: number;
   name: string;
@@ -156,5 +140,4 @@ export interface WeatherState {
   isSearching: boolean;
   error: string | null;
   temperatureUnit: TemperatureUnit;
-  alerts: WeatherAlert[];
 }
