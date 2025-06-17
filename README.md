@@ -4,7 +4,7 @@ A modern, interactive weather reporting application. This app provides real-time
 
 ## 🚀 Live Demo
 
-👉 [Click here to view the app](https://your-vercel-url.vercel.app)
+👉 [Click here to view the app](https://weather-app-one-zeta-35.vercel.app)
 
 ---
 
