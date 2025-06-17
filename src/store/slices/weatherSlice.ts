@@ -67,7 +67,6 @@ const weatherSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch weather forecast
       .addCase(fetchWeatherForecast.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -85,7 +84,6 @@ const weatherSlice = createSlice({
         state.error = action.payload as string;
       })
 
-      // Search locations
       .addCase(searchLocations.pending, (state) => {
         state.isSearching = true;
         state.error = null;
