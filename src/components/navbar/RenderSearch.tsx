@@ -70,6 +70,11 @@ const RenderSearch = ({
         type="text"
         placeholder="Search city..."
         onChange={(e) => setQuery(e.target.value)}
+        onFocus={() => {
+          if (query.length >= 3 && (isSearching || searchResults.length > 0)) {
+            setShowDropdown(true);
+          }
+        }}
         value={query}
         className="w-full"
       />
