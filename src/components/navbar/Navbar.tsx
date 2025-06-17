@@ -7,7 +7,7 @@ import {
   DrawerHeader,
   DrawerClose,
 } from "../ui/drawer";
-import { ModeToggle } from "../mode-toggle";
+import { ModeToggle } from "../ModeToggle";
 import { RenderSearch } from "./RenderSearch";
 import { RenderCity } from "./RenderCity";
 import { RenderIcon } from "./RenderIcon";
