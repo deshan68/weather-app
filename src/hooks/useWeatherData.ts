@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchWeatherForecast } from "@/store/slices/weatherSlice";
+import {
+  fetchWeatherForecast,
+  searchLocations,
+} from "@/store/slices/weatherSlice";
 import type { AppDispatch, RootState } from "@/store/store";
 
 export const useWeatherData = () => {
@@ -17,11 +20,20 @@ export const useWeatherData = () => {
     }
   };
 
+  const searchWeatherLocations = async (searchQuery: string) => {
+    try {
+      await dispatch(searchLocations(searchQuery)).unwrap();
+    } catch (error) {
+      console.error("Failed to search locations:", error);
+    }
+  };
+
   return {
     currentWeather,
     isLoading,
     error,
     temperatureUnit,
     fetchWeatherByCoordinates,
+    searchWeatherLocations,
   };
 };
