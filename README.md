@@ -1,54 +1,43 @@
-# React + TypeScript + Vite
+# 🌤️ Weather App - Clyma
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive weather reporting application. This app provides real-time weather data for Colombo by default and allows users to explore weather information globally with features like search, map pinning, favorites, and visual charts.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+👉 [Click here to view the app](https://your-vercel-url.vercel.app)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ✨ Features
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **🔍 Default Weather View** – Displays current weather in **Colombo**, Sri Lanka.
+- **🌐 Search Cities** – Search for any city worldwide and instantly fetch real-time weather.
+- **📍 Pin Cities on Map** – Pin cities on the global map to track them visually.
+- **❤️ Add to Favorites** – Add cities to your favorites list for quick access.
+- **📊 7-Day Forecast** – View the next 7 days of weather, including:
+  - Wind speed
+  - Humidity
+  - UV index
+  - Temperature
+- **📈 Weather Charts** – Visualize:
+  - Wind Speed Progression (Bar Chart)
+  - Temperature Progression (Area Chart)
+  - Humidity Progression (Area Chart)
+- **🖼️ Real-Time Weather Icons on Map** – Displays live weather condition icons at pinned locations.
+- **🌓 Dark/Light Mode** – Toggle between light and dark themes.
+- **🌡️ Celsius / Fahrenheit Switch** – Easily switch between temperature units.
+- **⚡ Responsive & Minimal UI** – Optimized for usability on both desktop and mobile devices.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🧠 Tech Stack
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- **React** with **TypeScript**
+- **Redux Toolkit** for state management
+- **WeatherAPI.com** – Free weather API
+- **MapLibre GL** (`@vis.gl/react-maplibre`) for interactive maps
+- **Recharts** – Visual data charts (bar, area)
+- **Tailwind CSS** – Fast and responsive styling
+- **Vercel** – Deployment
+
+---
