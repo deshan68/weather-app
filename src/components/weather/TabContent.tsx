@@ -8,7 +8,7 @@ type TodayProps = {
   subCardListType: "today" | "tomorrow" | "sevenDays";
 };
 
-function Today({ subCardListType }: TodayProps) {
+const Today = ({ subCardListType }: TodayProps) => {
   const { currentWeather, isLoading, error, temperatureUnit } = useAppSelector(
     (state) => state.weather
   );
@@ -41,6 +41,6 @@ function Today({ subCardListType }: TodayProps) {
       <WeatherSubCardList type={subCardListType} />
     </div>
   );
-}
+};
 
 export default Today;

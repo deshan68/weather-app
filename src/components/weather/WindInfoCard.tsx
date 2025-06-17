@@ -14,7 +14,7 @@ interface WindInfoCardProps {
 
 const RADIUS = 48;
 const DOT_OFFSET = 10;
-export const WindInfoCard = ({
+const WindInfoCard = ({
   windMph,
   windKph,
   windDegree,
@@ -133,3 +133,5 @@ export const WindInfoCard = ({
     </div>
   );
 };
+
+export default WindInfoCard;

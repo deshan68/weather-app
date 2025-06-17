@@ -8,7 +8,7 @@ import { DEFAULT_COORDINATE } from "@/lib/constants";
 import PinnedCityDropdown from "./PinnedCityDropdown";
 import { usePinnedCityIcons } from "@/hooks/usePinnedCityIcons";
 
-function MapArea() {
+const MapArea = () => {
   const { theme } = useTheme();
   const mapRef = useRef<MapRef>(null);
   const cityIcons = usePinnedCityIcons();
@@ -67,6 +67,6 @@ function MapArea() {
       </Map>
     </div>
   );
-}
+};
 
 export default memo(MapArea);

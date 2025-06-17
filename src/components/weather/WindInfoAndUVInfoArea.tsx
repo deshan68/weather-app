@@ -1,8 +1,8 @@
 import { useAppSelector } from "@/hooks/useRedux";
-import { WindInfoCard } from "./WindInfoCard";
-import { UVIndexCard } from "./UVIndexCard";
+import UVIndexCard from "./UVIndexCard";
+import WindInfoCard from "./WindInfoCard";
 
-function WindInfoAndUVInfoArea() {
+const WindInfoAndUVInfoArea = () => {
   const { currentWeather, isLoading } = useAppSelector(
     (state) => state.weather
   );
@@ -20,6 +20,6 @@ function WindInfoAndUVInfoArea() {
       <UVIndexCard uv={currentWeather?.current.uv} isLoading={isLoading} />
     </div>
   );
-}
+};
 
 export default WindInfoAndUVInfoArea;

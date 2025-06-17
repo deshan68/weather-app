@@ -10,7 +10,7 @@ import type { HourlyWeatherData } from "@/types";
 import WeatherMainCard, { type WeatherDataProps } from "./WeatherMainCard";
 import { Separator } from "../ui/separator";
 
-function DateWiseWeatherDisplay() {
+const DateWiseWeatherDisplay = () => {
   const { currentWeather, temperatureUnit, error } = useAppSelector(
     (state) => state.weather
   );
@@ -195,6 +195,6 @@ function DateWiseWeatherDisplay() {
       )}
     </div>
   );
-}
+};
 
 export default DateWiseWeatherDisplay;

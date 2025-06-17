@@ -13,9 +13,9 @@ import {
 } from "@/store/slices/cityPreferencesSlice";
 import { useWeatherData } from "@/hooks/useWeatherData";
 import { toast } from "sonner";
-import { useState } from "react";
+import { memo, useState } from "react";
 
-export function FavoriteDropdown() {
+const FavoriteDropdown = () => {
   const dispatch = useAppDispatch();
   const { fetchWeatherByCoordinates } = useWeatherData();
   const { currentWeather } = useAppSelector((state) => state.weather);
@@ -124,4 +124,6 @@ export function FavoriteDropdown() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
+
+export default memo(FavoriteDropdown);

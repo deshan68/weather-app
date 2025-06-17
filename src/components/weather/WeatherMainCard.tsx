@@ -51,11 +51,11 @@ export interface WeatherMainCardProps {
   isLoading: boolean;
 }
 
-function WeatherMainCard({
+const WeatherMainCard = ({
   weatherData,
   temperatureUnit,
   isLoading,
-}: WeatherMainCardProps) {
+}: WeatherMainCardProps) => {
   const temp = getTemperature(
     weatherData.temp_c,
     weatherData.temp_f,
@@ -205,6 +205,6 @@ function WeatherMainCard({
       </div>
     </div>
   );
-}
+};
 
 export default WeatherMainCard;

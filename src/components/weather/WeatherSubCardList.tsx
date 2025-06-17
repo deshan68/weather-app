@@ -5,10 +5,10 @@ import { FrownIcon } from "lucide-react";
 import { Icon } from "../ui/icon";
 import { useMemo } from "react";
 
-type WeatherSubCardListProps = {
+interface WeatherSubCardListProps {
   type: "today" | "tomorrow" | "sevenDays";
-};
-function WeatherSubCardList({ type }: WeatherSubCardListProps) {
+}
+const WeatherSubCardList = ({ type }: WeatherSubCardListProps) => {
   const { currentWeather } = useAppSelector((state) => state.weather);
   const forecastDayDate = currentWeather!.forecast.forecastday;
 
@@ -69,6 +69,6 @@ function WeatherSubCardList({ type }: WeatherSubCardListProps) {
         ))}
     </div>
   );
-}
+};
 
 export default WeatherSubCardList;

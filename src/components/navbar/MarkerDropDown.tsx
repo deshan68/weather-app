@@ -11,8 +11,9 @@ import {
   addPinnedCity,
   removePinnedCity,
 } from "@/store/slices/cityPreferencesSlice";
+import { memo } from "react";
 
-export function MarkerDropDown() {
+const MarkerDropDown = () => {
   const dispatch = useAppDispatch();
   const { currentWeather } = useAppSelector((state) => state.weather);
   const { pinnedCityNames, citiesByName } = useAppSelector(
@@ -93,4 +94,6 @@ export function MarkerDropDown() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
+
+export default memo(MarkerDropDown);

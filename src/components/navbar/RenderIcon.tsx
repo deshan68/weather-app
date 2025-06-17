@@ -2,8 +2,9 @@ import { MapPin } from "lucide-react";
 import { useAppSelector } from "@/hooks/useRedux";
 import { Skeleton } from "../ui/skeleton";
 import { Icon } from "../ui/icon";
+import { memo } from "react";
 
-export const RenderIcon = () => {
+const RenderIcon = () => {
   const { isLoading } = useAppSelector((state) => state.weather);
 
   return isLoading ? (
@@ -21,3 +22,5 @@ export const RenderIcon = () => {
     </Icon>
   );
 };
+
+export default memo(RenderIcon);

@@ -1,6 +1,6 @@
 import { Text } from "./ui/text";
 
-function Footer() {
+const Footer = () => {
   return (
     <footer className="w-full py-2">
       <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row justify-between items-start gap-1.5 text-center md:text-left">
@@ -22,6 +22,6 @@ function Footer() {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;

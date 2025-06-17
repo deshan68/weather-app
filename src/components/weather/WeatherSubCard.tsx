@@ -11,7 +11,7 @@ import { Droplets } from "lucide-react";
 import { Icon } from "../ui/icon";
 import { useAppSelector } from "@/hooks/useRedux";
 
-type WeatherSubCardProps = {
+interface WeatherSubCardProps {
   dayOrTime: string;
   type?: "day" | "time";
   icon: string;
@@ -20,9 +20,9 @@ type WeatherSubCardProps = {
   tempc: number;
   humidity: number;
   wind: string;
-};
+}
 
-function WeatherSubCard({
+const WeatherSubCard = ({
   dayOrTime,
   type = "time",
   icon,
@@ -31,7 +31,7 @@ function WeatherSubCard({
   tempf,
   humidity,
   wind,
-}: WeatherSubCardProps) {
+}: WeatherSubCardProps) => {
   const { temperatureUnit } = useAppSelector((state) => state.weather);
   const unit = getTemperatureUnit(temperatureUnit);
   const temp = getTemperature(tempc, tempf, temperatureUnit);
@@ -77,6 +77,6 @@ function WeatherSubCard({
       </div>
     </div>
   );
-}
+};
 
 export default WeatherSubCard;

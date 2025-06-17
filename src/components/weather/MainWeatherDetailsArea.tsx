@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TabContent from "./TabContent";
 import CalendarResultDrawer from "./CalendarResultDrawer";
 
-export function MainWeatherDetailsArea() {
+const MainWeatherDetailsArea = () => {
   return (
     <Tabs defaultValue="today" className="flex max-w-sm flex-col min-w-full">
       <div className="flex items-center gap-x-2">
@@ -25,4 +25,6 @@ export function MainWeatherDetailsArea() {
       </TabsContent>
     </Tabs>
   );
-}
+};
+
+export default MainWeatherDetailsArea;

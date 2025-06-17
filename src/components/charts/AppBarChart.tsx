@@ -19,14 +19,14 @@ interface AppBarChartProps {
   showAllData?: boolean;
 }
 
-function AppBarChart({
+const AppBarChart = ({
   data,
   keyOfXAxis,
   keyOfYAxis,
   label,
   title,
   showAllData = false,
-}: AppBarChartProps) {
+}: AppBarChartProps) => {
   const { isLoading, error } = useAppSelector((state) => state.weather);
 
   const chartConfig = {
@@ -81,6 +81,6 @@ function AppBarChart({
       </ChartContainer>
     </div>
   );
-}
+};
 
 export default AppBarChart;

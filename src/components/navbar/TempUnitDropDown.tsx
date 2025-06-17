@@ -7,8 +7,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { setTemperatureUnit } from "@/store/slices/weatherSlice";
+import { memo } from "react";
 
-export function TempUnitDropDown() {
+const TempUnitDropDown = () => {
   const dispatch = useAppDispatch();
   const { temperatureUnit } = useAppSelector((state) => state.weather);
 
@@ -35,4 +36,6 @@ export function TempUnitDropDown() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
+
+export default memo(TempUnitDropDown);
