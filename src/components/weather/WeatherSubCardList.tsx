@@ -4,12 +4,15 @@ import { Text } from "../ui/text";
 import { FrownIcon } from "lucide-react";
 import { Icon } from "../ui/icon";
 import { useMemo } from "react";
+import { getSpeed } from "@/utils/weatherHelpers";
 
 interface WeatherSubCardListProps {
   type: "today" | "tomorrow" | "sevenDays";
 }
 const WeatherSubCardList = ({ type }: WeatherSubCardListProps) => {
-  const { currentWeather } = useAppSelector((state) => state.weather);
+  const { currentWeather, temperatureUnit } = useAppSelector(
+    (state) => state.weather
+  );
   const forecastDayDate = currentWeather!.forecast.forecastday;
 
   const forecastData = forecastDayDate[type === "today" ? 0 : 1].hour;
@@ -23,7 +26,11 @@ const WeatherSubCardList = ({ type }: WeatherSubCardListProps) => {
         tempc: day.day.avgtemp_c,
         tempf: day.day.avgtemp_f,
         humidity: day.day.avghumidity,
-        wind: `${day.day.maxwind_kph} km/h`,
+        wind: getSpeed(
+          day.day.maxwind_kph,
+          day.day.maxwind_mph,
+          temperatureUnit
+        ),
       }));
 
     const now = new Date();
@@ -37,9 +44,9 @@ const WeatherSubCardList = ({ type }: WeatherSubCardListProps) => {
       tempc: hour.temp_c,
       tempf: hour.temp_f,
       humidity: hour.humidity,
-      wind: `${hour.wind_kph} km/h`,
+      wind: getSpeed(hour.wind_kph, hour.wind_mph, temperatureUnit),
     }));
-  }, [forecastData, forecastDayDate, type]);
+  }, [type, forecastDayDate, forecastData, temperatureUnit]);
 
   return (
     <div className="flex w-full gap-x-2 overflow-x-scroll">
