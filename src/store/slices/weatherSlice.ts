@@ -20,21 +20,6 @@ const initialState: WeatherState = {
   temperatureUnit: "celsius",
 };
 
-// Async thunks
-export const fetchCurrentWeather = createAsyncThunk(
-  "weather/fetchCurrentWeather",
-  async (query: string, { rejectWithValue }) => {
-    try {
-      const data = await weatherApi.getCurrentWeather(query);
-      return data;
-    } catch (error) {
-      return rejectWithValue(
-        error instanceof Error ? error.message : "Failed to fetch weather data"
-      );
-    }
-  }
-);
-
 export const fetchWeatherForecast = createAsyncThunk(
   "weather/fetchWeatherForecast",
   async (
@@ -82,24 +67,6 @@ const weatherSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch current weather
-      .addCase(fetchCurrentWeather.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(
-        fetchCurrentWeather.fulfilled,
-        (state, action: PayloadAction<WeatherData>) => {
-          state.isLoading = false;
-          state.currentWeather = action.payload;
-          state.error = null;
-        }
-      )
-      .addCase(fetchCurrentWeather.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-      })
-
       // Fetch weather forecast
       .addCase(fetchWeatherForecast.pending, (state) => {
         state.isLoading = true;

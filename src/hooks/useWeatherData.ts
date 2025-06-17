@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { weatherApi } from "../services/weatherApi";
 import { fetchWeatherForecast } from "@/store/slices/weatherSlice";
 import type { AppDispatch, RootState } from "@/store/store";
 
@@ -9,26 +8,12 @@ export const useWeatherData = () => {
     (state: RootState) => state.weather
   );
 
-  const fetchWeatherByLocation = async (query: string, days?: number) => {
-    try {
-      await dispatch(fetchWeatherForecast({ query, days })).unwrap();
-    } catch (error) {
-      console.error("Failed to fetch weather data:", error);
-    }
-  };
-
   const fetchWeatherByCoordinates = async (lat: number, lon: number) => {
     const query = `${lat},${lon}`;
-    await fetchWeatherByLocation(query);
-  };
-
-  const fetchCurrentLocationWeather = async () => {
     try {
-      const position = await weatherApi.getCurrentPosition();
-      await fetchWeatherByCoordinates(position.latitude, position.longitude);
+      await dispatch(fetchWeatherForecast({ query })).unwrap();
     } catch (error) {
-      console.error("Failed to get current location weather:", error);
-      await fetchWeatherByLocation("Colombo");
+      console.error("Failed to fetch weather data:", error);
     }
   };
 
@@ -37,8 +22,6 @@ export const useWeatherData = () => {
     isLoading,
     error,
     temperatureUnit,
-    fetchWeatherByLocation,
     fetchWeatherByCoordinates,
-    fetchCurrentLocationWeather,
   };
 };
