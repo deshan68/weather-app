@@ -1,9 +1,4 @@
 import { useEffect, useState, useCallback, useRef } from "react";
-import { useAppDispatch } from "@/hooks/useRedux";
-import {
-  clearSearchResults,
-  searchLocations,
-} from "@/store/slices/weatherSlice";
 import { Button } from "../ui/button";
 import {
   Drawer,
@@ -12,7 +7,7 @@ import {
   DrawerHeader,
   DrawerClose,
 } from "../ui/drawer";
-import { ModeToggle } from "../mode-toggle";
+import { ModeToggle } from "../ModeToggle";
 import { RenderSearch } from "./RenderSearch";
 import { RenderCity } from "./RenderCity";
 import { RenderIcon } from "./RenderIcon";
@@ -20,28 +15,23 @@ import { Menu, XIcon } from "lucide-react";
 import { MarkerDropDown } from "./MarkerDropDown";
 import { TempUnitDropDown } from "./TempUnitDropDown";
 import { FavoriteDropdown } from "./FavoriteDropdown";
+import { useWeatherData } from "@/hooks/useWeatherData";
 
 function Navbar() {
-  const dispatch = useAppDispatch();
+  const { searchWeatherLocations } = useWeatherData();
+
   const [query, setQuery] = useState<string>("");
   const [openDrawer, setIsOpenDrawer] = useState<boolean>(false);
   const skipSearchRef = useRef(false);
 
-  const handleSearch = useCallback(
-    async (searchQuery: string) => {
-      if (searchQuery.length < 3) {
-        dispatch(clearSearchResults());
-        return;
-      }
-
-      try {
-        await dispatch(searchLocations(searchQuery)).unwrap();
-      } catch (error) {
-        console.error("Search failed:", error);
-      }
-    },
-    [dispatch]
-  );
+  const handleSearch = useCallback(async (searchQuery: string) => {
+    try {
+      await searchWeatherLocations(searchQuery);
+    } catch (error) {
+      console.error("Search failed:", error);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOpenDrawer = (open: boolean) => {
     setIsOpenDrawer(open);

@@ -1,5 +1,5 @@
 import { Map, Marker, type MapRef } from "@vis.gl/react-maplibre";
-import { memo, useEffect, useRef } from "react";
+import { memo, useRef } from "react";
 import { useTheme } from "../../providers/ThemeProvider";
 import { useAppSelector } from "@/hooks/useRedux";
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -16,26 +16,11 @@ function MapArea() {
   const { citiesByName, pinnedCityNames } = useAppSelector(
     (state) => state.cityPreferences
   );
-  const { currentWeather } = useAppSelector((state) => state.weather);
 
   const mapStyle =
     theme === "dark"
       ? "/styles/dark.json"
       : "https://tiles.openfreemap.org/styles/liberty";
-
-  useEffect(() => {
-    if (currentWeather) {
-      flyTo(currentWeather.location.lat, currentWeather.location.lon);
-    }
-  }, [currentWeather]);
-
-  const flyTo = (lat: number, lon: number) => {
-    mapRef.current?.flyTo({
-      center: [lon, lat],
-      zoom: 10,
-      duration: 2000,
-    });
-  };
 
   return (
     <div className="flex flex-col gap-1 h-full w-full mt-2 md:mt-0">

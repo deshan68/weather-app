@@ -7,10 +7,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAppSelector } from "@/hooks/useRedux";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { type MapRef } from "@vis.gl/react-maplibre";
-import { useWeatherData } from "@/hooks/useWeatherData";
-import { toast } from "sonner";
 
 type PinnedCityDropdownProps = {
   mapRef: React.RefObject<MapRef | null>;
@@ -19,54 +17,34 @@ type PinnedCityDropdownProps = {
 export default function PinnedCityDropdown({
   mapRef,
 }: PinnedCityDropdownProps) {
-  const { fetchWeatherByCoordinates } = useWeatherData();
-
-  const { currentWeather } = useAppSelector((state) => state.weather);
   const { pinnedCityNames, citiesByName } = useAppSelector(
     (state) => state.cityPreferences
   );
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    if (pinnedCityNames.length > 0) {
+    if (pinnedCityNames.length > 0 && !selectedCity) {
       const firstName = pinnedCityNames[0];
       const firstCity = citiesByName[firstName];
       if (firstCity) {
+        setSelectedCity(firstCity.name);
         mapRef?.current?.flyTo({
           center: [firstCity.lon, firstCity.lat],
           zoom: 10,
-          duration: 1500,
+          duration: 1000,
         });
       }
     }
-  }, [pinnedCityNames, citiesByName, mapRef]);
+  }, [pinnedCityNames, citiesByName, selectedCity, mapRef]);
 
   const handleFlyTo = (name: string, lat: number, lon: number) => {
-    const isSameCity =
-      currentWeather?.location.lat === lat &&
-      currentWeather?.location.lon === lon;
-
-    if (isSameCity) {
-      toast("Already viewing", {
-        description: `You're already seeing weather for ${name}`,
-        duration: 4000,
-        position: "bottom-center",
-      });
-      return;
-    }
-
-    fetchWeatherByCoordinates(lat, lon);
+    setSelectedCity(name);
 
     mapRef?.current?.flyTo({
       center: [lon, lat],
       zoom: 10,
       duration: 1500,
-    });
-
-    toast.success("Switched city", {
-      description: `Now showing weather for ${name}`,
-      duration: 4000,
-      position: "bottom-center",
     });
 
     dropdownRef.current?.click();
@@ -95,10 +73,7 @@ export default function PinnedCityDropdown({
           return (
             <DropdownMenuCheckboxItem
               key={name}
-              checked={
-                currentWeather?.location?.lat === city.lat &&
-                currentWeather?.location?.lon === city.lon
-              }
+              checked={selectedCity === name}
               onCheckedChange={() => handleFlyTo(name, city.lat, city.lon)}
             >
               {name}

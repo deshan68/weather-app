@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { weatherApi } from "../services/weatherApi";
-import { fetchWeatherForecast } from "@/store/slices/weatherSlice";
+import {
+  fetchWeatherForecast,
+  searchLocations,
+} from "@/store/slices/weatherSlice";
 import type { AppDispatch, RootState } from "@/store/store";
 
 export const useWeatherData = () => {
@@ -9,26 +11,20 @@ export const useWeatherData = () => {
     (state: RootState) => state.weather
   );
 
-  const fetchWeatherByLocation = async (query: string, days?: number) => {
+  const fetchWeatherByCoordinates = async (lat: number, lon: number) => {
+    const query = `${lat},${lon}`;
     try {
-      await dispatch(fetchWeatherForecast({ query, days })).unwrap();
+      await dispatch(fetchWeatherForecast({ query })).unwrap();
     } catch (error) {
       console.error("Failed to fetch weather data:", error);
     }
   };
 
-  const fetchWeatherByCoordinates = async (lat: number, lon: number) => {
-    const query = `${lat},${lon}`;
-    await fetchWeatherByLocation(query);
-  };
-
-  const fetchCurrentLocationWeather = async () => {
+  const searchWeatherLocations = async (searchQuery: string) => {
     try {
-      const position = await weatherApi.getCurrentPosition();
-      await fetchWeatherByCoordinates(position.latitude, position.longitude);
+      await dispatch(searchLocations(searchQuery)).unwrap();
     } catch (error) {
-      console.error("Failed to get current location weather:", error);
-      await fetchWeatherByLocation("Colombo");
+      console.error("Failed to search locations:", error);
     }
   };
 
@@ -37,8 +33,7 @@ export const useWeatherData = () => {
     isLoading,
     error,
     temperatureUnit,
-    fetchWeatherByLocation,
     fetchWeatherByCoordinates,
-    fetchCurrentLocationWeather,
+    searchWeatherLocations,
   };
 };

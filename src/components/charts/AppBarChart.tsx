@@ -16,6 +16,7 @@ interface AppBarChartProps {
   keyOfYAxis: string;
   label: string;
   title: string;
+  showAllData?: boolean;
 }
 
 function AppBarChart({
@@ -24,11 +25,12 @@ function AppBarChart({
   keyOfYAxis,
   label,
   title,
+  showAllData = false,
 }: AppBarChartProps) {
   const { isLoading, error } = useAppSelector((state) => state.weather);
 
   const chartConfig = {
-    chancePercentage: {
+    [keyOfYAxis]: {
       label,
     },
   } satisfies ChartConfig;
@@ -55,7 +57,10 @@ function AppBarChart({
         config={chartConfig}
         className="h-56 w-full md:h-full md:w-full bg-accent rounded-2xl p-2"
       >
-        <BarChart accessibilityLayer data={data.slice(0, 12)}>
+        <BarChart
+          accessibilityLayer
+          data={data.slice(0, showAllData ? undefined : 12)}
+        >
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey={keyOfXAxis}
@@ -64,10 +69,7 @@ function AppBarChart({
             axisLine={false}
             fontSize={9}
           />
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent hideLabel />}
-          />
+          <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
           <Bar
             dataKey={keyOfYAxis}
             fill="var(--chart-1)"

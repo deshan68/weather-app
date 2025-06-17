@@ -1,9 +1,11 @@
 import {
   getDayName,
+  getPressure,
   getSpeed,
   getTemperature,
   getTemperatureUnit,
   getUVIndexLevel,
+  getVisibility,
   getWeatherIconUrl,
 } from "@/utils/weatherHelpers";
 import { Text } from "../ui/text";
@@ -174,9 +176,11 @@ function WeatherMainCard({
                 weight={"light"}
                 className="text-muted-foreground"
               >
-                {temperatureUnit === "celsius"
-                  ? `${weatherData.pressure_mb} mb`
-                  : `${weatherData.pressure_in} in`}
+                {getPressure(
+                  weatherData.pressure_mb,
+                  weatherData.pressure_in,
+                  temperatureUnit
+                )}
               </Text>
             </div>
           )}
@@ -190,9 +194,11 @@ function WeatherMainCard({
               weight={"light"}
               className="text-muted-foreground"
             >
-              {temperatureUnit === "celsius"
-                ? `${weatherData.vis_km} km`
-                : `${weatherData.vis_miles} mi`}
+              {getVisibility(
+                weatherData.vis_km,
+                weatherData.vis_miles,
+                temperatureUnit
+              )}
             </Text>
           </div>
         </div>

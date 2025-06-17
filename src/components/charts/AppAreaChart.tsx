@@ -16,6 +16,7 @@ interface AppAreaChartProps {
   keyOfYAxis: string;
   label: string;
   title: string;
+  showAllData?: boolean;
 }
 
 function AppAreaChart({
@@ -24,11 +25,12 @@ function AppAreaChart({
   keyOfYAxis,
   label,
   title,
+  showAllData = false,
 }: AppAreaChartProps) {
   const { isLoading, error } = useAppSelector((state) => state.weather);
 
   const chartConfig = {
-    chancePercentage: {
+    [keyOfYAxis]: {
       label,
     },
   } satisfies ChartConfig;
@@ -55,7 +57,10 @@ function AppAreaChart({
         config={chartConfig}
         className="h-56 w-full md:h-full md:w-full bg-accent rounded-2xl p-2"
       >
-        <AreaChart accessibilityLayer data={data.slice(0, 12)}>
+        <AreaChart
+          accessibilityLayer
+          data={data.slice(0, showAllData ? undefined : 12)}
+        >
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey={keyOfXAxis}

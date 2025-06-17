@@ -6,7 +6,6 @@ import {
 import {
   type SearchLocation,
   type TemperatureUnit,
-  type WeatherAlert,
   type WeatherData,
   type WeatherState,
 } from "@/types/weather";
@@ -19,23 +18,7 @@ const initialState: WeatherState = {
   isSearching: false,
   error: null,
   temperatureUnit: "celsius",
-  alerts: [],
 };
-
-// Async thunks
-export const fetchCurrentWeather = createAsyncThunk(
-  "weather/fetchCurrentWeather",
-  async (query: string, { rejectWithValue }) => {
-    try {
-      const data = await weatherApi.getCurrentWeather(query);
-      return data;
-    } catch (error) {
-      return rejectWithValue(
-        error instanceof Error ? error.message : "Failed to fetch weather data"
-      );
-    }
-  }
-);
 
 export const fetchWeatherForecast = createAsyncThunk(
   "weather/fetchWeatherForecast",
@@ -68,20 +51,6 @@ export const searchLocations = createAsyncThunk(
   }
 );
 
-export const fetchWeatherAlerts = createAsyncThunk(
-  "weather/fetchWeatherAlerts",
-  async (query: string, { rejectWithValue }) => {
-    try {
-      const data = await weatherApi.getAlerts(query);
-      return data;
-    } catch (error) {
-      return rejectWithValue(
-        error instanceof Error ? error.message : "Failed to fetch alerts"
-      );
-    }
-  }
-);
-
 const weatherSlice = createSlice({
   name: "weather",
   initialState,
@@ -98,24 +67,6 @@ const weatherSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch current weather
-      .addCase(fetchCurrentWeather.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(
-        fetchCurrentWeather.fulfilled,
-        (state, action: PayloadAction<WeatherData>) => {
-          state.isLoading = false;
-          state.currentWeather = action.payload;
-          state.error = null;
-        }
-      )
-      .addCase(fetchCurrentWeather.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-      })
-
       // Fetch weather forecast
       .addCase(fetchWeatherForecast.pending, (state) => {
         state.isLoading = true;
@@ -151,15 +102,7 @@ const weatherSlice = createSlice({
         state.error = action.payload as string;
         state.isSearching = false;
         state.searchResults = [];
-      })
-
-      // Fetch weather alerts
-      .addCase(
-        fetchWeatherAlerts.fulfilled,
-        (state, action: PayloadAction<WeatherAlert[]>) => {
-          state.alerts = action.payload;
-        }
-      );
+      });
   },
 });
 
