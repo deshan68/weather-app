@@ -1,8 +1,4 @@
-import type {
-  SearchLocation,
-  WeatherAlert,
-  WeatherData,
-} from "@/types/weather";
+import type { SearchLocation, WeatherData } from "@/types/weather";
 
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 const BASE_URL = import.meta.env.VITE_WEATHER_API_URL;
@@ -14,7 +10,6 @@ class WeatherApi {
   ): Promise<T> {
     const url = new URL(`${BASE_URL}${endpoint}`);
 
-    // Add API key and other parameters
     url.searchParams.append("key", API_KEY);
     Object.entries(params).forEach(([key, value]) => {
       url.searchParams.append(key, value);
@@ -49,21 +44,6 @@ class WeatherApi {
   async searchLocations(query: string): Promise<SearchLocation[]> {
     if (query.length < 3) return [];
     return this.makeRequest<SearchLocation[]>("/search.json", { q: query });
-  }
-
-  async getAlerts(query: string): Promise<WeatherAlert[]> {
-    try {
-      const data = await this.makeRequest<{
-        alerts: { alert: WeatherAlert[] };
-      }>("/current.json", {
-        q: query,
-        alerts: "yes",
-      });
-      return data.alerts?.alert || [];
-    } catch (error) {
-      console.error("Failed to fetch alerts:", error);
-      return [];
-    }
   }
 
   async getCurrentPosition(): Promise<{ latitude: number; longitude: number }> {
