@@ -20,7 +20,7 @@ const HorizontalDatePicker = ({
     [today]
   );
   return (
-    <div className="flex gap-2 pt-4 pb-2 justify-between px-2">
+    <div className="flex gap-2 pb-2 justify-between px-2">
       {dates.map((date) => {
         const isSelected =
           format(date, "yyyy-MM-dd") === format(selectedDate, "yyyy-MM-dd");

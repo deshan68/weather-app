@@ -3,6 +3,7 @@ import type {
   TemperatureUnit,
   WeatherData,
 } from "@/types/weather";
+import { format } from "date-fns";
 
 export const getTemperature = (
   tempC: number,
@@ -88,7 +89,7 @@ export class Predictions {
     if (!this.currentWeather) return null;
 
     const forecastDays = this.currentWeather.forecast.forecastday;
-    const formattedDate = date.toISOString().split("T")[0];
+    const formattedDate = format(date, "yyyy-MM-dd");
 
     const dayData = forecastDays.find((day) => day.date === formattedDate)?.day;
 
@@ -108,7 +109,7 @@ export class Predictions {
     if (!this.currentWeather) return null;
 
     const forecastDays = this.currentWeather.forecast.forecastday;
-    const formattedDate = date.toISOString().split("T")[0];
+    const formattedDate = format(date, "yyyy-MM-dd");
 
     const dayData = forecastDays.find((day) => day.date === formattedDate);
 

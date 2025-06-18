@@ -16,6 +16,7 @@ const DateWiseWeatherDisplay = () => {
   );
 
   const today = useMemo(() => new Date(), []);
+
   const predictions = useMemo(
     () => new Predictions(currentWeather),
     [currentWeather]
@@ -91,7 +92,7 @@ const DateWiseWeatherDisplay = () => {
   }, [handleDateChange, today]);
 
   return (
-    <div className="flex flex-col overflow-y-auto p-2">
+    <div className="flex flex-col overflow-y-auto px-2 pb-2">
       <HorizontalDatePicker
         selectedDate={selectedDate}
         onDateChange={handleDateChange}
