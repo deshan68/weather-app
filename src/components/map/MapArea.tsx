@@ -1,9 +1,10 @@
 import { Map, Marker, type MapRef } from "@vis.gl/react-maplibre";
-import { memo, useRef } from "react";
+import { memo, useRef, useState } from "react";
 import { useTheme } from "../../providers/ThemeProvider";
 import { useAppSelector } from "@/hooks/useRedux";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { Text } from "../ui/text";
+import { Skeleton } from "../ui/skeleton";
 import { DEFAULT_COORDINATE } from "@/lib/constants";
 import PinnedCityDropdown from "./PinnedCityDropdown";
 import { usePinnedCityIcons } from "@/hooks/usePinnedCityIcons";
@@ -11,6 +12,7 @@ import { usePinnedCityIcons } from "@/hooks/usePinnedCityIcons";
 const MapArea = () => {
   const { theme } = useTheme();
   const mapRef = useRef<MapRef>(null);
+  const [isMapLoading, setIsMapLoading] = useState(true);
   const cityIcons = usePinnedCityIcons();
 
   const { citiesByName, pinnedCityNames } = useAppSelector(
@@ -30,41 +32,53 @@ const MapArea = () => {
         </Text>
       </div>
 
-      <Map
-        ref={mapRef}
-        initialViewState={{
-          latitude: DEFAULT_COORDINATE[0],
-          longitude: DEFAULT_COORDINATE[1],
-          zoom: 10,
-        }}
-        mapStyle={mapStyle}
-        style={{ width: "100%", height: "50vh", borderRadius: "1.5rem" }}
-        attributionControl={false}
-      >
-        {pinnedCityNames.map((name) => {
-          const city = citiesByName[name];
-          const icon = cityIcons[name];
+      {isMapLoading && (
+        <Skeleton className="w-full h-[50vh] rounded-2xl bg-muted" />
+      )}
 
-          if (!city || !icon) return null;
+      <div className={isMapLoading ? "hidden" : "block"}>
+        <Map
+          ref={mapRef}
+          initialViewState={{
+            latitude: DEFAULT_COORDINATE[0],
+            longitude: DEFAULT_COORDINATE[1],
+            zoom: 10,
+          }}
+          mapStyle={mapStyle}
+          style={{
+            width: "100%",
+            height: "50vh",
+            borderRadius: "1.5rem",
+            backgroundColor: "var(--background)",
+          }}
+          attributionControl={false}
+          onLoad={() => setIsMapLoading(false)}
+        >
+          {pinnedCityNames.map((name) => {
+            const city = citiesByName[name];
+            const icon = cityIcons[name];
 
-          return (
-            <Marker
-              key={name}
-              latitude={city.lat}
-              longitude={city.lon}
-              anchor="top"
-            >
-              <div className="flex p-1 items-center justify-center bg-background rounded-full border border-sidebar-ring cursor-pointer">
-                <img src={icon} alt={city.name} className="w-5 h-5" />
-              </div>
-            </Marker>
-          );
-        })}
+            if (!city || !icon) return null;
 
-        <div className="absolute top-2 left-2 z-10">
-          <PinnedCityDropdown mapRef={mapRef} />
-        </div>
-      </Map>
+            return (
+              <Marker
+                key={name}
+                latitude={city.lat}
+                longitude={city.lon}
+                anchor="top"
+              >
+                <div className="flex p-1 items-center justify-center bg-background rounded-full border border-sidebar-ring cursor-pointer">
+                  <img src={icon} alt={city.name} className="w-5 h-5" />
+                </div>
+              </Marker>
+            );
+          })}
+
+          <div className="absolute top-2 left-2 z-10">
+            <PinnedCityDropdown mapRef={mapRef} />
+          </div>
+        </Map>
+      </div>
     </div>
   );
 };
