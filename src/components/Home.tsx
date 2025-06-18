@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { useWeatherData } from "@/hooks/useWeatherData";
 import MapArea from "./map/MapArea";
 import { DEFAULT_COORDINATE } from "@/lib/constants";
-import TemperatureAndUVArea from "./favorite/FavoriteItemsArea";
+import TemperatureAndUVArea from "./weather/TemperatureAndUVArea";
 import Footer from "./Footer";
 import WindInfoAndUVInfoArea from "./weather/WindInfoAndUVInfoArea";
 import MainWeatherDetailsArea from "./weather/MainWeatherDetailsArea";
 
-const WeatherDashboard = () => {
+const Home = () => {
   const { fetchWeatherByCoordinates } = useWeatherData();
   useEffect(() => {
     fetchWeatherByCoordinates(DEFAULT_COORDINATE[0], DEFAULT_COORDINATE[1]);
@@ -39,4 +39,4 @@ const WeatherDashboard = () => {
   );
 };
 
-export default WeatherDashboard;
+export default Home;

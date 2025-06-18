@@ -36,7 +36,7 @@ const AppBarChart = ({
   } satisfies ChartConfig;
 
   if (isLoading) {
-    return <Skeleton className="h-52 w-full rounded-3xl" />;
+    return <Skeleton className="md:h-full h-52 w-full rounded-3xl" />;
   }
 
   if (data.length === 0)

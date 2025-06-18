@@ -1,4 +1,3 @@
-import type { HourlyPrediction } from "@/types";
 import type {
   ForecastDay,
   TemperatureUnit,
@@ -78,31 +77,107 @@ export const getDayName = (dateString: string): string => {
   return date.toLocaleDateString("en-US", { weekday: "long" });
 };
 
-export function getUpcomingHourlyPredictions<
-  K extends keyof ForecastDay["hour"][0]
->(currentWeather: WeatherData | null, variable: K): Array<HourlyPrediction<K>> {
-  const currentEpoch = Math.floor(Date.now() / 1000);
-  if (!currentWeather || !currentWeather.forecast) return [];
-  const todayForecast = currentWeather.forecast.forecastday[0].hour;
+export class Predictions {
+  private currentWeather: WeatherData | null;
 
-  const todayHours = todayForecast
-    .filter((hour) => hour.time_epoch >= currentEpoch)
-    .map((hour) => ({
-      time: `${hour.time.split(" ")[1].slice(0, 2)}AM`,
-      [variable]: hour[variable],
-    })) as HourlyPrediction<K>[];
+  constructor(currentWeather: WeatherData | null) {
+    this.currentWeather = currentWeather;
+  }
 
-  if (todayHours.length >= 8) return todayHours;
+  private getWeatherForDay(date: Date): ForecastDay["day"] | null {
+    if (!this.currentWeather) return null;
 
-  const tomorrowForecast = currentWeather.forecast.forecastday[1].hour;
-  const remainingHours = 8 - todayHours.length;
+    const forecastDays = this.currentWeather.forecast.forecastday;
+    const formattedDate = date.toISOString().split("T")[0];
 
-  const tomorrowHours = tomorrowForecast
-    .slice(0, remainingHours)
-    .map((hour) => ({
-      time: `${hour.time.split(" ")[1].slice(0, 2)}AM`,
-      [variable]: hour[variable],
-    })) as HourlyPrediction<K>[];
+    const dayData = forecastDays.find((day) => day.date === formattedDate)?.day;
 
-  return [...todayHours, ...tomorrowHours];
+    return dayData ?? null;
+  }
+
+  private getWeatherForNextDays(numberOfDays: number): ForecastDay[] | null {
+    if (!this.currentWeather) return null;
+
+    return this.currentWeather.forecast.forecastday.slice(1, numberOfDays + 1);
+  }
+
+  private getWeatherForAllHours(
+    date: Date = new Date(),
+    numberOfHours: number
+  ): ForecastDay["hour"] | null {
+    if (!this.currentWeather) return null;
+
+    const forecastDays = this.currentWeather.forecast.forecastday;
+    const formattedDate = date.toISOString().split("T")[0];
+
+    const dayData = forecastDays.find((day) => day.date === formattedDate);
+
+    return dayData?.hour.slice(0, numberOfHours) ?? null;
+  }
+
+  private getWeatherForNextHours(
+    numberOfHours: number,
+    stopAtToday: boolean
+  ): ForecastDay["hour"] | null {
+    if (!this.currentWeather) return null;
+    const currentEpoch = Math.floor(Date.now() / 1000);
+    const todayForecast = this.currentWeather.forecast.forecastday[0].hour;
+
+    const todayHours = todayForecast
+      .filter((hour) => hour.time_epoch >= currentEpoch)
+      .slice(0, numberOfHours);
+
+    if (stopAtToday) return todayHours;
+    if (todayHours.length >= numberOfHours) return todayHours;
+
+    const tomorrowForecast = this.currentWeather.forecast.forecastday[1].hour;
+    const remainingHours = numberOfHours - todayHours.length;
+
+    const tomorrowHours = tomorrowForecast.slice(0, remainingHours);
+
+    return [...todayHours, ...tomorrowHours];
+  }
+
+  getWeather() {
+    return {
+      forDays: () => {
+        return {
+          tomorrow: (numberOfHours: number = 7) => {
+            return this.getWeatherForNextDays(numberOfHours);
+          },
+          nextDays: (numberOfDays: number = 7) => {
+            return this.getWeatherForNextDays(numberOfDays);
+          },
+          day: (date: Date) => {
+            return this.getWeatherForDay(date);
+          },
+        };
+      },
+      forHours: () => {
+        return {
+          today: (numberOfHours: number = 24) => {
+            return this.getWeatherForAllHours(new Date(), numberOfHours);
+          },
+          tomorrow: (numberOfHours: number = 24) => {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            return this.getWeatherForAllHours(tomorrow, numberOfHours);
+          },
+          day: (date: Date, numberOfHours: number = 24) => {
+            return this.getWeatherForAllHours(date, numberOfHours);
+          },
+          nextHours: (numberOfHours: number = 8) => {
+            return {
+              stopAt: (from: "today" | "tomorrow") => {
+                if (from === "today") {
+                  return this.getWeatherForNextHours(numberOfHours, true);
+                }
+                return this.getWeatherForNextHours(numberOfHours, false);
+              },
+            };
+          },
+        };
+      },
+    };
+  }
 }

@@ -3,6 +3,7 @@ import WeatherMainCard from "./WeatherMainCard";
 import WeatherSubCardList from "./WeatherSubCardList";
 import { Text } from "@/components/ui/text";
 import { Skeleton } from "../ui/skeleton";
+import { format } from "date-fns";
 
 type TodayProps = {
   subCardListType: "today" | "tomorrow" | "sevenDays";
@@ -32,7 +33,8 @@ const Today = ({ subCardListType }: TodayProps) => {
         <WeatherMainCard
           weatherData={{
             ...currentWeather.current,
-            localtime: currentWeather.location.localtime,
+            localEEEE: format(currentWeather.location.localtime, "EEEE"),
+            localtime: format(currentWeather.location.localtime, "hh:mm a"),
           }}
           temperatureUnit={temperatureUnit}
           isLoading={isLoading}

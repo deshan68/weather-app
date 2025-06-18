@@ -1,9 +1,9 @@
 import { Provider } from "react-redux";
 import { persistor, store } from "@/store/store";
 import MainLayout from "./layout/MainLayout";
-import WeatherDashboard from "./components/Home";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import { PersistGate } from "redux-persist/integration/react";
+import Home from "./components/Home";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider>
           <MainLayout>
-            <WeatherDashboard />
+            <Home />
           </MainLayout>
         </ThemeProvider>
       </PersistGate>
