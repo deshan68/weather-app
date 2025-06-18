@@ -66,7 +66,7 @@ const WeatherSubCardList = ({ type }: WeatherSubCardListProps) => {
     }
 
     const forecastNextHour =
-      predictions.getWeather().forHours().nextHours(7) || [];
+      predictions.getWeather().forHours().nextHours(7).stopAt("today") || [];
     return forecastNextHour.map((hour) => ({
       time: formatHour(hour.time),
       icon: hour.condition.icon,

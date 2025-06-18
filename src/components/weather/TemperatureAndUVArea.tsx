@@ -9,7 +9,11 @@ const TemperatureAndUVArea = () => {
   );
 
   const predictions = new Predictions(currentWeather);
-  const upcomingHours = predictions.getWeather().forHours().nextHours(8);
+  const upcomingHours = predictions
+    .getWeather()
+    .forHours()
+    .nextHours(8)
+    .stopAt("tomorrow");
 
   const chartData =
     upcomingHours?.map((hour) => ({
