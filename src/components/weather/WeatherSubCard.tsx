@@ -11,7 +11,7 @@ import { Droplets } from "lucide-react";
 import { Icon } from "../ui/icon";
 import { useAppSelector } from "@/hooks/useRedux";
 
-interface WeatherSubCardProps {
+export interface WeatherSubCardProps {
   dayOrTime: string;
   type?: "day" | "time";
   icon: string;
