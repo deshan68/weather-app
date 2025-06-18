@@ -116,7 +116,8 @@ export class Predictions {
   }
 
   private getWeatherForNextHours(
-    numberOfHours: number
+    numberOfHours: number,
+    stopAtToday: boolean
   ): ForecastDay["hour"] | null {
     if (!this.currentWeather) return null;
     const currentEpoch = Math.floor(Date.now() / 1000);
@@ -126,6 +127,7 @@ export class Predictions {
       .filter((hour) => hour.time_epoch >= currentEpoch)
       .slice(0, numberOfHours);
 
+    if (stopAtToday) return todayHours;
     if (todayHours.length >= numberOfHours) return todayHours;
 
     const tomorrowForecast = this.currentWeather.forecast.forecastday[1].hour;
@@ -165,7 +167,14 @@ export class Predictions {
             return this.getWeatherForAllHours(date, numberOfHours);
           },
           nextHours: (numberOfHours: number = 8) => {
-            return this.getWeatherForNextHours(numberOfHours);
+            return {
+              stopAt: (from: "today" | "tomorrow") => {
+                if (from === "today") {
+                  return this.getWeatherForNextHours(numberOfHours, true);
+                }
+                return this.getWeatherForNextHours(numberOfHours, false);
+              },
+            };
           },
         };
       },
