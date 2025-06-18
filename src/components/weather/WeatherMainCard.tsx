@@ -1,5 +1,4 @@
 import {
-  getDayName,
   getPressure,
   getSpeed,
   getTemperature,
@@ -28,7 +27,8 @@ export interface WeatherCondition {
 }
 
 export interface WeatherDataProps {
-  localtime: string;
+  localEEEE: string;
+  localtime?: string;
   temp_c: number;
   temp_f: number;
   feelslike_c: number;
@@ -78,14 +78,11 @@ const WeatherMainCard = ({
       {/* day name and time */}
       <div className="flex justify-between w-full">
         <Text size={"sm"} weight={"normal"}>
-          {getDayName(weatherData.localtime.split(" ")[0])}
+          {weatherData.localEEEE}
         </Text>
-        {weatherData.pressure_in && weatherData.pressure_mb && (
+        {weatherData.localtime && (
           <Text size={"sm"} weight={"normal"}>
-            {new Date(weatherData.localtime).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+            {weatherData.localtime}
           </Text>
         )}
       </div>
