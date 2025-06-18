@@ -1,4 +1,11 @@
-import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../ui/drawer";
 import { Button } from "../ui/button";
 import { CalendarDays } from "lucide-react";
 import DateWiseWeatherDisplay from "./DateWiseWeatherDisplay";
@@ -12,6 +19,10 @@ const CalendarResultDrawer = () => {
         </Button>
       </DrawerTrigger>
       <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Conditions</DrawerTitle>
+          <DrawerDescription />
+        </DrawerHeader>
         <DateWiseWeatherDisplay />
       </DrawerContent>
     </Drawer>

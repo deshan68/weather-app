@@ -6,6 +6,8 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerClose,
+  DrawerTitle,
+  DrawerDescription,
 } from "../ui/drawer";
 import { Menu, XIcon } from "lucide-react";
 import { useWeatherData } from "@/hooks/useWeatherData";
@@ -90,10 +92,15 @@ function Navbar() {
           <DrawerContent>
             <div className="mx-auto w-full max-w-sm px-4 py-4 h-full">
               <DrawerHeader className="flex flex-row items-center p-0 mb-5 gap-x-3">
-                <ModeToggle />
-                <TempUnitDropDown />
-                <MarkerDropDown />
-                <FavoriteDropdown />
+                <DrawerTitle className="flex items-center gap-x-3">
+                  <ModeToggle />
+                  <TempUnitDropDown />
+                  <MarkerDropDown />
+                  <FavoriteDropdown />
+                </DrawerTitle>
+
+                <DrawerDescription />
+
                 <DrawerClose asChild>
                   <Button
                     variant="ghost"
