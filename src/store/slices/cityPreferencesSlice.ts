@@ -45,7 +45,6 @@ const cityPreferencesSlice = createSlice({
         position: "bottom-center",
       });
 
-      // Optionally remove city data if it's not referenced anymore
       if (!state.pinnedCityNames.includes(name)) {
         delete state.citiesByName[name];
       }
@@ -82,7 +81,6 @@ const cityPreferencesSlice = createSlice({
         position: "bottom-center",
       });
 
-      // Optionally remove city data if it's not referenced anymore
       if (!state.favoriteCityNames.includes(name)) {
         delete state.citiesByName[name];
       }
