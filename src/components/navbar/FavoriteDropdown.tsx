@@ -101,7 +101,7 @@ const FavoriteDropdown = () => {
             return (
               <div key={name} className="flex items-center justify-between">
                 <Text
-                  className="h-full p-2 rounded-md w-full text-sm text-left"
+                  className="h-full p-2 rounded-md w-full text-sm text-left cursor-pointer"
                   onClick={() =>
                     handleCitySelect(city.name, city.lat, city.lon)
                   }
