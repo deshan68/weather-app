@@ -43,7 +43,7 @@ const WeatherSubCard = ({
   return (
     <div
       className={cn(
-        "flex flex-col h-52 min-w-20 max-w-28 w-full rounded-3xl bg-accent py-4 px-1",
+        "flex flex-col h-52 min-w-20 max-w-28 w-full rounded-3xl bg-accent py-4 px-1 -z-10",
         theme === "weather" && "blur-card"
       )}
     >

@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <div className="flex w-full gap-2 flex-col">
       <div className="flex w-full flex-col gap-2 md:flex-row">
-        <div className="w-full md:w-2/3 -z-10">
+        <div className="w-full md:w-2/3">
           <MainWeatherDetailsArea />
         </div>
 
