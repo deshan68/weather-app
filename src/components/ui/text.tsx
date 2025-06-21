@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-
+import { useTheme } from "@/providers/ThemeProvider";
 import { cn } from "@/lib/utils";
 
 const textVariants = cva("transition-colors", {
@@ -31,6 +31,7 @@ const textVariants = cva("transition-colors", {
       primary: "text-primary",
       secondary: "text-secondary",
       destructive: "text-destructive",
+      white: "text-white",
     },
   },
   defaultVariants: {
@@ -47,12 +48,24 @@ interface TextProps
 }
 
 const Text = React.forwardRef<HTMLSpanElement, TextProps>(
-  ({ className, size, weight, color, asChild = false, ...props }, ref) => {
+  (
+    { className, size, weight, color = "default", asChild = false, ...props },
+    ref
+  ) => {
+    const { theme } = useTheme();
     const Comp = asChild ? Slot : "span";
+
+    const isWeatherTheme = theme === "weather";
+    const overrideColor = isWeatherTheme && color === "default";
+
     return (
       <Comp
         ref={ref}
-        className={cn(textVariants({ size, weight, color }), className)}
+        className={cn(
+          textVariants({ size, weight, color }),
+          overrideColor && "text-white",
+          className
+        )}
         {...props}
       />
     );

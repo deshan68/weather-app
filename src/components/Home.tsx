@@ -17,11 +17,11 @@ const Home = () => {
   return (
     <div className="flex w-full gap-2 flex-col">
       <div className="flex w-full flex-col gap-2 md:flex-row">
-        <div className="w-full md:w-2/3">
+        <div className="w-full md:w-2/3 -z-10">
           <MainWeatherDetailsArea />
         </div>
 
-        <div className="flex w-full md:w-1/3">
+        <div className="flex w-full md:w-1/3 -z-10">
           <WindInfoAndUVInfoArea />
         </div>
       </div>

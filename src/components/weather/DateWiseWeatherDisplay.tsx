@@ -9,6 +9,8 @@ import WeatherMainCard, { type WeatherDataProps } from "./WeatherMainCard";
 import { Separator } from "../ui/separator";
 import { Predictions } from "@/utils/weatherHelpers";
 import HorizontalDatePicker from "./HorizontalDatePicker";
+import { useTheme } from "@/providers/ThemeProvider";
+import { cn } from "@/lib/utils";
 
 const DateWiseWeatherDisplay = () => {
   const { currentWeather, temperatureUnit, error } = useAppSelector(
@@ -26,6 +28,8 @@ const DateWiseWeatherDisplay = () => {
   const [hourlyData, setHourlyData] = useState<HourlyWeatherData[]>([]);
   const [selectedDayWeather, setSelectedDayWeather] =
     useState<WeatherDataProps | null>(null);
+
+  const { theme } = useTheme();
 
   const extractHourlyData = useCallback(
     (date: Date): HourlyWeatherData[] => {
@@ -97,7 +101,10 @@ const DateWiseWeatherDisplay = () => {
         selectedDate={selectedDate}
         onDateChange={handleDateChange}
       />
-      <Text size="xs" className="text-center">
+      <Text
+        size="xs"
+        className={cn("text-center", theme === "weather" && "text-white")}
+      >
         {format(selectedDate, "EEEE, d MMMM yyyy")}
       </Text>
 

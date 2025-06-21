@@ -22,7 +22,10 @@ const ModeToggle = () => {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent
+        align="end"
+        className={theme === "weather" ? "blur-card text-white border-0" : ""}
+      >
         <DropdownMenuCheckboxItem
           checked={theme === "light"}
           onCheckedChange={() => setTheme("light")}
@@ -34,6 +37,12 @@ const ModeToggle = () => {
           onCheckedChange={() => setTheme("dark")}
         >
           Dark
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={theme === "weather"}
+          onCheckedChange={() => setTheme("weather")}
+        >
+          Weather
         </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>

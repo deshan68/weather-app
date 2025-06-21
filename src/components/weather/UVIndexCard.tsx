@@ -1,6 +1,8 @@
+import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
 import { Text } from "../ui/text";
 import { getUVIndexLevel } from "@/utils/weatherHelpers";
+import { useTheme } from "@/providers/ThemeProvider";
 
 interface UVIndexCardProps {
   uv?: number;
@@ -8,6 +10,7 @@ interface UVIndexCardProps {
 }
 
 const UVIndexCard = ({ uv, isLoading = false }: UVIndexCardProps) => {
+  const { theme } = useTheme();
   if (isLoading) {
     return (
       <div className="w-full h-full flex items-center justify-center">
@@ -32,7 +35,12 @@ const UVIndexCard = ({ uv, isLoading = false }: UVIndexCardProps) => {
   const percentage = (clampedUV / maxUV) * 100;
 
   return (
-    <div className="w-full h-1/2 bg-background p-4 rounded-3xl border space-y-4 justify-center flex flex-col">
+    <div
+      className={cn(
+        "w-full h-1/2 bg-background p-4 rounded-3xl border space-y-4 justify-center flex flex-col",
+        theme === "weather" && "blur-card border-0"
+      )}
+    >
       {/* Header */}
       <div className="flex justify-between items-center">
         <Text size="xs">UV Index</Text>
@@ -47,14 +55,21 @@ const UVIndexCard = ({ uv, isLoading = false }: UVIndexCardProps) => {
         }}
       >
         <div
-          className="absolute top-1/2 size-3 rounded-full bg-primary border border-muted shadow"
+          className={cn(
+            "absolute top-1/2 size-3 rounded-full bg-primary border border-muted shadow",
+            theme === "weather" && "bg-white"
+          )}
           style={{ left: `${percentage}%`, transform: "translate(-50%, -50%)" }}
         />
       </div>
 
       {/* Current UV */}
       <div className="flex items-center justify-between">
-        <Text size="xs" color="muted" weight={"light"}>
+        <Text
+          size="xs"
+          color={theme === "weather" ? "white" : "muted"}
+          weight={"light"}
+        >
           Current UV
         </Text>
         <Text size="sm" weight="medium">

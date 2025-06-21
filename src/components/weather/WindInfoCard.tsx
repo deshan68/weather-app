@@ -2,6 +2,8 @@ import { getSpeed } from "@/utils/weatherHelpers";
 import { Skeleton } from "../ui/skeleton";
 import { Text } from "../ui/text";
 import { useAppSelector } from "@/hooks/useRedux";
+import { useTheme } from "@/providers/ThemeProvider";
+import { cn } from "@/lib/utils";
 
 interface WindInfoCardProps {
   windMph?: number;
@@ -23,6 +25,7 @@ const WindInfoCard = ({
   isLoading = false,
 }: WindInfoCardProps) => {
   const { temperatureUnit } = useAppSelector((state) => state.weather);
+  const { theme } = useTheme();
 
   if (isLoading) {
     return (
@@ -47,27 +50,44 @@ const WindInfoCard = ({
   const y = RADIUS + (RADIUS - DOT_OFFSET) * Math.sin(angleInRadians);
 
   return (
-    <div className="w-full h-1/2 bg-background p-4 rounded-3xl border space-y-4 justify-center flex flex-col">
+    <div
+      className={cn(
+        "w-full h-1/2 bg-background p-4 rounded-3xl border space-y-4 justify-center flex flex-col",
+        theme === "weather" && "blur-card border-0"
+      )}
+    >
       <div className="flex justify-between items-center w-full gap-2">
         {/* Wind Details */}
         <div className="flex flex-col gap-3 w-full">
           <div className="flex items-center justify-between">
             <Text size="xs">Wind</Text>
-            <Text size="xs" weight="light" color="muted">
+            <Text
+              size="xs"
+              weight="light"
+              color={theme === "weather" ? "white" : "muted"}
+            >
               {getSpeed(windKph, windMph, temperatureUnit)}
             </Text>
           </div>
 
           <div className="flex items-center justify-between">
             <Text size="xs">Gust</Text>
-            <Text size="xs" weight="light" color="muted">
+            <Text
+              size="xs"
+              weight="light"
+              color={theme === "weather" ? "white" : "muted"}
+            >
               {getSpeed(gustKph, gustMph, temperatureUnit)}
             </Text>
           </div>
 
           <div className="flex items-center justify-between">
             <Text size="xs">Direction</Text>
-            <Text size="xs" weight="light" color="muted">
+            <Text
+              size="xs"
+              weight="light"
+              color={theme === "weather" ? "white" : "muted"}
+            >
               {windDegree}° W
             </Text>
           </div>
@@ -75,7 +95,12 @@ const WindInfoCard = ({
 
         {/* Wind Compass */}
         <div className="flex items-center justify-end min-w-24">
-          <div className="relative min-w-24 min-h-24 rounded-full border-2 border-muted bg-background flex items-center justify-center">
+          <div
+            className={cn(
+              "relative min-w-24 min-h-24 rounded-full border-2 border-muted bg-background flex items-center justify-center",
+              theme === "weather" && "bg-transparent border-white"
+            )}
+          >
             {/* Cardinal Directions */}
             <div className="absolute inset-0 text-[10px] font-semibold text-muted-foreground pointer-events-none">
               <Text

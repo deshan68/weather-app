@@ -20,6 +20,8 @@ import {
 } from "lucide-react";
 import { Icon } from "../ui/icon";
 import { Skeleton } from "../ui/skeleton";
+import { useTheme } from "@/providers/ThemeProvider";
+import { cn } from "@/lib/utils";
 
 export interface WeatherCondition {
   text: string;
@@ -69,12 +71,19 @@ const WeatherMainCard = ({
   const unit = getTemperatureUnit(temperatureUnit);
   const uvLevel = getUVIndexLevel(weatherData.uv);
 
+  const { theme } = useTheme();
+
   if (isLoading) {
     return <Skeleton className="h-52 aspect-square rounded-3xl" />;
   }
 
   return (
-    <div className="flex flex-col h-52 p-4 bg-accent aspect-square rounded-3xl">
+    <div
+      className={cn(
+        "flex flex-col h-52 p-4 bg-accent aspect-square rounded-3xl",
+        theme === "weather" && "blur-card bg-black/10"
+      )}
+    >
       {/* day name and time */}
       <div className="flex justify-between w-full">
         <Text size={"sm"} weight={"normal"}>
@@ -86,9 +95,9 @@ const WeatherMainCard = ({
           </Text>
         )}
       </div>
-
-      <Separator className="mt-1 mb-3" />
-
+      <Separator
+        className={cn("mt-1 mb-3", theme === "weather" && "bg-white")}
+      />
       <div className="flex justify-between h-full">
         <div className="flex flex-col items-start justify-between">
           <Text size={"5xl"} weight={"light"}>
@@ -97,29 +106,56 @@ const WeatherMainCard = ({
           </Text>
 
           <div className="flex items-center gap-1">
-            <Icon size={"sm"} color={"muted"}>
+            <Icon
+              size={"sm"}
+              color={"muted"}
+              className={cn(theme === "weather" && "text-white")}
+            >
               <ThermometerSun />
             </Icon>
-            <Text size={"xs"} weight={"light"} color={"muted"}>
+            <Text
+              size={"xs"}
+              weight={"light"}
+              color={"muted"}
+              className={cn(theme === "weather" && "text-white")}
+            >
               Feels like: {Math.round(feelsLike)}
               {unit}
             </Text>
           </div>
 
           <div className="flex items-center gap-1">
-            <Icon size={"sm"} color={"muted"}>
+            <Icon
+              size={"sm"}
+              color={"muted"}
+              className={cn(theme === "weather" && "text-white")}
+            >
               <Droplets />
             </Icon>
-            <Text size={"xs"} weight={"light"} color={"muted"}>
+            <Text
+              size={"xs"}
+              weight={"light"}
+              color={"muted"}
+              className={cn(theme === "weather" && "text-white")}
+            >
               Humidity: {weatherData.humidity}%
             </Text>
           </div>
 
           <div className="flex items-center gap-1">
-            <Icon size={"sm"} color={"muted"}>
+            <Icon
+              size={"sm"}
+              color={"muted"}
+              className={cn(theme === "weather" && "text-white")}
+            >
               <Wind />
             </Icon>
-            <Text size={"xs"} weight={"light"} color={"muted"}>
+            <Text
+              size={"xs"}
+              weight={"light"}
+              color={"muted"}
+              className={cn(theme === "weather" && "text-white")}
+            >
               Wind:{" "}
               {getSpeed(
                 weatherData.wind_kph,
@@ -136,7 +172,8 @@ const WeatherMainCard = ({
             <Text
               size={"xs"}
               weight={"light"}
-              className="text-muted-foreground"
+              color={"muted"}
+              className={cn(theme === "weather" && "text-white")}
             >
               UV Index: {weatherData.uv}
             </Text>
@@ -151,13 +188,18 @@ const WeatherMainCard = ({
           />
 
           <div className="flex items-center gap-1">
-            <Icon size={"sm"} color={"muted"}>
+            <Icon
+              size={"sm"}
+              color={"muted"}
+              className={cn(theme === "weather" && "text-white")}
+            >
               <Cloud />
             </Icon>
             <Text
               size={"xs"}
               weight={"light"}
-              className="text-muted-foreground"
+              color={"muted"}
+              className={cn(theme === "weather" && "text-white")}
             >
               {weatherData.cloud}%
             </Text>
@@ -165,13 +207,17 @@ const WeatherMainCard = ({
 
           {weatherData.pressure_in && weatherData.pressure_mb && (
             <div className="flex items-center gap-1">
-              <Icon size={"sm"} color={"muted"}>
+              <Icon
+                size={"sm"}
+                color={"muted"}
+                className={cn(theme === "weather" && "text-white")}
+              >
                 <Gauge />
               </Icon>
               <Text
                 size={"xs"}
-                weight={"light"}
-                className="text-muted-foreground"
+                color={"muted"}
+                className={cn(theme === "weather" && "text-white")}
               >
                 {getPressure(
                   weatherData.pressure_mb,
@@ -183,13 +229,18 @@ const WeatherMainCard = ({
           )}
 
           <div className="flex items-center gap-1">
-            <Icon size={"sm"} color={"muted"}>
+            <Icon
+              size={"sm"}
+              color={"muted"}
+              className={cn(theme === "weather" && "text-white")}
+            >
               <Eye />
             </Icon>
             <Text
               size={"xs"}
               weight={"light"}
-              className="text-muted-foreground"
+              className={cn(theme === "weather" && "text-white")}
+              color={"muted"}
             >
               {getVisibility(
                 weatherData.vis_km,

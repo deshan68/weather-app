@@ -10,6 +10,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { useWeatherData } from "@/hooks/useWeatherData";
 import { clearSearchResults } from "@/store/slices/weatherSlice";
 import { Button } from "../ui/button";
+import { useTheme } from "@/providers/ThemeProvider";
 
 interface RenderSearchProps {
   query: string;
@@ -25,6 +26,7 @@ const RenderSearch = ({
   const { isSearching, searchResults } = useAppSelector(
     (state) => state.weather
   );
+  const { theme } = useTheme();
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -76,11 +78,19 @@ const RenderSearch = ({
           }
         }}
         value={query}
-        className="w-full"
+        className={cn(
+          "w-full",
+          theme === "weather" && "text-white placeholder:text-white"
+        )}
       />
 
       {showDropdown && (
-        <Card className="absolute z-50 mt-2 w-full shadow-md border rounded-md overflow-hidden py-2">
+        <Card
+          className={cn(
+            "absolute z-50 mt-2 w-full py-2 border shadow-md overflow-hidden bg-transparent",
+            theme === "weather" && "bg-primary-foreground"
+          )}
+        >
           {isSearching ? (
             <div className="flex items-center justify-center py-4">
               <Loader2 className="animate-spin size-4 text-muted-foreground" />
@@ -94,13 +104,17 @@ const RenderSearch = ({
                     key={result.id}
                     onClick={() => handleSelect(result)}
                     className={cn(
-                      "w-full flex justify-between items-center px-4 py-2 mb-1 rounded-none"
+                      "w-full flex justify-between items-center px-4 py-2 mb-1 rounded-none",
+                      theme === "weather" && "hover:bg-primary/20"
                     )}
                   >
                     <Text
                       size="xs"
                       weight="light"
-                      className="text-left whitespace-normal break-words leading-4"
+                      className={cn(
+                        "text-left whitespace-normal break-words leading-4",
+                        theme === "weather" && "text-black"
+                      )}
                     >
                       {result.name}, {result.region}, {result.country}.
                     </Text>

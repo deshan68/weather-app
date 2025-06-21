@@ -12,9 +12,13 @@ import {
   removePinnedCity,
 } from "@/store/slices/cityPreferencesSlice";
 import { memo } from "react";
+import { useTheme } from "@/providers/ThemeProvider";
+import { cn } from "@/lib/utils";
 
 const MarkerDropDown = () => {
   const dispatch = useAppDispatch();
+  const { theme } = useTheme();
+
   const { currentWeather } = useAppSelector((state) => state.weather);
   const { pinnedCityNames, citiesByName } = useAppSelector(
     (state) => state.cityPreferences
@@ -45,12 +49,15 @@ const MarkerDropDown = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="w-56 min-h-24 justify-between gap-1 py-2 flex flex-col"
+        className={cn(
+          "w-56 min-h-24 justify-between gap-1 py-2 flex flex-col",
+          theme === "weather" && "blur-card border-0"
+        )}
       >
         {pinnedCityNames.length === 0 ? (
           <Text
             size="xs"
-            color="muted"
+            color={theme === "weather" ? "white" : "muted"}
             className="truncate text-center my-auto"
           >
             No pinned cities.
@@ -69,13 +76,15 @@ const MarkerDropDown = () => {
                   <Text size="sm" weight="light">
                     {city.name}
                   </Text>
-                  <Button
-                    variant="ghost"
-                    size="icon"
+                  <Trash
+                    className={cn(
+                      "h-full p-2 rounded-md text-sm text-left hover:cursor-pointer hover:bg-accent",
+                      theme === "weather" && "hover:bg-primary"
+                    )}
+                    size={30}
+                    color={theme === "weather" ? "white" : "currentColor"}
                     onClick={() => handleUnpinCity(name)}
-                  >
-                    <Trash className="size-3.5" />
-                  </Button>
+                  />
                 </div>
               );
             })}
@@ -83,7 +92,7 @@ const MarkerDropDown = () => {
         )}
 
         <Button
-          variant="default"
+          variant={theme === "weather" ? "outline" : "default"}
           className="mt-2 mx-1 text-[12px]"
           size="sm"
           onClick={handlePinCity}

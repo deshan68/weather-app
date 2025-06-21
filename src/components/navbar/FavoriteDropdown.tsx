@@ -14,9 +14,12 @@ import {
 import { useWeatherData } from "@/hooks/useWeatherData";
 import { toast } from "sonner";
 import { memo, useState } from "react";
+import { useTheme } from "@/providers/ThemeProvider";
+import { cn } from "@/lib/utils";
 
 const FavoriteDropdown = () => {
   const dispatch = useAppDispatch();
+  const { theme } = useTheme();
   const { fetchWeatherByCoordinates } = useWeatherData();
   const { currentWeather } = useAppSelector((state) => state.weather);
   const { favoriteCityNames, citiesByName } = useAppSelector(
@@ -77,12 +80,15 @@ const FavoriteDropdown = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="w-56 min-h-24 justify-between gap-1 py-2 flex flex-col"
+        className={cn(
+          "w-56 min-h-24 justify-between gap-1 py-2 flex flex-col",
+          theme === "weather" && "blur-card border-0"
+        )}
       >
         {favoriteCityNames.length === 0 ? (
           <Text
             size="xs"
-            color="muted"
+            color={theme === "weather" ? "white" : "muted"}
             className="truncate text-center my-auto"
           >
             No favorite cities.
@@ -94,26 +100,29 @@ const FavoriteDropdown = () => {
 
             return (
               <div key={name} className="flex items-center justify-between">
-                <button
-                  className="h-full p-2 rounded-md w-full text-sm text-left hover:text-primary hover:cursor-pointer"
+                <Text
+                  className="h-full p-2 rounded-md w-full text-sm text-left"
                   onClick={() =>
                     handleCitySelect(city.name, city.lat, city.lon)
                   }
                 >
                   {city.name}
-                </button>
-                <button
-                  className="h-full p-2 rounded-md text-sm text-left hover:text-primary hover:cursor-pointer hover:bg-accent"
+                </Text>
+                <Trash
+                  className={cn(
+                    "h-full p-2 rounded-md text-sm text-left hover:cursor-pointer hover:bg-accent",
+                    theme === "weather" && "hover:bg-primary"
+                  )}
                   onClick={() => handleRemoveFavorite(city.name)}
-                >
-                  <Trash className="size-3.5" />
-                </button>
+                  size={30}
+                  color={theme === "weather" ? "white" : "currentColor"}
+                />
               </div>
             );
           })
         )}
         <Button
-          variant="default"
+          variant={theme === "weather" ? "outline" : "default"}
           className="mt-2 mx-1 text-[12px]"
           size="sm"
           onClick={handleAddFavorite}
