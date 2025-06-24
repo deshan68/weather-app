@@ -129,3 +129,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.blur-card {
+  @apply backdrop-blur-xl bg-black/15;
+}
+
+.weather .recharts-cartesian-axis-tick text {
+  fill: rgb(255, 255, 255);
+}

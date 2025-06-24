@@ -9,8 +9,11 @@ import {
 import { Button } from "../ui/button";
 import { CalendarDays } from "lucide-react";
 import DateWiseWeatherDisplay from "./DateWiseWeatherDisplay";
+import { useTheme } from "@/providers/ThemeProvider";
+import { cn } from "@/lib/utils";
 
 const CalendarResultDrawer = () => {
+  const { theme } = useTheme();
   return (
     <Drawer direction="right">
       <DrawerTrigger asChild>
@@ -18,9 +21,16 @@ const CalendarResultDrawer = () => {
           <CalendarDays />
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent
+        className={cn(
+          "max-w-sm",
+          theme === "weather" && "blur-card border-none"
+        )}
+      >
         <DrawerHeader>
-          <DrawerTitle>Conditions</DrawerTitle>
+          <DrawerTitle className={cn(theme === "weather" && "text-white")}>
+            Conditions
+          </DrawerTitle>
           <DrawerDescription />
         </DrawerHeader>
         <DateWiseWeatherDisplay />

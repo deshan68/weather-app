@@ -18,9 +18,12 @@ import TempUnitDropDown from "./TempUnitDropDown";
 import RenderCity from "./RenderCity";
 import RenderIcon from "./RenderIcon";
 import RenderSearch from "./RenderSearch";
+import { cn } from "@/lib/utils";
+import { useTheme } from "@/providers/ThemeProvider";
 
 function Navbar() {
   const { searchWeatherLocations } = useWeatherData();
+  const { theme } = useTheme();
 
   const [query, setQuery] = useState<string>("");
   const [openDrawer, setIsOpenDrawer] = useState<boolean>(false);
@@ -57,7 +60,12 @@ function Navbar() {
   }, [handleSearch, query]);
 
   return (
-    <nav className="flex items-center justify-between py-4">
+    <nav
+      className={cn(
+        "flex items-center justify-between py-2 mb-2 rounded-full mt-1",
+        theme === "weather" && "blur-card px-2"
+      )}
+    >
       <div className="flex items-center gap-2">
         <RenderIcon />
         <RenderCity />
@@ -85,11 +93,22 @@ function Navbar() {
           onOpenChange={handleOpenDrawer}
         >
           <DrawerTrigger asChild>
-            <Button variant="ghost" size="icon" className="rounded-full">
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                "rounded-full",
+                theme === "weather" && "text-white"
+              )}
+            >
               <Menu className="size-5" />
             </Button>
           </DrawerTrigger>
-          <DrawerContent>
+          <DrawerContent
+            className={
+              theme === "weather" ? "blur-card text-white border-none" : ""
+            }
+          >
             <div className="mx-auto w-full max-w-sm px-4 py-4 h-full">
               <DrawerHeader className="flex flex-row items-center p-0 mb-5 gap-x-3">
                 <DrawerTitle className="flex items-center gap-x-3">

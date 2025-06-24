@@ -3,6 +3,8 @@ import { useAppSelector } from "@/hooks/useRedux";
 import { Skeleton } from "../ui/skeleton";
 import { Text } from "../ui/text";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { cn } from "@/lib/utils";
+import { useTheme } from "@/providers/ThemeProvider";
 
 const RenderCity = () => {
   const { currentWeather, isLoading } = useAppSelector(
@@ -10,6 +12,8 @@ const RenderCity = () => {
   );
 
   const [time, setTime] = useState<string>("");
+
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!currentWeather) return;
@@ -54,7 +58,12 @@ const RenderCity = () => {
               </p>
             </TooltipContent>
           </Tooltip>
-          <Text size="xs" color="muted" weight="light" className="leading-3">
+          <Text
+            size="xs"
+            color="muted"
+            weight="light"
+            className={cn("leading-3", theme === "weather" && "text-white")}
+          >
             {time}
           </Text>
         </div>

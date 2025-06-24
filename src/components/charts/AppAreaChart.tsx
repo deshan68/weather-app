@@ -5,9 +5,11 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "../ui/chart";
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, XAxis, YAxis } from "recharts";
 import { Text } from "../ui/text";
 import { Skeleton } from "../ui/skeleton";
+import { cn } from "@/lib/utils";
+import { useTheme } from "@/providers/ThemeProvider";
 
 interface AppAreaChartProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,6 +30,7 @@ const AppAreaChart = ({
   showAllData = false,
 }: AppAreaChartProps) => {
   const { isLoading, error } = useAppSelector((state) => state.weather);
+  const { theme } = useTheme();
 
   const chartConfig = {
     [keyOfYAxis]: {
@@ -49,19 +52,20 @@ const AppAreaChart = ({
     );
 
   return (
-    <div className="flex flex-col gap-1 h-full w-full">
+    <div
+      className={cn(
+        "flex flex-col gap-1 h-full w-full rounded-2xl bg-accent p-2",
+        theme === "weather" && "blur-card"
+      )}
+    >
       <Text size={"sm"} weight={"normal"}>
         {title}
       </Text>
-      <ChartContainer
-        config={chartConfig}
-        className="h-56 w-full md:h-full md:w-full bg-accent rounded-2xl p-2"
-      >
+      <ChartContainer config={chartConfig}>
         <AreaChart
           accessibilityLayer
           data={data.slice(0, showAllData ? undefined : 12)}
         >
-          <CartesianGrid vertical={false} />
           <XAxis
             dataKey={keyOfXAxis}
             tickLine={false}

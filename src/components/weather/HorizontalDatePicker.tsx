@@ -3,6 +3,7 @@ import { Text } from "../ui/text";
 import { cn } from "@/lib/utils";
 import { useMemo } from "react";
 import { DAYS_TO_SHOW } from "@/lib/constants";
+import { useTheme } from "@/providers/ThemeProvider";
 
 interface HorizontalDatePickerProps {
   selectedDate: Date;
@@ -14,6 +15,7 @@ const HorizontalDatePicker = ({
   onDateChange,
 }: HorizontalDatePickerProps) => {
   const today = useMemo(() => new Date(), []);
+  const { theme } = useTheme();
 
   const dates = useMemo(
     () => Array.from({ length: DAYS_TO_SHOW }, (_, i) => addDays(today, i)),
@@ -31,15 +33,33 @@ const HorizontalDatePicker = ({
             onClick={() => onDateChange(date)}
             className="flex flex-col items-center justify-center gap-y-1"
           >
-            <Text size="xs" color={isSelected ? "primary" : "muted"}>
-              {format(date, "EEEEE")}
-            </Text>
             <Text
               size="xs"
-              color={isSelected ? "primary" : "muted"}
+              className={cn(
+                theme === "weather" ? "text-white" : "text-muted-foreground"
+              )}
+            >
+              {format(date, "EEEEE")}
+            </Text>
+
+            <Text
+              size="xs"
+              color={
+                theme === "weather"
+                  ? isSelected
+                    ? "primary"
+                    : undefined
+                  : isSelected
+                  ? "primary"
+                  : "muted"
+              }
               className={cn(
                 "rounded-full w-6 h-6 flex items-center justify-center",
-                isSelected && "bg-primary text-primary-foreground"
+                isSelected &&
+                  (theme === "weather"
+                    ? "bg-white text-black"
+                    : "bg-primary text-primary-foreground"),
+                theme === "weather" && !isSelected && "text-white"
               )}
             >
               {format(date, "d")}

@@ -21,7 +21,7 @@ const Home = () => {
           <MainWeatherDetailsArea />
         </div>
 
-        <div className="flex w-full md:w-1/3">
+        <div className="flex w-full md:w-1/3 -z-10">
           <WindInfoAndUVInfoArea />
         </div>
       </div>
