@@ -56,7 +56,7 @@ const UVIndexCard = ({ uv, isLoading = false }: UVIndexCardProps) => {
       >
         <div
           className={cn(
-            "absolute top-1/2 size-3 rounded-full bg-primary border border-muted shadow",
+            "absolute top-1/2 size-2.5 rounded-full bg-primary",
             theme === "weather" && "bg-white"
           )}
           style={{ left: `${percentage}%`, transform: "translate(-50%, -50%)" }}
