@@ -87,7 +87,7 @@ const RenderSearch = ({
       {showDropdown && (
         <Card
           className={cn(
-            "absolute z-50 mt-2 w-full py-2 border shadow-md overflow-hidden bg-transparent",
+            "absolute z-50 mt-2 w-full py-2 border shadow-md overflow-hidden",
             theme === "weather" && "bg-primary-foreground"
           )}
         >
